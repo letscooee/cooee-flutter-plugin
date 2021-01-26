@@ -25,22 +25,20 @@ class _MyAppState extends State<MyApp> {
   // Platform messages are asynchronous, so we initialize in an async method.
   Future<void> initPlatformState() async {
     String platformVersion;
-    // Platform messages may fail, so we use a try/catch PlatformException.
+
     try {
-      await CooeePluginFlutter.sendEvent("init",new Map<String,String>());
-
-
-    } on Exception{
+      await CooeePlugin.sendEvent("Add To Cart", new Map<String, String>());
+    } on Exception {
       print(Exception);
     }
     // try{
-    //   await CooeePluginFlutter.updateUserData({"test":"test"});
+    //   await CooeePlugin.updateUserData({"test":"test"});
     // } on Exception{
     //   print(Exception);
     // }
-    try{
-      await CooeePluginFlutter.updateUserProperties({"test":"test"});
-    }catch(e){
+    try {
+      await CooeePlugin.updateUserProperties({"foo": "bar", "Purchased Once": true});
+    } catch (e) {
       print(e);
     }
 

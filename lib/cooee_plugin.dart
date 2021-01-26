@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/services.dart';
 
-class CooeePluginFlutter {
+class CooeePlugin {
 
   static const MethodChannel _channel = const MethodChannel('cooee_plugin');
 
