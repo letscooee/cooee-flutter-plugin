@@ -1,8 +1,8 @@
 name: cooee_plugin_flutter
-description: A new flutter plugin project.
+description: Hyperpersonalised Mobile App Re-Engagement via Machine Learning for Flutter apps.
 version: 0.0.1
 author:
-homepage:
+homepage: https://www.letscooee.com
 
 environment:
   sdk: ">=2.7.0 <3.0.0"
@@ -29,7 +29,7 @@ flutter:
     platforms:
       android:
         package: org.letscooee.cooee_plugin_flutter
-        pluginClass: CooeePluginFlutterPlugin
+        pluginClass: CooeeFlutterPlugin
 
   # To add assets to your plugin package, add an assets section, like this:
   # assets:

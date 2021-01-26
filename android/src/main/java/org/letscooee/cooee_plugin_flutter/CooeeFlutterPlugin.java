@@ -18,11 +18,14 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 /**
- * CooeePluginFlutterPlugin
+ * Main wrapper of Android's Cooee SDK.
+ *
+ * @author Abhishek Tapariya
+ * @author Raajas Sode
  */
-public class CooeePluginFlutterPlugin implements FlutterPlugin, MethodCallHandler {
+public class CooeeFlutterPlugin implements FlutterPlugin, MethodCallHandler {
+
     /// The MethodChannel that will the communication between Flutter and native Android
-    ///
     /// This local reference serves to register the plugin with the Flutter Engine and unregister it
     /// when the Flutter Engine is detached from the Activity
     private MethodChannel channel;
@@ -46,7 +49,7 @@ public class CooeePluginFlutterPlugin implements FlutterPlugin, MethodCallHandle
     // in the same class.
     public static void registerWith(Registrar registrar) {
         final MethodChannel channel = new MethodChannel(registrar.messenger(), "hello");
-        channel.setMethodCallHandler(new CooeePluginFlutterPlugin());
+        channel.setMethodCallHandler(new CooeeFlutterPlugin());
     }
 
     @Override
@@ -54,7 +57,6 @@ public class CooeePluginFlutterPlugin implements FlutterPlugin, MethodCallHandle
         if (call.method.equals("sendEvent")) {
 
             try {
-
                 cooeeSDK.sendEvent(call.argument("eventName"), call.argument("eventProperties"));
                 result.success(" Event Sent ");
             } catch (Exception e) {
@@ -62,17 +64,12 @@ public class CooeePluginFlutterPlugin implements FlutterPlugin, MethodCallHandle
                 result.error(e.toString(), " Event Not Sent", e.getCause());
                 e.printStackTrace();
             }
-            finally{
-                System.out.println(call.argument("eventName").toString());
-            }
         } else if (call.method.equals("updateUserData")) {
-//            System.out.println(call.argument("userData").toString());
             Map<String, String> userData = call.argument("userData");
-            System.out.println("UserData"+userData.toString());
-            try {
 
+            try {
                 cooeeSDK.updateUserData(userData);
-                result.success(" User Data Updated ");
+                result.success("User Data Updated ");
             } catch (Exception e) {
                 System.out.println("Exception : " + e);
                 result.error(e.toString(), " User Data Not Updated ", e.getCause());
@@ -89,17 +86,13 @@ public class CooeePluginFlutterPlugin implements FlutterPlugin, MethodCallHandle
                 e.printStackTrace();
             }
         } else if (call.method.equals("setScreenName")) {
-            //Not working on version 0.0.3, will be implemented on next version
-        /*  try{
-            cooeeSDK.updateScreenName(String.valueOf(call.arguments));
-            result.success(" Screen Name Updated ");
-          }
-          catch(Exception e){
-            System.out.println("Exception : "+e);
-            result.error(e," Screen Name Not Update ",e.getCause());
-          }
-
-         */
+            try {
+                cooeeSDK.updateScreenName(String.valueOf(call.arguments));
+                result.success(" Screen Name Updated ");
+            } catch (Exception e) {
+                System.out.println("Exception : " + e);
+                result.error(e, " Screen Name Not Update ", e.getCause());
+            }
         } else {
             result.notImplemented();
         }
@@ -108,19 +101,5 @@ public class CooeePluginFlutterPlugin implements FlutterPlugin, MethodCallHandle
     @Override
     public void onDetachedFromEngine(@NonNull FlutterPluginBinding binding) {
         channel.setMethodCallHandler(null);
-    }
-
-    private Map<String, String> toMap(JSONObject jsonobj) throws JSONException {
-        Map<String, String> map = new HashMap<String, String>();
-        Iterator<String> keys = jsonobj.keys();
-        while (keys.hasNext()) {
-            String key = keys.next();
-            String value = jsonobj.getString(key);
-            map.put(key, value);
-        }
-
-        return map;
-
-
     }
 }
