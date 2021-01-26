@@ -4,7 +4,7 @@ import 'package:flutter/services.dart';
 
 class CooeePluginFlutter {
 
-  static const MethodChannel _channel = const MethodChannel('cooee_plugin_flutter');
+  static const MethodChannel _channel = const MethodChannel('cooee_plugin');
 
   static Future<String> get platformVersion async {
     final String version = await _channel.invokeMethod('getPlatformVersion');

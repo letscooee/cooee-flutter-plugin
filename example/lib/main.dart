@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'dart:async';
 
 import 'package:flutter/services.dart';
-import 'package:cooee_plugin_flutter/cooee_plugin_flutter.dart';
+import 'package:cooee_plugin/cooee_plugin.dart';
 
 void main() {
   runApp(MyApp());

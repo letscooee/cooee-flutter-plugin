@@ -33,7 +33,7 @@ public class CooeeFlutterPlugin implements FlutterPlugin, MethodCallHandler {
 
     @Override
     public void onAttachedToEngine(@NonNull FlutterPluginBinding flutterPluginBinding) {
-        channel = new MethodChannel(flutterPluginBinding.getBinaryMessenger(), "cooee_plugin_flutter");
+        channel = new MethodChannel(flutterPluginBinding.getBinaryMessenger(), "cooee_plugin");
         cooeeSDK = CooeeSDK.getDefaultInstance(flutterPluginBinding.getApplicationContext());
         channel.setMethodCallHandler(this);
     }
