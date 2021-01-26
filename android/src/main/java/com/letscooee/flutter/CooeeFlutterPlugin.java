@@ -1,4 +1,4 @@
-package org.letscooee.cooee_plugin_flutter;
+package com.letscooee.flutter;
 
 import java.util.*;
 import java.io.*;
