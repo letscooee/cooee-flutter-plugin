@@ -85,14 +85,6 @@ public class CooeeFlutterPlugin implements FlutterPlugin, MethodCallHandler {
                 result.error(e.toString(), " User Properties Updated Failed ", e.getCause());
                 e.printStackTrace();
             }
-        } else if (call.method.equals("setScreenName")) {
-            try {
-                cooeeSDK.updateScreenName(String.valueOf(call.arguments));
-                result.success(" Screen Name Updated ");
-            } catch (Exception e) {
-                System.out.println("Exception : " + e);
-                result.error(e, " Screen Name Not Update ", e.getCause());
-            }
         } else {
             result.notImplemented();
         }
