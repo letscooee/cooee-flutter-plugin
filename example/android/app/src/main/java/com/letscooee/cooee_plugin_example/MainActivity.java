@@ -1,4 +1,4 @@
-package org.letscooee.cooee_plugin_example;
+package com.letscooee.cooee_plugin_example;
 
 import io.flutter.embedding.android.FlutterActivity;
 

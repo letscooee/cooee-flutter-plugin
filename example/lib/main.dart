@@ -37,7 +37,7 @@ class _MyAppState extends State<MyApp> {
     //   print(Exception);
     // }
     try {
-      await CooeePlugin.updateUserProperties({"foo": "bar", "Purchased Once": true});
+      await CooeePlugin.updateUserProperties({"foo": "bar", "Purchased Once": "true"});
     } catch (e) {
       print(e);
     }
