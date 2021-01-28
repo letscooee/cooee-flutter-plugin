@@ -12,7 +12,7 @@ import io.flutter.plugin.common.MethodChannel.MethodCallHandler;
 import io.flutter.plugin.common.MethodChannel.Result;
 import io.flutter.plugin.common.PluginRegistry.Registrar;
 
-import com.letscooee.cooeesdk.CooeeSDK;
+import com.letscooee.CooeeSDK;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -84,6 +84,14 @@ public class CooeeFlutterPlugin implements FlutterPlugin, MethodCallHandler {
                 System.out.println("Exception : " + e);
                 result.error(e.toString(), " User Properties Updated Failed ", e.getCause());
                 e.printStackTrace();
+            }
+        } else if (call.method.equals("setCurrentScreen")) {
+            try {
+                cooeeSDK.setCurrentScreen(String.valueOf(call.argument("screenName")));
+                result.success(" Screen Name Updated ");
+            } catch (Exception e) {
+                System.out.println("Exception : " + e);
+                result.error(e.toString(), " Screen Name Not Update ", e.getCause());
             }
         } else {
             result.notImplemented();

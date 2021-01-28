@@ -22,4 +22,8 @@ class CooeePlugin {
   static void updateUserProperties(Map<String, String> userProperties) async {
     await _channel.invokeMethod("updateUserProperties", {"userProperties": userProperties});
   }
+
+  static void setCurrentScreen(String screenName) async {
+    await _channel.invokeMethod("setCurrentScreen", {"screenName": screenName});
+  }
 }
