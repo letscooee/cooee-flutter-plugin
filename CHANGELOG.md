@@ -1,3 +1,7 @@
+## 0.0.5
+
+1. Using v0.2.1 of the Android SDK.
+
 ## 0.0.4
 
 1. Using v0.2.0 of the Android SDK.
