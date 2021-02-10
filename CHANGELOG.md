@@ -1,3 +1,7 @@
+## 0.0.4
+
+1. Using v0.2.0 of the Android SDK.
+
 ## 0.0.3
 
 1. Fix installing the plugin on the app.

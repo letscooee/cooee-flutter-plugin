@@ -23,7 +23,7 @@ To add the Cooee Flutter plugin to your project, edit your project's `pubspec.ya
 
 ```yaml
 dependencies:
-cooee_plugin: 0.0.2
+cooee_plugin: x.x.x
 ```
 
 You can check the latest version of the plugin from https://pub.dev/packages/cooee_plugin/admin.
