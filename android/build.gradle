@@ -36,7 +36,7 @@ android {
 }
 
 dependencies {
-    implementation 'com.letscooee:cooee-android-sdk:0.1.1'
+    implementation 'com.letscooee:cooee-android-sdk:0.2.1'
 }
 
 android.defaultConfig.javaCompileOptions.annotationProcessorOptions.includeCompileClasspath = true
