@@ -2,9 +2,26 @@ import 'dart:async';
 
 import 'package:flutter/services.dart';
 
+typedef void CooeeInAppNotificationButtonClickedHandler(
+    Map<String, String> mapList);
+
 class CooeePlugin {
 
+  CooeeInAppNotificationButtonClickedHandler cooeeInAppNotificationButtonClickedHandler;
+
   static const MethodChannel _channel = const MethodChannel('cooee_plugin');
+
+  CooeePlugin._internal() {
+    _channel.setMethodCallHandler(_platformCallHandler);
+  }
+
+  Future _platformCallHandler(MethodCall call) async {
+    switch(call.method){
+      case "onInAppButtonClick":
+        Map<String, String> args = call.arguments;
+        cooeeInAppNotificationButtonClickedHandler(args);
+    }
+  }
 
   static Future<String> get platformVersion async {
     final String version = await _channel.invokeMethod('getPlatformVersion');
@@ -25,5 +42,10 @@ class CooeePlugin {
 
   static void setCurrentScreen(String screenName) async {
     await _channel.invokeMethod("setCurrentScreen", {"screenName": screenName});
+  }
+
+  /// Define a method to handle inApp notification button clicked
+  void setCooeeInAppNotificationButtonClickedHandler(CooeeInAppNotificationButtonClickedHandler handler) {
+    cooeeInAppNotificationButtonClickedHandler = handler;
   }
 }

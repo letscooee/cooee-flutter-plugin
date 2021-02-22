@@ -4,6 +4,7 @@ import java.util.*;
 import java.io.*;
 
 import androidx.annotation.NonNull;
+import android.util.Log;
 
 import io.flutter.embedding.engine.plugins.FlutterPlugin;
 import io.flutter.plugin.common.MethodCall;
@@ -11,11 +12,21 @@ import io.flutter.plugin.common.MethodChannel;
 import io.flutter.plugin.common.MethodChannel.MethodCallHandler;
 import io.flutter.plugin.common.MethodChannel.Result;
 import io.flutter.plugin.common.PluginRegistry.Registrar;
+import io.flutter.embedding.engine.plugins.activity.ActivityPluginBinding;
+import io.flutter.embedding.engine.plugins.activity.ActivityAware;
 
 import com.letscooee.CooeeSDK;
 
+import com.letscooee.utils.InAppNotificationClickListener;
+import com.letscooee.utils.CooeeSDKConstants;
+
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import android.app.Activity;
+import android.content.Context;
+
+import io.flutter.plugin.common.BinaryMessenger;
 
 /**
  * Main wrapper of Android's Cooee SDK.
@@ -23,19 +34,24 @@ import org.json.JSONObject;
  * @author Abhishek Tapariya
  * @author Raajas Sode
  */
-public class CooeeFlutterPlugin implements FlutterPlugin, MethodCallHandler {
+public class CooeeFlutterPlugin implements ActivityAware, FlutterPlugin, MethodCallHandler, InAppNotificationClickListener{
 
     /// The MethodChannel that will the communication between Flutter and native Android
     /// This local reference serves to register the plugin with the Flutter Engine and unregister it
     /// when the Flutter Engine is detached from the Activity
     private MethodChannel channel;
     private CooeeSDK cooeeSDK;
+    private Context context;
+    private Activity activity;
 
     @Override
     public void onAttachedToEngine(@NonNull FlutterPluginBinding flutterPluginBinding) {
         channel = new MethodChannel(flutterPluginBinding.getBinaryMessenger(), "cooee_plugin");
+        setupPlugin(flutterPluginBinding.getApplicationContext(), flutterPluginBinding.getBinaryMessenger(), null);
         cooeeSDK = CooeeSDK.getDefaultInstance(flutterPluginBinding.getApplicationContext());
         channel.setMethodCallHandler(this);
+        this.context = flutterPluginBinding.getApplicationContext();
+        System.out.println("Constant : "+ CooeeSDKConstants.LOG_PREFIX);
     }
 
     // This static function is optional and equivalent to onAttachedToEngine. It supports the old
@@ -50,6 +66,28 @@ public class CooeeFlutterPlugin implements FlutterPlugin, MethodCallHandler {
     public static void registerWith(Registrar registrar) {
         final MethodChannel channel = new MethodChannel(registrar.messenger(), "hello");
         channel.setMethodCallHandler(new CooeeFlutterPlugin());
+        CooeeFlutterPlugin plugin = new CooeeFlutterPlugin();
+        plugin.setupPlugin(registrar.context(), null, registrar);
+    }
+
+    @Override
+    public void onAttachedToActivity(@NonNull ActivityPluginBinding binding) {
+        activity = binding.getActivity();
+    }
+
+    @Override
+    public void onDetachedFromActivity() {
+        activity = null;
+    }
+
+    @Override
+    public void onDetachedFromActivityForConfigChanges() {
+        activity = null;
+    }
+
+    @Override
+    public void onReattachedToActivityForConfigChanges(@NonNull ActivityPluginBinding binding) {
+        activity = binding.getActivity();
     }
 
     @Override
@@ -101,5 +139,48 @@ public class CooeeFlutterPlugin implements FlutterPlugin, MethodCallHandler {
     @Override
     public void onDetachedFromEngine(@NonNull FlutterPluginBinding binding) {
         channel.setMethodCallHandler(null);
+    }
+
+    @Override
+    public void onInAppButtonClick(HashMap<String, String> payload) {
+        invokeMethodOnUiThread("onInAppButtonClick", payload);
+    }
+
+    private void invokeMethodOnUiThread(final String methodName, final Map map) {
+        final MethodChannel channel = this.channel;
+        runOnMainThread(() -> channel.invokeMethod(methodName, map));
+    }
+
+    private void runOnMainThread(final Runnable runnable) {
+        if (activity != null) {
+            activity.runOnUiThread(runnable);
+        } else {
+            try {
+                ((Activity) context).runOnUiThread(runnable);
+            } catch (Exception e) {
+                Log.e("TAG", "Exception while running on main thread - ");
+                e.printStackTrace();
+            }
+        }
+
+
+    }
+
+    private void setupPlugin(Context context, BinaryMessenger messenger, Registrar registrar) {
+        if (registrar != null) {
+            //V1 setup
+            this.channel = new MethodChannel(registrar.messenger(), "cooee_plugin");
+            this.activity = ((Activity) registrar.activeContext());
+        } else {
+            //V2 setup
+            this.channel = new MethodChannel(messenger, "cooee_plugin");
+        }
+        this.channel.setMethodCallHandler(this);
+        this.context = context.getApplicationContext();
+        this.cooeeSDK = CooeeSDK.getDefaultInstance(this.context);
+        if (this.cooeeSDK != null) {
+//            this.cooeeSDK.setInAppNotificationButtonListener(this);
+        }
+        System.out.println("Constant : "+ CooeeSDKConstants.LOG_PREFIX);
     }
 }
