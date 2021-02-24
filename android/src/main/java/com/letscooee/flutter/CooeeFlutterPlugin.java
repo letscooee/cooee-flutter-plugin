@@ -34,7 +34,7 @@ import io.flutter.plugin.common.BinaryMessenger;
  * @author Abhishek Tapariya
  * @author Raajas Sode
  */
-public class CooeeFlutterPlugin implements ActivityAware, FlutterPlugin, MethodCallHandler, InAppNotificationClickListener{
+public class CooeeFlutterPlugin implements ActivityAware, FlutterPlugin, MethodCallHandler{
 
     /// The MethodChannel that will the communication between Flutter and native Android
     /// This local reference serves to register the plugin with the Flutter Engine and unregister it
@@ -141,11 +141,6 @@ public class CooeeFlutterPlugin implements ActivityAware, FlutterPlugin, MethodC
         channel.setMethodCallHandler(null);
     }
 
-    @Override
-    public void onInAppButtonClick(HashMap<String, String> payload) {
-        invokeMethodOnUiThread("onInAppButtonClick", payload);
-    }
-
     private void invokeMethodOnUiThread(final String methodName, final Map map) {
         final MethodChannel channel = this.channel;
         runOnMainThread(() -> channel.invokeMethod(methodName, map));
@@ -165,7 +160,12 @@ public class CooeeFlutterPlugin implements ActivityAware, FlutterPlugin, MethodC
 
 
     }
-
+    InAppNotificationClickListener listener=new InAppNotificationClickListener() {
+        @Override
+        public void onInAppButtonClick(HashMap<String, String> payload) {
+            invokeMethodOnUiThread("onInAppButtonClick", payload);
+        }
+    };
     private void setupPlugin(Context context, BinaryMessenger messenger, Registrar registrar) {
         if (registrar != null) {
             //V1 setup
@@ -179,8 +179,9 @@ public class CooeeFlutterPlugin implements ActivityAware, FlutterPlugin, MethodC
         this.context = context.getApplicationContext();
         this.cooeeSDK = CooeeSDK.getDefaultInstance(this.context);
         if (this.cooeeSDK != null) {
-//            this.cooeeSDK.setInAppNotificationButtonListener(this);
+            this.cooeeSDK.setInAppNotificationButtonListener(listener);
         }
         System.out.println("Constant : "+ CooeeSDKConstants.LOG_PREFIX);
     }
+
 }

@@ -3,23 +3,36 @@ import 'dart:async';
 import 'package:flutter/services.dart';
 
 typedef void CooeeInAppNotificationButtonClickedHandler(
-    Map<String, String> mapList);
+    Map<String, dynamic> mapList);
 
 class CooeePlugin {
-
-  CooeeInAppNotificationButtonClickedHandler cooeeInAppNotificationButtonClickedHandler;
+  CooeeInAppNotificationButtonClickedHandler
+      cooeeInAppNotificationButtonClickedHandler;
 
   static const MethodChannel _channel = const MethodChannel('cooee_plugin');
+
+  static final CooeePlugin _cooeePlugin = new CooeePlugin._internal();
+
+  factory CooeePlugin() => _cooeePlugin;
 
   CooeePlugin._internal() {
     _channel.setMethodCallHandler(_platformCallHandler);
   }
 
+
   Future _platformCallHandler(MethodCall call) async {
-    switch(call.method){
+
+    switch (call.method) {
       case "onInAppButtonClick":
-        Map<String, String> args = call.arguments;
-        cooeeInAppNotificationButtonClickedHandler(args);
+        try {
+          print(call.arguments);
+          var args = call.arguments;
+          cooeeInAppNotificationButtonClickedHandler(
+              args.cast<String, dynamic>());
+        }on Exception catch(e){
+
+        }
+        break;
     }
   }
 
@@ -28,8 +41,10 @@ class CooeePlugin {
     return version;
   }
 
-  static void sendEvent(String eventName, Map<String, String> eventProperties) async {
-    await _channel.invokeMethod("sendEvent", {"eventName": eventName, "eventProperties": eventProperties});
+  static void sendEvent(
+      String eventName, Map<String, String> eventProperties) async {
+    await _channel.invokeMethod("sendEvent",
+        {"eventName": eventName, "eventProperties": eventProperties});
   }
 
   static void updateUserData(Map<String, String> userData) async {
@@ -37,7 +52,8 @@ class CooeePlugin {
   }
 
   static void updateUserProperties(Map<String, String> userProperties) async {
-    await _channel.invokeMethod("updateUserProperties", {"userProperties": userProperties});
+    await _channel.invokeMethod(
+        "updateUserProperties", {"userProperties": userProperties});
   }
 
   static void setCurrentScreen(String screenName) async {
@@ -45,7 +61,19 @@ class CooeePlugin {
   }
 
   /// Define a method to handle inApp notification button clicked
-  void setCooeeInAppNotificationButtonClickedHandler(CooeeInAppNotificationButtonClickedHandler handler) {
+  void setCooeeInAppNotificationButtonClickedHandler(
+      CooeeInAppNotificationButtonClickedHandler handler) {
     cooeeInAppNotificationButtonClickedHandler = handler;
+  }
+
+  @override
+  Map<String, String> onClick() {
+    Future _platformCallHandler(MethodCall call) async {
+      switch (call.method) {
+        case "onInAppButtonClick":
+          Map<String, String> args = call.arguments;
+          return args;
+      }
+    }
   }
 }

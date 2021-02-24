@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
 
-import 'package:flutter/services.dart';
 import 'package:cooee_plugin/cooee_plugin.dart';
 
 void main() {
@@ -20,6 +19,13 @@ class _MyAppState extends State<MyApp> {
   void initState() {
     super.initState();
     initPlatformState();
+    initHandlers();
+  }
+
+  void inAppTriggered(Map<String, dynamic> map) {
+    this.setState(() {
+      print("*************** Data " + map.toString());
+    });
   }
 
   // Platform messages are asynchronous, so we initialize in an async method.
@@ -31,13 +37,20 @@ class _MyAppState extends State<MyApp> {
     } on Exception {
       print(Exception);
     }
-    // try{
-    //   await CooeePlugin.updateUserData({"test":"test"});
-    // } on Exception{
-    //   print(Exception);
-    // }
+
     try {
-      await CooeePlugin.updateUserProperties({"foo": "bar", "Purchased Once": "true"});
+      await CooeePlugin.updateUserProperties(
+          {"foo": "bar", "Purchased Once": "true"});
+    } catch (e) {
+      print(e);
+    }
+
+    try {
+      await CooeePlugin.updateUserData({
+        "name": "Ashish flutter",
+        "email": "ashish@flutter.com",
+        "mobile": "98745632102"
+      });
     } catch (e) {
       print(e);
     }
@@ -64,5 +77,10 @@ class _MyAppState extends State<MyApp> {
         ),
       ),
     );
+  }
+
+  void initHandlers() {
+    CooeePlugin sdk = new CooeePlugin();
+    sdk.setCooeeInAppNotificationButtonClickedHandler(inAppTriggered);
   }
 }
