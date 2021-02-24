@@ -125,7 +125,7 @@ public class CooeeFlutterPlugin implements ActivityAware, FlutterPlugin, MethodC
             }
         } else if (call.method.equals("setCurrentScreen")) {
             try {
-                cooeeSDK.setCurrentScreen(String.valueOf(call.argument("screenName")));
+                cooeeSDK.setCurrentScreen(call.argument("screenName"));
                 result.success(" Screen Name Updated ");
             } catch (Exception e) {
                 System.out.println("Exception : " + e);

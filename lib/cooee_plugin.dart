@@ -6,7 +6,7 @@ typedef void CooeeInAppNotificationButtonClickedHandler(
     Map<String, dynamic> mapList);
 
 class CooeePlugin {
-  CooeeInAppNotificationButtonClickedHandler
+  static CooeeInAppNotificationButtonClickedHandler
       cooeeInAppNotificationButtonClickedHandler;
 
   static const MethodChannel _channel = const MethodChannel('cooee_plugin');
@@ -19,49 +19,50 @@ class CooeePlugin {
     _channel.setMethodCallHandler(_platformCallHandler);
   }
 
-
   Future _platformCallHandler(MethodCall call) async {
-
     switch (call.method) {
       case "onInAppButtonClick":
-        try {
-          print(call.arguments);
-          var args = call.arguments;
-          cooeeInAppNotificationButtonClickedHandler(
-              args.cast<String, dynamic>());
-        }on Exception catch(e){
-
-        }
+        var args = call.arguments;
+        cooeeInAppNotificationButtonClickedHandler(
+            args.cast<String, dynamic>());
         break;
     }
   }
 
-  static Future<String> get platformVersion async {
-    final String version = await _channel.invokeMethod('getPlatformVersion');
-    return version;
-  }
-
+  /// Sends custom events to the server and returns with trigger data(if any)
+  ///
+  /// @param eventName       Name the event like onDeviceReady
+  /// @param eventProperties Properties associated with the event
   static void sendEvent(
       String eventName, Map<String, String> eventProperties) async {
     await _channel.invokeMethod("sendEvent",
         {"eventName": eventName, "eventProperties": eventProperties});
   }
 
+  /// Send given user data to the server
+  ///
+  /// @param userData The common user data like name, email.
   static void updateUserData(Map<String, String> userData) async {
     await _channel.invokeMethod("updateUserData", {"userData": userData});
   }
 
+  /// Send given user properties to the server
+  ///
+  /// @param userProperties The additional user properties.
   static void updateUserProperties(Map<String, String> userProperties) async {
     await _channel.invokeMethod(
         "updateUserProperties", {"userProperties": userProperties});
   }
 
+  /// Manually update screen name
+  ///
+  /// @param screenName Screen name given by user
   static void setCurrentScreen(String screenName) async {
     await _channel.invokeMethod("setCurrentScreen", {"screenName": screenName});
   }
 
   /// Define a method to handle inApp notification button clicked
-  void setCooeeInAppNotificationButtonClickedHandler(
+  static void setCooeeInAppNotificationAction(
       CooeeInAppNotificationButtonClickedHandler handler) {
     cooeeInAppNotificationButtonClickedHandler = handler;
   }

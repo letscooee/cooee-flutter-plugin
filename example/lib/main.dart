@@ -33,6 +33,7 @@ class _MyAppState extends State<MyApp> {
     String platformVersion;
 
     try {
+      CooeePlugin.setCurrentScreen("CartPage");
       await CooeePlugin.sendEvent("Add To Cart", new Map<String, String>());
     } on Exception {
       print(Exception);
@@ -47,9 +48,9 @@ class _MyAppState extends State<MyApp> {
 
     try {
       await CooeePlugin.updateUserData({
-        "name": "Ashish flutter",
-        "email": "ashish@flutter.com",
-        "mobile": "98745632102"
+        "name": "Abhishek flutter",
+        "email": "abhishek@flutter.com",
+        "mobile": "4545454545"
       });
     } catch (e) {
       print(e);
@@ -80,7 +81,7 @@ class _MyAppState extends State<MyApp> {
   }
 
   void initHandlers() {
-    CooeePlugin sdk = new CooeePlugin();
-    sdk.setCooeeInAppNotificationButtonClickedHandler(inAppTriggered);
+    // CooeePlugin sdk = new CooeePlugin();
+    CooeePlugin.setCooeeInAppNotificationAction(inAppTriggered);
   }
 }
