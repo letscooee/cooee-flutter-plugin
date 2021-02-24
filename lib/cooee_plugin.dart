@@ -6,19 +6,23 @@ typedef void CooeeInAppNotificationButtonClickedHandler(
     Map<String, dynamic> mapList);
 
 class CooeePlugin {
-  static CooeeInAppNotificationButtonClickedHandler
+   CooeeInAppNotificationButtonClickedHandler
       cooeeInAppNotificationButtonClickedHandler;
 
   static const MethodChannel _channel = const MethodChannel('cooee_plugin');
 
   static final CooeePlugin _cooeePlugin = new CooeePlugin._internal();
 
+  ///Default Constructor will point to plugin initialization
   factory CooeePlugin() => _cooeePlugin;
 
   CooeePlugin._internal() {
     _channel.setMethodCallHandler(_platformCallHandler);
   }
 
+  /// Will Listen for @invokeMethod which will triggered by Java SDK
+  ///
+  /// @param call will hold data arrived from backend
   Future _platformCallHandler(MethodCall call) async {
     switch (call.method) {
       case "onInAppButtonClick":
@@ -62,19 +66,8 @@ class CooeePlugin {
   }
 
   /// Define a method to handle inApp notification button clicked
-  static void setCooeeInAppNotificationAction(
+   void setCooeeInAppNotificationAction(
       CooeeInAppNotificationButtonClickedHandler handler) {
     cooeeInAppNotificationButtonClickedHandler = handler;
-  }
-
-  @override
-  Map<String, String> onClick() {
-    Future _platformCallHandler(MethodCall call) async {
-      switch (call.method) {
-        case "onInAppButtonClick":
-          Map<String, String> args = call.arguments;
-          return args;
-      }
-    }
   }
 }

@@ -81,7 +81,7 @@ class _MyAppState extends State<MyApp> {
   }
 
   void initHandlers() {
-    // CooeePlugin sdk = new CooeePlugin();
-    CooeePlugin.setCooeeInAppNotificationAction(inAppTriggered);
+     CooeePlugin sdk = new CooeePlugin();
+     sdk.setCooeeInAppNotificationAction(inAppTriggered);
   }
 }
