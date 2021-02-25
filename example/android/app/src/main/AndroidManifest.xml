@@ -42,5 +42,14 @@
         <meta-data
             android:name="flutterEmbedding"
             android:value="2" />
+
+        <meta-data
+            android:name="COOEE_APP_ID"
+            android:value="5f9136107d618d7d123cc118" />
+
+        <meta-data
+            android:name="COOEE_APP_SECRET"
+            android:value="TEST-6107d618d7d123cc118" />
+
     </application>
 </manifest>

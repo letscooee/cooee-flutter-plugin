@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
 
-import 'package:flutter/services.dart';
 import 'package:cooee_plugin/cooee_plugin.dart';
 
 void main() {
@@ -20,6 +19,13 @@ class _MyAppState extends State<MyApp> {
   void initState() {
     super.initState();
     initPlatformState();
+    initHandlers();
+  }
+
+  void inAppTriggered(Map<String, dynamic> map) {
+    this.setState(() {
+      print("*************** Data " + map.toString());
+    });
   }
 
   // Platform messages are asynchronous, so we initialize in an async method.
@@ -27,17 +33,25 @@ class _MyAppState extends State<MyApp> {
     String platformVersion;
 
     try {
+      CooeePlugin.setCurrentScreen("CartPage");
       await CooeePlugin.sendEvent("Add To Cart", new Map<String, String>());
     } on Exception {
       print(Exception);
     }
-    // try{
-    //   await CooeePlugin.updateUserData({"test":"test"});
-    // } on Exception{
-    //   print(Exception);
-    // }
+
     try {
-      await CooeePlugin.updateUserProperties({"foo": "bar", "Purchased Once": "true"});
+      await CooeePlugin.updateUserProperties(
+          {"foo": "bar", "Purchased Once": "true"});
+    } catch (e) {
+      print(e);
+    }
+
+    try {
+      await CooeePlugin.updateUserData({
+        "name": "Abhishek flutter",
+        "email": "abhishek@flutter.com",
+        "mobile": "4545454545"
+      });
     } catch (e) {
       print(e);
     }
@@ -64,5 +78,10 @@ class _MyAppState extends State<MyApp> {
         ),
       ),
     );
+  }
+
+  void initHandlers() {
+     CooeePlugin sdk = new CooeePlugin();
+     sdk.setCooeeInAppNotificationAction(inAppTriggered);
   }
 }
