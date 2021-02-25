@@ -1,0 +1,36 @@
+// swift-interface-format-version: 1.0
+// swift-compiler-version: Apple Swift version 5.3.1 (swiftlang-1200.0.41 clang-1200.0.32.8)
+// swift-module-flags: -target x86_64-apple-ios14.2-simulator -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -O -module-name CooeeSDK
+@_exported import CooeeSDK
+import CoreBluetooth
+import CoreLocation
+import CoreTelephony
+import Foundation
+import Swift
+import SystemConfiguration
+import UIKit
+@available(iOS 9.0, *)
+extension UIScreen {
+  public static let pixelsPerInch: CoreGraphics.CGFloat?
+  public static let pixelsPerCentimeter: CoreGraphics.CGFloat?
+  public static let pointsPerInch: CoreGraphics.CGFloat?
+  public static let pointsPerCentimeter: CoreGraphics.CGFloat?
+  public static let dimensionInInches: CoreGraphics.CGSize?
+  public static let dimensionInCentimeters: CoreGraphics.CGSize?
+}
+@objc @_inheritsConvenienceInitializers public class RegisterUser : ObjectiveC.NSObject {
+  @objc override dynamic public init()
+  public static let shared: CooeeSDK.RegisterUser
+  public var screenName: Swift.String?
+  public func setup(firebaseToken: Swift.String)
+  public func fetchUDID() -> Swift.String?
+  @objc public func sendEvent(withName: Swift.String, properties: [Swift.String : Swift.String])
+  public func updateProfile(withProperties: [Swift.String : Swift.String]?, andData: [Swift.String : Swift.String]?)
+  @objc deinit
+}
+extension RegisterUser : CoreBluetooth.CBCentralManagerDelegate {
+  @objc dynamic public func centralManagerDidUpdateState(_ central: CoreBluetooth.CBCentralManager)
+}
+extension RegisterUser : CoreLocation.CLLocationManagerDelegate {
+  @objc dynamic public func locationManager(_ manager: CoreLocation.CLLocationManager, didUpdateLocations locations: [CoreLocation.CLLocation])
+}
