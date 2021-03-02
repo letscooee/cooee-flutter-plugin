@@ -7,11 +7,13 @@ import 'package:flutter/services.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'dart:ui' as ui;
 
+import 'package:shared_preferences/shared_preferences.dart';
+
 typedef void CooeeInAppNotificationButtonClickedHandler(
     Map<String, dynamic> mapList);
 
 class CooeePlugin {
-   CooeeInAppNotificationButtonClickedHandler
+  CooeeInAppNotificationButtonClickedHandler
       cooeeInAppNotificationButtonClickedHandler;
 
   static const MethodChannel _channel = const MethodChannel('cooee_plugin');
@@ -23,6 +25,7 @@ class CooeePlugin {
 
   CooeePlugin._internal() {
     _channel.setMethodCallHandler(_platformCallHandler);
+    loadImage();
   }
 
   /// Will Listen for @invokeMethod which will triggered by Java SDK
@@ -71,7 +74,7 @@ class CooeePlugin {
   }
 
   /// Define a method to handle inApp notification button clicked
-   void setCooeeInAppNotificationAction(
+  void setCooeeInAppNotificationAction(
       CooeeInAppNotificationButtonClickedHandler handler) {
     cooeeInAppNotificationButtonClickedHandler = handler;
   }
@@ -79,19 +82,30 @@ class CooeePlugin {
   void setGlobalKey(GlobalKey<State<StatefulWidget>> previewContainer) {}
 
   Future<void> setBitmap(String base64encode) async {
-    await _channel.invokeMethod("setBitmap",
-        {"base64encode":base64encode});
+    await _channel.invokeMethod("setBitmap", {"base64encode": base64encode});
   }
 
-  Future<void> seController(GlobalKey<State<StatefulWidget>> screenshotController) async {
+  Future<void> seController(
+      GlobalKey<State<StatefulWidget>> screenshotController) async {
     await Future.delayed(const Duration(milliseconds: 2000));
     RenderRepaintBoundary boundary =
-    screenshotController.currentContext.findRenderObject();
+        screenshotController.currentContext.findRenderObject();
 
     ui.Image image = await boundary.toImage(pixelRatio: 1);
     //final directory = (await getApplicationDocumentsDirectory()).path;
     ByteData byteData = await image.toByteData(format: ui.ImageByteFormat.png);
     Uint8List pngBytes = byteData.buffer.asUint8List();
     setBitmap(base64Encode(pngBytes));
+    sharedPrefarence(base64Encode(pngBytes));
+  }
+
+  Future<void> sharedPrefarence(String image) async {
+    final prefs = await SharedPreferences.getInstance();
+    prefs.setString('base64', image);
+  }
+
+  Future<void> loadImage() async {
+    final prefs = await SharedPreferences.getInstance();
+    setBitmap(prefs.getString('base64'));
   }
 }
