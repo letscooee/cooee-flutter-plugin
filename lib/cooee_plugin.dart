@@ -1,6 +1,11 @@
 import 'dart:async';
+import 'dart:convert';
+import 'dart:typed_data';
 
+import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter/src/widgets/framework.dart';
+import 'dart:ui' as ui;
 
 typedef void CooeeInAppNotificationButtonClickedHandler(
     Map<String, dynamic> mapList);
@@ -69,5 +74,24 @@ class CooeePlugin {
    void setCooeeInAppNotificationAction(
       CooeeInAppNotificationButtonClickedHandler handler) {
     cooeeInAppNotificationButtonClickedHandler = handler;
+  }
+
+  void setGlobalKey(GlobalKey<State<StatefulWidget>> previewContainer) {}
+
+  Future<void> setBitmap(String base64encode) async {
+    await _channel.invokeMethod("setBitmap",
+        {"base64encode":base64encode});
+  }
+
+  Future<void> seController(GlobalKey<State<StatefulWidget>> screenshotController) async {
+    await Future.delayed(const Duration(milliseconds: 2000));
+    RenderRepaintBoundary boundary =
+    screenshotController.currentContext.findRenderObject();
+
+    ui.Image image = await boundary.toImage(pixelRatio: 1);
+    //final directory = (await getApplicationDocumentsDirectory()).path;
+    ByteData byteData = await image.toByteData(format: ui.ImageByteFormat.png);
+    Uint8List pngBytes = byteData.buffer.asUint8List();
+    setBitmap(base64Encode(pngBytes));
   }
 }

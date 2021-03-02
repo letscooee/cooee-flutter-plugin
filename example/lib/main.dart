@@ -1,7 +1,13 @@
+import 'dart:convert';
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 import 'dart:async';
 
 import 'package:cooee_plugin/cooee_plugin.dart';
+import 'package:cooee_plugin/cooee_parent.dart';
+import 'package:flutter/rendering.dart';
+import 'dart:ui' as ui;
 
 void main() {
   runApp(MyApp());
@@ -14,6 +20,8 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   String _platformVersion = 'Unknown';
+  Uint8List _imageFile;
+  GlobalKey screenshotController = GlobalKey();
 
   @override
   void initState() {
@@ -68,20 +76,48 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(
-          title: const Text('Plugin example app'),
-        ),
-        body: Center(
-          child: Text('Running on: $_platformVersion\n'),
+    return CooeeParent(
+      key: screenshotController,
+      child: MaterialApp(
+
+        home: Scaffold(
+          appBar: AppBar(
+            title: const Text('Plugin example app'),
+          ),
+          body: Container(
+            height: double.infinity,
+            width: double.infinity,
+            child: Center(
+              child: Image(
+                image: new AssetImage('assets/homepage.png'),
+                width: double.infinity,
+                height: double.infinity,
+              ),
+            ),
+          ),
         ),
       ),
     );
   }
 
+  CooeePlugin sdk;
+
   void initHandlers() {
-     CooeePlugin sdk = new CooeePlugin();
-     sdk.setCooeeInAppNotificationAction(inAppTriggered);
+    sdk = new CooeePlugin();
+    sdk.setCooeeInAppNotificationAction(inAppTriggered);
+    sdk.seController(screenshotController);
+    //sdk.setGlobalKey(previewContainer);
+  }
+
+  void takeScreenShot() async {
+    await Future.delayed(const Duration(milliseconds: 20));
+    RenderRepaintBoundary boundary =
+        screenshotController.currentContext.findRenderObject();
+
+    ui.Image image = await boundary.toImage(pixelRatio: 1);
+    //final directory = (await getApplicationDocumentsDirectory()).path;
+    ByteData byteData = await image.toByteData(format: ui.ImageByteFormat.png);
+    Uint8List pngBytes = byteData.buffer.asUint8List();
+    sdk.setBitmap(base64Encode(pngBytes));
   }
 }

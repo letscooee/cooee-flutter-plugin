@@ -47,10 +47,10 @@ public class CooeeFlutterPlugin implements ActivityAware, FlutterPlugin, MethodC
     @Override
     public void onAttachedToEngine(@NonNull FlutterPluginBinding flutterPluginBinding) {
         channel = new MethodChannel(flutterPluginBinding.getBinaryMessenger(), "cooee_plugin");
-        setupPlugin(flutterPluginBinding.getApplicationContext(), flutterPluginBinding.getBinaryMessenger(), null);
         cooeeSDK = CooeeSDK.getDefaultInstance(flutterPluginBinding.getApplicationContext());
         channel.setMethodCallHandler(this);
         this.context = flutterPluginBinding.getApplicationContext();
+        setupPlugin(flutterPluginBinding.getApplicationContext(), flutterPluginBinding.getBinaryMessenger(), null);
         System.out.println("Constant : "+ CooeeSDKConstants.LOG_PREFIX);
     }
 
@@ -126,6 +126,14 @@ public class CooeeFlutterPlugin implements ActivityAware, FlutterPlugin, MethodC
         } else if (call.method.equals("setCurrentScreen")) {
             try {
                 cooeeSDK.setCurrentScreen(call.argument("screenName"));
+                result.success(" Screen Name Updated ");
+            } catch (Exception e) {
+                System.out.println("Exception : " + e);
+                result.error(e.toString(), " Screen Name Not Update ", e.getCause());
+            }
+        }else if (call.method.equals("setBitmap")) {
+            try {
+                cooeeSDK.setBitmap(call.argument("base64encode"));
                 result.success(" Screen Name Updated ");
             } catch (Exception e) {
                 System.out.println("Exception : " + e);
