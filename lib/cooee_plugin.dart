@@ -25,7 +25,6 @@ class CooeePlugin {
 
   CooeePlugin._internal() {
     _channel.setMethodCallHandler(_platformCallHandler);
-    loadImage();
   }
 
   /// Will Listen for @invokeMethod which will triggered by Java SDK
@@ -79,17 +78,20 @@ class CooeePlugin {
     cooeeInAppNotificationButtonClickedHandler = handler;
   }
 
-  void setGlobalKey(GlobalKey<State<StatefulWidget>> previewContainer) {}
-
+  ///Send Base64 Image to Cooee SDK
+  ///
+  /// @param base64Encode will be image in base64 format
   Future<void> setBitmap(String base64encode) async {
     await _channel.invokeMethod("setBitmap", {"base64encode": base64encode});
   }
 
-  Future<void> seController(
-      GlobalKey<State<StatefulWidget>> screenshotController) async {
+  ///FUnction will take screenshot of current UI using
+  ///
+  /// @param globalKey will be object of GlobalKey which will passed by User
+  Future<void> setController(GlobalKey<State<StatefulWidget>> globalKey) async {
     await Future.delayed(const Duration(milliseconds: 2000));
     RenderRepaintBoundary boundary =
-        screenshotController.currentContext.findRenderObject();
+        globalKey.currentContext.findRenderObject();
 
     ui.Image image = await boundary.toImage(pixelRatio: 1);
     //final directory = (await getApplicationDocumentsDirectory()).path;
@@ -99,11 +101,15 @@ class CooeePlugin {
     sharedPrefarence(base64Encode(pngBytes));
   }
 
+  ///Save Image in SharedPrefarence
+  ///
+  /// @param image will be base64 image
   Future<void> sharedPrefarence(String image) async {
     final prefs = await SharedPreferences.getInstance();
     prefs.setString('base64', image);
   }
 
+  ///Load base64 image from SharedPrefarence and pass it to setBitmap
   Future<void> loadImage() async {
     final prefs = await SharedPreferences.getInstance();
     setBitmap(prefs.getString('base64'));
