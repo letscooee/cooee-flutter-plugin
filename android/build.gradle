@@ -16,7 +16,6 @@ rootProject.allprojects {
         google()
         jcenter()
         maven { url "https://dl.bintray.com/wizpanda/maven" }
-        mavenLocal()
     }
 }
 
