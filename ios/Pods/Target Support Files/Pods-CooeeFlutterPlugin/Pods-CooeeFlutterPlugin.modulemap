@@ -1,0 +1,6 @@
+framework module Pods_CooeeFlutterPlugin {
+  umbrella header "Pods-CooeeFlutterPlugin-umbrella.h"
+
+  export *
+  module * { export * }
+}

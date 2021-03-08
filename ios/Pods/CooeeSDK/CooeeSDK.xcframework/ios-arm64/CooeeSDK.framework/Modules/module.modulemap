@@ -1,0 +1,11 @@
+framework module CooeeSDK {
+  umbrella header "CooeeSDK.h"
+
+  export *
+  module * { export * }
+}
+
+module CooeeSDK.Swift {
+    header "CooeeSDK-Swift.h"
+    requires objc
+}
