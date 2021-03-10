@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'dart:async';
 
 import 'package:cooee_plugin/cooee_plugin.dart';
+import 'package:flutter/rendering.dart';
 
 void main() {
   runApp(MyApp());
@@ -14,6 +15,7 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   String _platformVersion = 'Unknown';
+  CooeePlugin sdk;
 
   @override
   void initState() {
@@ -69,19 +71,28 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(
-          title: const Text('Plugin example app'),
+        home: Scaffold(
+          appBar: AppBar(
+            title: const Text('Plugin example app'),
+          ),
+          body: Container(
+            height: double.infinity,
+            width: double.infinity,
+            child: Center(
+              child: Image(
+                image: new AssetImage('assets/homepage.png'),
+                width: double.infinity,
+                height: double.infinity,
+              ),
+            ),
+          ),
         ),
-        body: Center(
-          child: Text('Running on: $_platformVersion\n'),
-        ),
-      ),
+     /* ),*/
     );
   }
 
   void initHandlers() {
-     CooeePlugin sdk = new CooeePlugin();
-     sdk.setCooeeInAppNotificationAction(inAppTriggered);
+    sdk = new CooeePlugin();
+    sdk.setCooeeInAppNotificationAction(inAppTriggered);
   }
 }
