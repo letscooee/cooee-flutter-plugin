@@ -1,11 +1,11 @@
 name: cooee_plugin
 description: Hyperpersonalised Mobile App Re-Engagement via Machine Learning for Flutter apps.
-version: 0.0.6
+version: 0.0.7
 homepage: https://www.letscooee.com
 
 environment:
   sdk: ">=2.7.0 <3.0.0"
-  flutter: ">=1.20.0 <2.0.0"
+  flutter: ">=1.20.0"
 
 dependencies:
   shared_preferences: ^0.5.12+4

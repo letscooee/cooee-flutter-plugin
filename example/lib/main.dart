@@ -1,3 +1,5 @@
+import 'package:cooee_plugin_example/glass.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
 
@@ -21,7 +23,7 @@ class _MyAppState extends State<MyApp> {
   void initState() {
     super.initState();
     initPlatformState();
-    initHandlers();
+    initHandlers(context);
   }
 
   void inAppTriggered(Map<String, dynamic> map) {
@@ -71,28 +73,57 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        home: Scaffold(
-          appBar: AppBar(
-            title: const Text('Plugin example app'),
-          ),
-          body: Container(
-            height: double.infinity,
-            width: double.infinity,
-            child: Center(
-              child: Image(
-                image: new AssetImage('assets/homepage.png'),
-                width: double.infinity,
-                height: double.infinity,
-              ),
-            ),
-          ),
-        ),
+        home: HomePage(),
      /* ),*/
     );
   }
 
-  void initHandlers() {
+  void initHandlers(BuildContext context) {
     sdk = new CooeePlugin();
     sdk.setCooeeInAppNotificationAction(inAppTriggered);
+    sdk.setContext(context);
+  }
+
+  void onclick(BuildContext context) {
+    Navigator.push(context, MaterialPageRoute(builder: (context)=>GlassmophismEffect()));
   }
 }
+
+class HomePage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Plugin example app'),
+      ),
+      body: Container(
+        height: double.infinity,
+        width: double.infinity,
+
+        child: Center(
+          child:
+          Column(
+              children:[ Image(
+                image: new AssetImage('assets/homepage.png'),
+                width: 500,
+                height: 500,
+              ),
+                RaisedButton(
+                  onPressed: (){
+                    onclick(context);
+                  },
+                ),
+              ]
+          ),
+        ),
+      ),
+    );
+  }
+
+  void onclick(BuildContext context) {
+    //Navigator.push(context, MaterialPageRoute(builder: (context)=>GlassmophismEffect()));
+    showCupertinoModalPopup(context: context, builder: (context) =>GlassmophismEffect());
+  }
+}
+
+

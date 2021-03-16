@@ -4,6 +4,7 @@ import java.util.*;
 import java.io.*;
 
 import androidx.annotation.NonNull;
+
 import android.util.Log;
 
 import io.flutter.embedding.engine.plugins.FlutterPlugin;
@@ -17,7 +18,9 @@ import io.flutter.embedding.engine.plugins.activity.ActivityAware;
 
 import com.letscooee.CooeeSDK;
 
+import com.letscooee.trigger.EngagementTriggerActivity;
 import com.letscooee.utils.InAppNotificationClickListener;
+import com.letscooee.utils.OnInAppPopListener;
 import com.letscooee.utils.CooeeSDKConstants;
 
 import org.json.JSONException;
@@ -34,7 +37,7 @@ import io.flutter.plugin.common.BinaryMessenger;
  * @author Abhishek Tapariya
  * @author Raajas Sode
  */
-public class CooeeFlutterPlugin implements ActivityAware, FlutterPlugin, MethodCallHandler{
+public class CooeeFlutterPlugin implements ActivityAware, FlutterPlugin, MethodCallHandler {
 
     /// The MethodChannel that will the communication between Flutter and native Android
     /// This local reference serves to register the plugin with the Flutter Engine and unregister it
@@ -51,7 +54,7 @@ public class CooeeFlutterPlugin implements ActivityAware, FlutterPlugin, MethodC
         channel.setMethodCallHandler(this);
         this.context = flutterPluginBinding.getApplicationContext();
         setupPlugin(flutterPluginBinding.getApplicationContext(), flutterPluginBinding.getBinaryMessenger(), null);
-        System.out.println("Constant : "+ CooeeSDKConstants.LOG_PREFIX);
+        System.out.println("Constant : " + CooeeSDKConstants.LOG_PREFIX);
     }
 
     // This static function is optional and equivalent to onAttachedToEngine. It supports the old
@@ -131,7 +134,7 @@ public class CooeeFlutterPlugin implements ActivityAware, FlutterPlugin, MethodC
                 System.out.println("Exception : " + e);
                 result.error(e.toString(), " Screen Name Not Update ", e.getCause());
             }
-        }else if (call.method.equals("setBitmap")) {
+        } else if (call.method.equals("setBitmap")) {
             try {
                 cooeeSDK.setBitmap(call.argument("base64encode"));
                 result.success(" Screen Name Updated ");
@@ -168,12 +171,22 @@ public class CooeeFlutterPlugin implements ActivityAware, FlutterPlugin, MethodC
 
 
     }
-    InAppNotificationClickListener listener=new InAppNotificationClickListener() {
+
+    InAppNotificationClickListener listener = new InAppNotificationClickListener() {
         @Override
         public void onInAppButtonClick(HashMap<String, String> payload) {
             invokeMethodOnUiThread("onInAppButtonClick", payload);
         }
     };
+
+    OnInAppPopListener onInAppPopListener = new OnInAppPopListener() {
+        @Override
+        public void onInAppTriggered() {
+            android.util.Log.d("TAG", "onInAppTriggered: ");
+            invokeMethodOnUiThread("onInAppTriggered", new HashMap());
+        }
+    };
+
     private void setupPlugin(Context context, BinaryMessenger messenger, Registrar registrar) {
         if (registrar != null) {
             //V1 setup
@@ -188,8 +201,9 @@ public class CooeeFlutterPlugin implements ActivityAware, FlutterPlugin, MethodC
         this.cooeeSDK = CooeeSDK.getDefaultInstance(this.context);
         if (this.cooeeSDK != null) {
             this.cooeeSDK.setInAppNotificationButtonListener(listener);
+            EngagementTriggerActivity.onInAppPopListener = onInAppPopListener;
         }
-        System.out.println("Constant : "+ CooeeSDKConstants.LOG_PREFIX);
+        System.out.println("Constant : " + CooeeSDKConstants.LOG_PREFIX);
     }
 
 }
