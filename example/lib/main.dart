@@ -28,7 +28,7 @@ class _MyAppState extends State<MyApp> {
 
   void inAppTriggered(Map<String, dynamic> map) {
     this.setState(() {
-      print("*************** Data " + map.toString());
+      print("Data " + map.toString());
     });
   }
 

@@ -41,14 +41,12 @@ class CooeePlugin {
             args.cast<String, dynamic>());
         break;
       case "onInAppTriggered":
-        print("**************************** onInAppTriggered");
         try {
           showCupertinoModalPopup(
               context: context, builder: (context) => GlassmophismEffect());
         } catch (error) {
-          print("*************** error " + error.toString());
+          print(error.toString());
         }
-        print("**************************** onInAppTriggered");
         break;
     }
   }
