@@ -55,3 +55,22 @@ Once you integrate the SDK, Cooee will automatically start tracking events. You 
 var eventProperties = {'product id': '1234', 'product name': 'Wooden Table'};
 CooeePlugin.sendEvent("Add to cart", eventProperties);
 ```
+
+### Step 5: Track user action on In-App Trigger
+
+Create an object of CooeePlugin and initialize event tracker
+
+```dart
+var cooeePlugin = new CooeePlugin();
+cooeePlugin.setCooeeInAppNotificationAction(inAppTriggered);
+```
+
+Don't forget to initialize `inAppTriggered`
+
+```dart
+void inAppTriggered(Map<String, dynamic> map) {
+    this.setState(() {
+      print("Data " + map.toString());
+    });
+}
+```

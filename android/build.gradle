@@ -2,7 +2,6 @@ buildscript {
     repositories {
         google()
         jcenter()
-        mavenLocal()
     }
 
     dependencies {
@@ -16,7 +15,6 @@ rootProject.allprojects {
         google()
         jcenter()
         maven { url "https://dl.bintray.com/wizpanda/maven" }
-        mavenLocal()
     }
 }
 
@@ -38,7 +36,7 @@ android {
 }
 
 dependencies {
-    implementation 'com.letscooee:cooee-android-sdk:0.2.3'
+    implementation 'com.letscooee:cooee-android-sdk:0.2.4'
 }
 
 android.defaultConfig.javaCompileOptions.annotationProcessorOptions.includeCompileClasspath = true

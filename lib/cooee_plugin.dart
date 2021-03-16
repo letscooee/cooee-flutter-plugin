@@ -2,6 +2,8 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:typed_data';
 
+import 'package:cooee_plugin/glassmorphism_effect.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -15,6 +17,7 @@ typedef void CooeeInAppNotificationButtonClickedHandler(
 class CooeePlugin {
   CooeeInAppNotificationButtonClickedHandler
       cooeeInAppNotificationButtonClickedHandler;
+  BuildContext context;
 
   static const MethodChannel _channel = const MethodChannel('cooee_plugin');
 
@@ -36,6 +39,16 @@ class CooeePlugin {
         var args = call.arguments;
         cooeeInAppNotificationButtonClickedHandler(
             args.cast<String, dynamic>());
+        break;
+      case "onInAppTriggered":
+        print("**************************** onInAppTriggered");
+        try {
+          showCupertinoModalPopup(
+              context: context, builder: (context) => GlassmophismEffect());
+        } catch (error) {
+          print("*************** error " + error.toString());
+        }
+        print("**************************** onInAppTriggered");
         break;
     }
   }
@@ -113,5 +126,12 @@ class CooeePlugin {
   Future<void> loadImage() async {
     final prefs = await SharedPreferences.getInstance();
     setBitmap(prefs.getString('base64'));
+  }
+
+  ///Accept context from user
+  ///
+  /// @param context BuildContext
+  void setContext(BuildContext context) {
+    this.context = context;
   }
 }
