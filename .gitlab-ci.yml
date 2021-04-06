@@ -1,0 +1,16 @@
+image: cirrusci/flutter:1.22.5
+
+before_script:
+    - cat $PUB_DEV_CREDENTIALS > ~/.pub-cache/credentials.json
+    - export PATH="$PATH":"$HOME/.pub-cache/bin"
+
+stages:
+    - publish
+
+Publish distribution:
+    stage: publish
+    script:
+        - flutter pub get
+        - flutter pub publish -f
+    only:
+        - tags
