@@ -9,18 +9,19 @@
 Pod::Spec.new do |spec|
 
 spec.name         = "CooeePlugin"
-spec.version      = "1.2.0"
+spec.version      = "v0.0.10"
 spec.summary      = "Cooee tracks user app activites"
 spec.description  = "Swift framework to track app activities"
 
 spec.homepage     = "https://github.com/letscooee/cooee-ios-sdk"
 spec.author       = { "Surbhi Lath" => "surbhibagadia.21@gmail.com" }
-spec.source       = { :git => 'https://gitlab.com/wizpanda/cooee/flutter-plugin.git', :tag => ':v0.0.8' }
+spec.source       = { :path => '.' }
 
 spec.vendored_frameworks = "Class/**/*"
 spec.platform = :ios
 spec.swift_version = "5.0"
 spec.license = "MIT"
+spec.dependency               'Flutter'
 spec.dependency               'CooeeSDK'
 spec.ios.deployment_target  = '13.0'
 
