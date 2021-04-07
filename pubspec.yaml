@@ -27,6 +27,8 @@ flutter:
       android:
         package: com.letscooee.flutter
         pluginClass: CooeeFlutterPlugin
+      ios:
+        pluginClass: SwiftFlutterCooeePlugin
 
   # To add assets to your plugin package, add an assets section, like this:
   # assets:
