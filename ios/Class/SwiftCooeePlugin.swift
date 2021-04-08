@@ -1,21 +1,12 @@
-//
-//  File.swift
-//  CooeeFlutterPlugin
-//
-//  Created by Surbhi Lath on 12/02/21.
-//
-
-//import Flutter
 import UIKit
 import CooeeSDK
 
-
-public class CooeeFlutterPlugin: NSObject, FlutterPlugin {
+public class SwiftCooeePlugin: NSObject, FlutterPlugin {
     var sdkInstance = RegisterUser.shared
     
     static public func register(with registrar: FlutterPluginRegistrar) {
         let channel = FlutterMethodChannel(name: "cooee_plugin", binaryMessenger: registrar.messenger())
-        let instance = CooeeFlutterPlugin()
+        let instance = SwiftCooeePlugin()
         registrar.addMethodCallDelegate(instance, channel: channel)
     }
     
