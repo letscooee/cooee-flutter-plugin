@@ -1,3 +1,7 @@
+## 0.0.9
+
+1. Support of iOS.
+
 ## 0.0.8
 
 1. Using v0.2.5 of the Android SDK

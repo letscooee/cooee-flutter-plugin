@@ -9,9 +9,9 @@
 Pod::Spec.new do |spec|
 
 spec.name         = "cooee_plugin"
-spec.version      = "0.0.10"
-spec.summary      = "Cooee tracks user app activites"
-spec.description  = "Swift framework to track app activities"
+spec.version      = "0.0.9"
+spec.summary      = "Hyper-personalised Mobile App Re-Engagement via Machine Learning"
+spec.description  = "Hyper-personalised Mobile App Re-Engagement via Machine Learning"
 
 spec.homepage     = "https://github.com/letscooee/cooee-ios-sdk"
 spec.author       = { "Surbhi Lath" => "surbhibagadia.21@gmail.com" }
