@@ -49,7 +49,7 @@ public class CooeeFlutterPlugin implements ActivityAware, FlutterPlugin, MethodC
 
     @Override
     public void onAttachedToEngine(@NonNull FlutterPluginBinding flutterPluginBinding) {
-        channel = new MethodChannel(flutterPluginBinding.getBinaryMessenger(), "cooee_plugin");
+        channel = new MethodChannel(flutterPluginBinding.getBinaryMessenger(), "cooee");
         cooeeSDK = CooeeSDK.getDefaultInstance(flutterPluginBinding.getApplicationContext());
         channel.setMethodCallHandler(this);
         this.context = flutterPluginBinding.getApplicationContext();
@@ -190,11 +190,11 @@ public class CooeeFlutterPlugin implements ActivityAware, FlutterPlugin, MethodC
     private void setupPlugin(Context context, BinaryMessenger messenger, Registrar registrar) {
         if (registrar != null) {
             //V1 setup
-            this.channel = new MethodChannel(registrar.messenger(), "cooee_plugin");
+            this.channel = new MethodChannel(registrar.messenger(), "cooee");
             this.activity = ((Activity) registrar.activeContext());
         } else {
             //V2 setup
-            this.channel = new MethodChannel(messenger, "cooee_plugin");
+            this.channel = new MethodChannel(messenger, "cooee");
         }
         this.channel.setMethodCallHandler(this);
         this.context = context.getApplicationContext();

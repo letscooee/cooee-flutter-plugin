@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |spec|
 
-spec.name         = "cooee_plugin"
+spec.name         = "cooee"
 spec.version      = "0.0.12"
 spec.summary      = "Hyper-personalised Mobile App Re-Engagement via Machine Learning"
 spec.description  = "Hyper-personalised Mobile App Re-Engagement via Machine Learning"
@@ -19,7 +19,7 @@ spec.source       = { :path => '.' }
 spec.source_files = 'Classes/**/*'
 spec.dependency               'Flutter'
 spec.dependency               'CooeeSDK','~>1.2.1'
-spec.platform = :ios, '8.0'
+spec.platform = :ios
 
 # Flutter.framework does not contain a i386 slice.
 spec.pod_target_xcconfig = { 'DEFINES_MODULE' => 'YES', 'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'i386' }
