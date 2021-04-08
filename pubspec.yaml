@@ -1,6 +1,7 @@
 name: cooee_plugin
 description: Hyperpersonalised Mobile App Re-Engagement via Machine Learning for Flutter apps.
 version: 0.0.14
+author: Letscooee
 homepage: https://www.letscooee.com
 
 environment:
@@ -12,11 +13,14 @@ dependencies:
   flutter:
     sdk: flutter
 
-
 dev_dependencies:
   flutter_test:
     sdk: flutter
 
+# For information on the generic Dart part of this file, see the
+# following page: https://dart.dev/tools/pub/pubspec
+
+# The following section is specific to Flutter.
 flutter:
   # This section identifies this Flutter project as a plugin project.
   # The 'pluginClass' and Android 'package' identifiers should not ordinarily

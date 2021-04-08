@@ -5,7 +5,7 @@ public class SwiftCooeePlugin: NSObject, FlutterPlugin {
     var sdkInstance = RegisterUser.shared
     
     static public func register(with registrar: FlutterPluginRegistrar) {
-        let channel = FlutterMethodChannel(name: "cooee", binaryMessenger: registrar.messenger())
+        let channel = FlutterMethodChannel(name: "cooee_plugin", binaryMessenger: registrar.messenger())
         let instance = SwiftCooeePlugin()
         registrar.addMethodCallDelegate(instance, channel: channel)
     }
