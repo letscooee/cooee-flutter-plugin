@@ -1,3 +1,7 @@
+## 0.0.10
+
+1. Fix for iOS plugin.
+
 ## 0.0.9
 
 1. Support of iOS.
