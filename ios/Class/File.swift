@@ -10,12 +10,12 @@ import UIKit
 import CooeeSDK
 
 
-public class SwiftFlutterCooeePlugin: NSObject, FlutterPlugin {
+public class CooeeFlutterPlugin: NSObject, FlutterPlugin {
     var sdkInstance = RegisterUser.shared
     
     static public func register(with registrar: FlutterPluginRegistrar) {
         let channel = FlutterMethodChannel(name: "cooee_plugin", binaryMessenger: registrar.messenger())
-        let instance = SwiftFlutterCooeePlugin()
+        let instance = CooeeFlutterPlugin()
         registrar.addMethodCallDelegate(instance, channel: channel)
     }
     
