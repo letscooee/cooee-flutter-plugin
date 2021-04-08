@@ -9,7 +9,7 @@
 Pod::Spec.new do |spec|
 
 spec.name         = "cooee_plugin"
-spec.version      = "0.0.11"
+spec.version      = "0.0.12"
 spec.summary      = "Hyper-personalised Mobile App Re-Engagement via Machine Learning"
 spec.description  = "Hyper-personalised Mobile App Re-Engagement via Machine Learning"
 
