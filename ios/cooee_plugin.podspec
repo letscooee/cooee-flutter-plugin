@@ -8,8 +8,8 @@
 
 Pod::Spec.new do |spec|
 
-spec.name         = "CooeePlugin"
-spec.version      = "v0.0.10"
+spec.name         = "cooee_plugin"
+spec.version      = "0.0.10"
 spec.summary      = "Cooee tracks user app activites"
 spec.description  = "Swift framework to track app activities"
 
@@ -22,7 +22,7 @@ spec.platform = :ios
 spec.swift_version = "5.0"
 spec.license = "MIT"
 spec.dependency               'Flutter'
-spec.dependency               'CooeeSDK'
+spec.dependency               'CooeeSDK','~>1.2.1'
 spec.ios.deployment_target  = '13.0'
 
 end
