@@ -16,13 +16,15 @@ spec.description  = "Hyper-personalised Mobile App Re-Engagement via Machine Lea
 spec.homepage     = "https://github.com/letscooee/cooee-ios-sdk"
 spec.author       = { "Surbhi Lath" => "surbhibagadia.21@gmail.com" }
 spec.source       = { :path => '.' }
-
-spec.vendored_frameworks = "Class/**/*"
-spec.platform = :ios
-spec.swift_version = "5.0"
-spec.license = "MIT"
+spec.source_files = 'Classes/**/*'
 spec.dependency               'Flutter'
 spec.dependency               'CooeeSDK','~>1.2.1'
+spec.platform = :ios, '8.0'
+
+# Flutter.framework does not contain a i386 slice.
+spec.pod_target_xcconfig = { 'DEFINES_MODULE' => 'YES', 'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'i386' }
+spec.swift_version = '5.0'
+spec.license = "MIT"
 spec.ios.deployment_target  = '13.0'
 
 end
