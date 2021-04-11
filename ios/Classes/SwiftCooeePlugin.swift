@@ -2,24 +2,18 @@ import UIKit
 import CooeeSDK
 
 public class SwiftCooeePlugin: NSObject, FlutterPlugin {
-    var sdkInstance = RegisterUser.shared
+    var sdkInstance = Cooee.shared
     
     static public func register(with registrar: FlutterPluginRegistrar) {
         let channel = FlutterMethodChannel(name: "cooee_plugin", binaryMessenger: registrar.messenger())
-        let instance = SwiftCooeePlugin()
+        let instance = SwiftFlutterCooeePlugin()
         registrar.addMethodCallDelegate(instance, channel: channel)
     }
     
     public func handle(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
-        if call.method == "setup"{
-            if let fToken = call.arguments as? String{
-                sdkInstance.setup(firebaseToken: fToken)
-                result("Cooee is all set!")
-            }
-        }
         
         if call.method == "getUDID"{
-            let UDID = RegisterUser.shared.fetchUDID() ?? ""
+            let UDID = sdkInstance.fetchUDID() ?? ""
             result(UDID)
         }
         
