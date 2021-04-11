@@ -1,3 +1,7 @@
+## 0.0.16
+
+1. Upgrading iOS native SDK to 1.2.2
+
 ## 0.0.9 - 0.0.15
 
 1. Support of iOS.
