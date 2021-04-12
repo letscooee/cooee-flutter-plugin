@@ -1,6 +1,6 @@
-## 0.0.16, 0.0.17
+## 0.0.16 - 0.0.18
 
-1. Upgrading iOS native SDK to 1.2.3
+1. Upgrading iOS native SDK to 1.2.4
 
 ## 0.0.9 - 0.0.15
 
