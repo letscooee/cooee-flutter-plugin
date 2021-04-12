@@ -1,4 +1,4 @@
-## 0.0.16 - 0.0.19
+## 0.0.16 - 0.0.20
 
 1. Upgrading iOS native SDK to 1.2.4
 
