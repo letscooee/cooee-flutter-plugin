@@ -61,13 +61,7 @@ public class SwiftCooeePlugin: NSObject, FlutterPlugin {
     
     public func handle(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
    
-        //if call.method == "setup"{
-            //if let fToken = call.arguments as? String{
-               // sdkInstance.setup(firebaseToken: fToken)
-                //result("Cooee is all set!")
-            //}
-        //}
-        
+
         if call.method == "getUDID"{
             let UDID = Cooee.shared.fetchUDID() ?? ""
             result(UDID)
