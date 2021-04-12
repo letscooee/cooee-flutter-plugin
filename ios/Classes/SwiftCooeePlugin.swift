@@ -7,20 +7,13 @@ public class SwiftCooeePlugin: NSObject, FlutterPlugin {
     static public func register(with registrar: FlutterPluginRegistrar) {
         let channel = FlutterMethodChannel(name: "cooee_plugin", binaryMessenger: registrar.messenger())
         let instance = SwiftCooeePlugin()
-         var sdk = Cooee.shared
+        var sdk = Cooee.shared
         registrar.addMethodCallDelegate(instance, channel: channel)
         
         channel.setMethodCallHandler({
               (call: FlutterMethodCall, result: @escaping FlutterResult) -> Void in
-              // Note: this method is invoked on the UI thread.
-              // Handle battery messages.
-              
-              if call.method == "setup"{
-                          if let fToken = call.arguments as? String{
-                             // sdkInstance.setup(firebaseToken: fToken)
-                              result("Cooee is all set!")
-                          }
-                      }
+
+            //instance.handle(call, result:result)
 
                       if call.method == "getUDID"{
                           let UDID = Cooee.shared.fetchUDID() ?? ""
@@ -47,8 +40,12 @@ public class SwiftCooeePlugin: NSObject, FlutterPlugin {
                       if call.method == "updateUserData"{
                       print("updateUserData")
                           if let userData = call.arguments as? [String: Any]{
-                            sdk.updateProfile(withProperties: nil, andData: userData)
-                              result("User Data Updated")
+                            if let data=userData["userData"] as? [String:Any]{
+                                print("**** \(data)")
+                                sdk.updateProfile(withProperties: nil, andData: data)
+                                  result("User Data Updated")
+                            }
+                            
                           }
                       }
 
@@ -59,17 +56,17 @@ public class SwiftCooeePlugin: NSObject, FlutterPlugin {
                               result("Screen name set")
                           }
                       }
-            })
+           })
     }
     
     public func handle(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
    
-        if call.method == "setup"{
-            if let fToken = call.arguments as? String{
+        //if call.method == "setup"{
+            //if let fToken = call.arguments as? String{
                // sdkInstance.setup(firebaseToken: fToken)
-                result("Cooee is all set!")
-            }
-        }
+                //result("Cooee is all set!")
+            //}
+        //}
         
         if call.method == "getUDID"{
             let UDID = Cooee.shared.fetchUDID() ?? ""
@@ -77,23 +74,23 @@ public class SwiftCooeePlugin: NSObject, FlutterPlugin {
         }
         
         if call.method == "sendEvent"{
-            if let eventParams = call.arguments as? [Any]{
-                if let eventName = eventParams[0] as? String, let eventProperties = eventParams[1] as? [String: String] {
-                    sdkInstance.sendEvent(withName: eventName, properties: eventProperties)
-                    result("Event sent")
+            if let eventParams = call.arguments as? [String: Any]{
+                if let eventName = eventParams["eventName"] as? String, let eventProperties = eventParams["eventProperties"] as? [String: Any]{
+                        sdkInstance.sendEvent(withName: eventName, properties: eventProperties)
+                        result("Event sent")
                 }
             }
         }
         
         if call.method == "updateUserProperties"{
-            if let userProperties = call.arguments as? [String: String]{
+            if let userProperties = call.arguments as? [String: Any]{
                 sdkInstance.updateProfile(withProperties: userProperties, andData: nil)
                 result("User Properties Updated")
             }
         }
         
         if call.method == "updateUserData"{
-            if let userData = call.arguments as? [String: String]{
+            if let userData = call.arguments as? [String: Any]{
                 sdkInstance.updateProfile(withProperties: nil, andData: userData)
                 result("User Data Updated")
             }

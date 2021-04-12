@@ -37,17 +37,10 @@ class _MyAppState extends State<MyApp> {
     String platformVersion;
 
     try {
-      //CooeePlugin.setCurrentScreen("CartPage");
+      CooeePlugin.setCurrentScreen("CartPage");
       await CooeePlugin.sendEvent("Add To Cart", new Map<String, String>());
     } on Exception {
       print(Exception);
-    }
-
-    try {
-      await CooeePlugin.updateUserProperties(
-          {"foo": "bar", "Purchased Once": "true"});
-    } catch (e) {
-      print(e);
     }
 
     try {
