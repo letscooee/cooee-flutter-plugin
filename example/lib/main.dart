@@ -44,13 +44,6 @@ class _MyAppState extends State<MyApp> {
     }
 
     try {
-      await CooeePlugin.updateUserProperties(
-          {"foo": "bar", "Purchased Once": "true"});
-    } catch (e) {
-      print(e);
-    }
-
-    try {
       await CooeePlugin.updateUserData({
         "name": "Abhishek flutter",
         "email": "abhishek@flutter.com",
