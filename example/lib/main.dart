@@ -66,8 +66,8 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        home: HomePage(),
-     /* ),*/
+      home: HomePage(),
+      /* ),*/
     );
   }
 
@@ -89,32 +89,31 @@ class HomePage extends StatelessWidget {
       body: Container(
         height: double.infinity,
         width: double.infinity,
-
         child: Center(
-          child:
-          Column(
-              children:[ Image(
-                image: new AssetImage('assets/homepage.png'),
-                width: 500,
-                height: 500,
-              ),
-                RaisedButton(
-                  onPressed: (){
-                    onclick(context);
-                  },
-                  child: Text("First page Button"),
-                ),
-              ]
-          ),
+          child: Column(children: [
+            Image(
+              image: new AssetImage('assets/homepage.png'),
+              width: 500,
+              height: 500,
+            ),
+            RaisedButton(
+              onPressed: () {
+                onclick(context);
+              },
+              child: Text("First page Button"),
+            ),
+          ]),
         ),
       ),
     );
   }
 
   void onclick(BuildContext context) {
-    showCupertinoModalPopup(context: context, builder: (context) =>SecondPage());
+    showCupertinoModalPopup(
+        context: context, builder: (context) => SecondPage());
   }
 }
+
 class SecondPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -126,31 +125,27 @@ class SecondPage extends StatelessWidget {
       body: Container(
         height: double.infinity,
         width: double.infinity,
-
         child: Center(
-          child:
-          Column(
-              children:[ Image(
-                image: new AssetImage('assets/homepage.png'),
-                width: 500,
-                height: 500,
-              ),
-                RaisedButton(
-                  onPressed: (){
-                    onclick(context);
-                  },
-                  child: Text("Second page Button"),
-                ),
-              ]
-          ),
+          child: Column(children: [
+            Image(
+              image: new AssetImage('assets/homepage.png'),
+              width: 500,
+              height: 500,
+            ),
+            RaisedButton(
+              onPressed: () {
+                onclick(context);
+              },
+              child: Text("Second page Button"),
+            ),
+          ]),
         ),
       ),
     );
   }
 
   void onclick(BuildContext context) {
-    showCupertinoModalPopup(context: context, builder: (context) =>GlassmophismEffect());
+    showCupertinoModalPopup(
+        context: context, builder: (context) => GlassmophismEffect());
   }
 }
-
-

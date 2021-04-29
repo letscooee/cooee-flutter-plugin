@@ -11,20 +11,22 @@ import 'cooee_plugin.dart';
 class GlassmophismEffect extends StatefulWidget {
   @override
   _GlassmorphismEffect createState() => _GlassmorphismEffect();
-
 }
-class _GlassmorphismEffect extends State<GlassmophismEffect>{
+
+class _GlassmorphismEffect extends State<GlassmophismEffect> {
   var cooeePlugin = CooeePlugin();
+
   @override
   void initState() {
-
     super.initState();
 
-    cooeePlugin.setCooeeInAppTriggerClosed(() {Navigator.pop(context);});
+    cooeePlugin.setCooeeInAppTriggerClosed(() {
+      Navigator.pop(context);
+    });
   }
+
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       backgroundColor: Colors.transparent,
       body: BackdropFilter(
@@ -33,10 +35,9 @@ class _GlassmorphismEffect extends State<GlassmophismEffect>{
           width: double.infinity,
           height: double.infinity,
           decoration:
-          BoxDecoration(color: Colors.grey.shade200.withOpacity(0.5)),
+              BoxDecoration(color: Colors.grey.shade200.withOpacity(0.5)),
         ),
       ),
     );
-
   }
 }

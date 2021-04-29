@@ -54,7 +54,6 @@ class CooeePlugin {
       case "onInAppCloseTriggered":
         cooeeInAppTriggerClosed();
         break;
-
     }
   }
 
@@ -136,12 +135,11 @@ class CooeePlugin {
   ///Accept context from user
   ///
   /// @param context BuildContext
-   void setContext(BuildContext context) {
+  void setContext(BuildContext context) {
     this.context = context;
   }
-  void setCooeeInAppTriggerClosed(
-      CooeeInAppTriggerClosed handler) {
+
+  void setCooeeInAppTriggerClosed(CooeeInAppTriggerClosed handler) {
     cooeeInAppTriggerClosed = handler;
   }
-
 }
