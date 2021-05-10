@@ -30,11 +30,32 @@ You can check the latest version of the plugin from https://pub.dev/packages/coo
 
 ### Step 2: Configure Credentials
 
+#### Android
+
 Add following in AndroidManifest.xml within the `<application>` tag:
 
 ```xml
 <meta-data android:name="COOEE_APP_ID" android:value="MY_COOEE_APP_ID"/>
 <meta-data android:name="COOEE_APP_SECRET" android:value="MY_COOEE_APP_SECRET"/>
+```
+
+Replace `MY_COOEE_APP_ID` & `MY_COOEE_APP_SECRET` with the app id & secret given to you separately.
+
+#### iOS
+
+Add following in Info.plist
+
+```xml
+<key>NSBluetoothPeripheralUsageDescription</key>
+<string>App uses Bluetooth to find out nearby devices</string>
+
+<key>NSLocationWhenInUseUsageDescription</key>
+<string>App uses location to search retailer location</string>
+
+<key>CooeeAppID</key>
+<string>MY_COOEE_APP_ID</string>
+<key>CooeeSecretKey</key>
+<string>MY_COOEE_APP_SECRET</string>
 ```
 
 Replace `MY_COOEE_APP_ID` & `MY_COOEE_APP_SECRET` with the app id & secret given to you separately.
@@ -47,7 +68,15 @@ Now in your Dart code, you can use:
 import 'package:cooee_plugin/cooee_plugin.dart';
 ```
 
-### Step 4: Track custom Events
+### Step 4: Provide BuildContext
+
+Use setContext() method to each of your route widget. Check [Example](https://pub.dev/packages/cooee_plugin/example) for reference.
+
+```dart
+CooeePlugin().setContext(context);
+```
+
+### Step 5: Track custom Events
 
 Once you integrate the SDK, Cooee will automatically start tracking events. You can view the collected events in System Default Events. Apart from these, you can track custom events as well.
 
@@ -56,7 +85,7 @@ var eventProperties = {'product id': '1234', 'product name': 'Wooden Table'};
 CooeePlugin.sendEvent("Add to cart", eventProperties);
 ```
 
-### Step 5: Track user action on In-App Trigger
+### Step 6: Track user action on In-App Trigger
 
 Create an object of CooeePlugin and initialize event tracker
 

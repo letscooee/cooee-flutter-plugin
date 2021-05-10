@@ -1,3 +1,7 @@
+## 0.0.21
+
+1. Added Glassmorphism effect
+
 ## 0.0.16 - 0.0.20
 
 1. Upgrading iOS native SDK to 1.2.4
