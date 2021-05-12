@@ -14,9 +14,12 @@ import 'package:shared_preferences/shared_preferences.dart';
 typedef void CooeeInAppNotificationButtonClickedHandler(
     Map<String, dynamic> mapList);
 
+typedef void CooeeInAppTriggerClosed();
+
 class CooeePlugin {
   CooeeInAppNotificationButtonClickedHandler
       cooeeInAppNotificationButtonClickedHandler;
+  CooeeInAppTriggerClosed cooeeInAppTriggerClosed;
   BuildContext context;
 
   static const MethodChannel _channel = const MethodChannel('cooee_plugin');
@@ -47,6 +50,9 @@ class CooeePlugin {
         } catch (error) {
           print(error.toString());
         }
+        break;
+      case "onInAppCloseTriggered":
+        cooeeInAppTriggerClosed();
         break;
     }
   }
@@ -131,5 +137,9 @@ class CooeePlugin {
   /// @param context BuildContext
   void setContext(BuildContext context) {
     this.context = context;
+  }
+
+  void setCooeeInAppTriggerClosed(CooeeInAppTriggerClosed handler) {
+    cooeeInAppTriggerClosed = handler;
   }
 }

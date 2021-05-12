@@ -66,8 +66,7 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        home: HomePage(),
-     /* ),*/
+      home: HomePage(),
     );
   }
 
@@ -76,15 +75,12 @@ class _MyAppState extends State<MyApp> {
     sdk.setCooeeInAppNotificationAction(inAppTriggered);
     sdk.setContext(context);
   }
-
-  void onclick(BuildContext context) {
-    Navigator.push(context, MaterialPageRoute(builder: (context)=>GlassmophismEffect()));
-  }
 }
 
 class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    CooeePlugin().setContext(context);
     return Scaffold(
       appBar: AppBar(
         title: const Text('Plugin example app'),
@@ -92,31 +88,63 @@ class HomePage extends StatelessWidget {
       body: Container(
         height: double.infinity,
         width: double.infinity,
-
         child: Center(
-          child:
-          Column(
-              children:[ Image(
-                image: new AssetImage('assets/homepage.png'),
-                width: 500,
-                height: 500,
-              ),
-                RaisedButton(
-                  onPressed: (){
-                    onclick(context);
-                  },
-                ),
-              ]
-          ),
+          child: Column(children: [
+            Image(
+              image: new AssetImage('assets/homepage.png'),
+              width: 500,
+              height: 500,
+            ),
+            RaisedButton(
+              onPressed: () {
+                onclick(context);
+              },
+              child: Text("First page Button"),
+            ),
+          ]),
         ),
       ),
     );
   }
 
   void onclick(BuildContext context) {
-    //Navigator.push(context, MaterialPageRoute(builder: (context)=>GlassmophismEffect()));
-    showCupertinoModalPopup(context: context, builder: (context) =>GlassmophismEffect());
+    showCupertinoModalPopup(
+        context: context, builder: (context) => SecondPage());
   }
 }
 
+class SecondPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    CooeePlugin().setContext(context);
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Plugin example app'),
+      ),
+      body: Container(
+        height: double.infinity,
+        width: double.infinity,
+        child: Center(
+          child: Column(children: [
+            Image(
+              image: new AssetImage('assets/homepage.png'),
+              width: 500,
+              height: 500,
+            ),
+            RaisedButton(
+              onPressed: () {
+                onclick(context);
+              },
+              child: Text("Second page Button"),
+            ),
+          ]),
+        ),
+      ),
+    );
+  }
 
+  void onclick(BuildContext context) {
+    showCupertinoModalPopup(
+        context: context, builder: (context) => GlassmophismEffect());
+  }
+}

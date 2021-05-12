@@ -21,6 +21,7 @@ import com.letscooee.CooeeSDK;
 import com.letscooee.trigger.EngagementTriggerActivity;
 import com.letscooee.utils.InAppNotificationClickListener;
 import com.letscooee.utils.OnInAppPopListener;
+import com.letscooee.utils.OnInAppCloseListener;
 import com.letscooee.utils.CooeeSDKConstants;
 
 import org.json.JSONException;
@@ -67,7 +68,7 @@ public class CooeeFlutterPlugin implements ActivityAware, FlutterPlugin, MethodC
     // depending on the user's project. onAttachedToEngine or registerWith must both be defined
     // in the same class.
     public static void registerWith(Registrar registrar) {
-        final MethodChannel channel = new MethodChannel(registrar.messenger(), "hello");
+        final MethodChannel channel = new MethodChannel(registrar.messenger(), "cooee_plugin");
         channel.setMethodCallHandler(new CooeeFlutterPlugin());
         CooeeFlutterPlugin plugin = new CooeeFlutterPlugin();
         plugin.setupPlugin(registrar.context(), null, registrar);
@@ -187,6 +188,13 @@ public class CooeeFlutterPlugin implements ActivityAware, FlutterPlugin, MethodC
         }
     };
 
+    OnInAppCloseListener onInAppCloseListener = new OnInAppCloseListener() {
+        @Override
+        public void onInAppClosed() {
+            invokeMethodOnUiThread("onInAppCloseTriggered", new HashMap());
+        }
+    };
+
     private void setupPlugin(Context context, BinaryMessenger messenger, Registrar registrar) {
         if (registrar != null) {
             //V1 setup
@@ -202,6 +210,7 @@ public class CooeeFlutterPlugin implements ActivityAware, FlutterPlugin, MethodC
         if (this.cooeeSDK != null) {
             this.cooeeSDK.setInAppNotificationButtonListener(listener);
             EngagementTriggerActivity.onInAppPopListener = onInAppPopListener;
+            EngagementTriggerActivity.onInAppCloseListener = onInAppCloseListener;
         }
         System.out.println("Constant : " + CooeeSDKConstants.LOG_PREFIX);
     }
