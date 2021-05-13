@@ -5,10 +5,10 @@ before_script:
     - export PATH="$PATH":"$HOME/.pub-cache/bin"
 
 stages:
-    - publish
+    - deploy
 
-Publish distribution:
-    stage: publish
+Publish Release:
+    stage: deploy
     script:
         - flutter pub get
         - flutter pub publish -f
