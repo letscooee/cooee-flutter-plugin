@@ -1,10 +1,11 @@
 ## 0.0.21
 
 1. Added Glassmorphism effect
+2. Using Android SDK v0.2.9
 
 ### Required Changes
 
-Add setContext() method to each of your route widget. Check [Example](https://pub.dev/packages/cooee_plugin/example) for reference.
+Add `setContext()` method to each of your route widget. Check [Example](https://pub.dev/packages/cooee_plugin/example) for reference.
    
 ```diff
 +   CooeePlugin().setContext(context);
