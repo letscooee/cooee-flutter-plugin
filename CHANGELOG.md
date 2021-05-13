@@ -2,6 +2,15 @@
 
 1. Added Glassmorphism effect
 
+### Required Changes
+
+Add setContext() method to each of your route widget. Check [Example](https://pub.dev/packages/cooee_plugin/example) for reference.
+   
+```diff
++   CooeePlugin().setContext(context);
+```
+
+
 ## 0.0.16 - 0.0.20
 
 1. Upgrading iOS native SDK to 1.2.4
