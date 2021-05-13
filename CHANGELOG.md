@@ -1,16 +1,18 @@
 ## 0.0.21
 
-1. Added Glassmorphism effect
-2. Using Android SDK v0.2.9
+1. Added Glassmorphism effect.
+2. Using Android SDK v0.2.9.
 
 ### Required Changes
+
+Because of a limitation in how Flutter for Android handles Activity, we could not achieve Glassmorphism effect in Flutter applications
+ without some extra code. For this to work, you have to add an extra line in each of your route widget.
 
 Add `setContext()` method to each of your route widget. Check [Example](https://pub.dev/packages/cooee_plugin/example) for reference.
    
 ```diff
 +   CooeePlugin().setContext(context);
 ```
-
 
 ## 0.0.16 - 0.0.20
 
