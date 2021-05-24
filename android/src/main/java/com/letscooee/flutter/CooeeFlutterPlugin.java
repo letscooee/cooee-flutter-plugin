@@ -175,7 +175,7 @@ public class CooeeFlutterPlugin implements ActivityAware, FlutterPlugin, MethodC
 
     InAppNotificationClickListener listener = new InAppNotificationClickListener() {
         @Override
-        public void onInAppButtonClick(HashMap<String, String> payload) {
+        public void onInAppButtonClick(HashMap<String, Object> payload) {
             invokeMethodOnUiThread("onInAppButtonClick", payload);
         }
     };
