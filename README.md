@@ -71,7 +71,7 @@ import 'package:cooee_plugin/cooee_plugin.dart';
 ### Step 4: Provide BuildContext
 
 Because of a limitation in how Flutter for Android handles Activity, we could not achieve Glassmorphism effect in Flutter applications
-without some extra code. For this to work, you have to add an extra line in each of your route widget.
+without some extra code. For this to work, you have to add an extra line in each of your first route widget.
 
 Call `setContext()` method to each of your route widget. Check [Example](https://pub.dev/packages/cooee_plugin/example) for reference.
 
