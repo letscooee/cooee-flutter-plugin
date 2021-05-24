@@ -1,5 +1,9 @@
 ## 0.0.21
 
+1. Using Android SDK v0.2.10.
+
+## 0.0.21
+
 1. Added Glassmorphism effect.
 2. Using Android SDK v0.2.9.
 
