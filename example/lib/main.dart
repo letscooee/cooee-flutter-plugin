@@ -1,4 +1,4 @@
-import 'package:cooee_plugin_example/glass.dart';
+import 'package:cooee_plugin/glassmorphism_effect.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
@@ -38,7 +38,7 @@ class _MyAppState extends State<MyApp> {
 
     try {
       CooeePlugin.setCurrentScreen("CartPage");
-      await CooeePlugin.sendEvent("Add To Cart", new Map<String, String>());
+      await CooeePlugin.sendEvent("Add To Cart", new Map<String, dynamic>());
     } on Exception {
       print(Exception);
     }
@@ -47,7 +47,7 @@ class _MyAppState extends State<MyApp> {
       await CooeePlugin.updateUserData({
         "name": "Abhishek flutter",
         "email": "abhishek@flutter.com",
-        "mobile": "4545454545"
+        "mobile": 4545454545
       });
     } catch (e) {
       print(e);
@@ -73,7 +73,6 @@ class _MyAppState extends State<MyApp> {
   void initHandlers(BuildContext context) {
     sdk = new CooeePlugin();
     sdk.setCooeeInAppNotificationAction(inAppTriggered);
-    sdk.setContext(context);
   }
 }
 
@@ -116,7 +115,6 @@ class HomePage extends StatelessWidget {
 class SecondPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    CooeePlugin().setContext(context);
     return Scaffold(
       appBar: AppBar(
         title: const Text('Plugin example app'),
@@ -128,23 +126,12 @@ class SecondPage extends StatelessWidget {
           child: Column(children: [
             Image(
               image: new AssetImage('assets/homepage.png'),
-              width: 500,
-              height: 500,
-            ),
-            RaisedButton(
-              onPressed: () {
-                onclick(context);
-              },
-              child: Text("Second page Button"),
+              width: 600,
+              height: 600,
             ),
           ]),
         ),
       ),
     );
-  }
-
-  void onclick(BuildContext context) {
-    showCupertinoModalPopup(
-        context: context, builder: (context) => GlassmophismEffect());
   }
 }
