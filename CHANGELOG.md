@@ -1,6 +1,7 @@
 ## 0.0.23
 
 1. Using Android SDK v0.2.11.
+2. All methods can now accept `Map<String, dynamic>`
 
 ## 0.0.22
 
