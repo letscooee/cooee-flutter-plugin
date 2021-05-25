@@ -107,7 +107,7 @@ public class CooeeFlutterPlugin implements ActivityAware, FlutterPlugin, MethodC
                 e.printStackTrace();
             }
         } else if (call.method.equals("updateUserData")) {
-            Map<String, String> userData = call.argument("userData");
+            Map<String, Object> userData = call.argument("userData");
 
             try {
                 cooeeSDK.updateUserData(userData);

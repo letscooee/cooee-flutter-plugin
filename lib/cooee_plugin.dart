@@ -62,23 +62,23 @@ class CooeePlugin {
   /// @param eventName       Name the event like onDeviceReady
   /// @param eventProperties Properties associated with the event
   static void sendEvent(
-      String eventName, Map<String, String> eventProperties) async {
-    await _channel.invokeMethod("sendEvent",
+      String eventName, Map<String, dynamic> eventProperties) async {
+     _channel.invokeMethod("sendEvent",
         {"eventName": eventName, "eventProperties": eventProperties});
   }
 
   /// Send given user data to the server
   ///
   /// @param userData The common user data like name, email.
-  static void updateUserData(Map<String, String> userData) async {
-    await _channel.invokeMethod("updateUserData", {"userData": userData});
+  static void updateUserData(Map<String, dynamic> userData) async {
+     _channel.invokeMethod("updateUserData", {"userData": userData});
   }
 
   /// Send given user properties to the server
   ///
   /// @param userProperties The additional user properties.
-  static void updateUserProperties(Map<String, String> userProperties) async {
-    await _channel.invokeMethod(
+  static void updateUserProperties(Map<String, dynamic> userProperties) async {
+     _channel.invokeMethod(
         "updateUserProperties", {"userProperties": userProperties});
   }
 
@@ -141,5 +141,9 @@ class CooeePlugin {
 
   void setCooeeInAppTriggerClosed(CooeeInAppTriggerClosed handler) {
     cooeeInAppTriggerClosed = handler;
+  }
+
+  void init() async{
+    _channel.invokeMethod("init",{});
   }
 }
