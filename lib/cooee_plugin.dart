@@ -143,7 +143,4 @@ class CooeePlugin {
     cooeeInAppTriggerClosed = handler;
   }
 
-  void init() async{
-    _channel.invokeMethod("init",{});
-  }
 }
