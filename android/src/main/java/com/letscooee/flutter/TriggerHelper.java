@@ -21,30 +21,16 @@ import io.sentry.Sentry;
  */
 public class TriggerHelper {
 
-    /**
-     * checks if data coming from {@link ActivityLifecycle} is valid or not
-     */
-    public void renderInAppTriggerFromJSONString(Context context, String rawTriggerData) {
-        if (TextUtils.isEmpty(rawTriggerData)) {
-            Log.i(Constants.LOG_PREFIX, "Empty/null trigger data received");
-            return;
-        }
-
-        Gson gson = new Gson();
-        TriggerData triggerData = gson.fromJson(rawTriggerData, TriggerData.class);
-
-
-        renderInAppTrigger(context, triggerData);
-    }
+    public static TriggerData lastTriggerData;
 
     /**
      * Renders {@link InAppTriggerActivity}
      */
-    private static void renderInAppTrigger(Context context, TriggerData triggerData) {
+    public static void renderInAppTrigger(Context context) {
         try {
             Intent intent = new Intent(context, InAppTriggerActivity.class);
             Bundle sendBundle = new Bundle();
-            sendBundle.putParcelable("triggerData", triggerData);
+            sendBundle.putParcelable("triggerData", lastTriggerData);
             intent.putExtra("bundle", sendBundle);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             context.startActivity(intent);
