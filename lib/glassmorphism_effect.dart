@@ -8,13 +8,24 @@ import 'cooee_plugin.dart';
 /// @author Ashish Gaikwad
 ///
 /// Custom widget for Gassmorphism effect
-class GlassmophismEffect extends StatefulWidget {
+class GlassmorphismEffect extends StatefulWidget {
+  int blur;
+
+  GlassmorphismEffect(int blur) {
+    this.blur = blur;
+  }
+
   @override
-  _GlassmorphismEffect createState() => _GlassmorphismEffect();
+  _GlassmorphismEffect createState() => _GlassmorphismEffect(blur);
 }
 
-class _GlassmorphismEffect extends State<GlassmophismEffect> {
+class _GlassmorphismEffect extends State<GlassmorphismEffect> {
   var cooeePlugin = CooeePlugin();
+  int blur;
+
+  _GlassmorphismEffect(int blur) {
+    this.blur = blur;
+  }
 
   @override
   void initState() {
@@ -30,12 +41,13 @@ class _GlassmorphismEffect extends State<GlassmophismEffect> {
     return Scaffold(
       backgroundColor: Colors.transparent,
       body: BackdropFilter(
-        filter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
+        filter:
+            ImageFilter.blur(sigmaX: blur.toDouble(), sigmaY: blur.toDouble()),
         child: Container(
           width: double.infinity,
           height: double.infinity,
           decoration:
-              BoxDecoration(color: Colors.grey.shade200.withOpacity(0.5)),
+              BoxDecoration(color: Color(0x0)),
         ),
       ),
     );
