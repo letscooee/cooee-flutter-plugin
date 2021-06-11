@@ -37,16 +37,17 @@ class CooeePlugin {
   ///
   /// @param call will hold data arrived from backend
   Future _platformCallHandler(MethodCall call) async {
+    var args = call.arguments;
     switch (call.method) {
       case "onInAppButtonClick":
-        var args = call.arguments;
         cooeeInAppNotificationButtonClickedHandler(
             args.cast<String, dynamic>());
         break;
       case "onInAppTriggered":
         try {
+          var map=args.cast<String, dynamic>();
           showCupertinoModalPopup(
-              context: context, builder: (context) => GlassmophismEffect());
+              context: context, builder: (context) => GlassmophismEffect(map["blur"]));
         } catch (error) {
           print(error.toString());
         }
