@@ -8,13 +8,11 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.letscooee.models.TriggerData;
 import com.letscooee.trigger.CooeeEmptyActivity;
 import com.letscooee.trigger.inapp.InAppTriggerActivity;
 import com.letscooee.utils.Constants;
 
-import static com.letscooee.flutter.LocalStorage.clearStorage;
-import static com.letscooee.flutter.LocalStorage.getFromStorage;
-import static com.letscooee.flutter.LocalStorage.storeTriggerData;
 
 /**
  * Register {@link Application.ActivityLifecycleCallbacks} to
@@ -50,11 +48,17 @@ public class ActivityLifecycle implements Application.ActivityLifecycleCallbacks
         }
 
         if (activity instanceof InAppTriggerActivity) {
-            cooeeFlutterPlugin.sendLoadGlassmorphism(InAppTriggerActivity.getTriggerData().getTriggerBackground().getBlur());
+            TriggerData triggerData = ((InAppTriggerActivity) activity).getTriggerData();
+            int blur = triggerData.getTriggerBackground().getBlur();
+            cooeeFlutterPlugin.sendLoadGlassmorphism(blur);
         } else {
-            String triggerString = getFromStorage(activity, "TRIGGERDATA");
-            new TriggerHelper().renderInAppTriggerFromJSONString(activity, triggerString);
-            clearStorage(activity);
+            if (TriggerHelper.lastTriggerData != null) {
+                // Alternative of using ProcessLifeCycleOwner
+                synchronized (TriggerHelper.lastTriggerData) {
+                    TriggerHelper.renderInAppTrigger(activity);
+                    TriggerHelper.lastTriggerData = null;
+                }
+            }
         }
 
     }
@@ -64,9 +68,15 @@ public class ActivityLifecycle implements Application.ActivityLifecycleCallbacks
         if (cooeeFlutterPlugin == null) {
             return;
         }
-        if (activity instanceof InAppTriggerActivity && !InAppTriggerActivity.isManualClose) {
-            storeTriggerData(activity, "TRIGGERDATA", InAppTriggerActivity.getTriggerData());
+        if (activity instanceof InAppTriggerActivity) {
+            InAppTriggerActivity inappActivity = (InAppTriggerActivity) activity;
+            if (inappActivity.isManualClose()) {
+                return;
+            }
+
+            TriggerHelper.lastTriggerData = inappActivity.getTriggerData();
             cooeeFlutterPlugin.sendTriggerPause();
+            // TODO: 11/06/21 come back here (Shashank)
             activity.finish();
         }
 
@@ -78,7 +88,12 @@ public class ActivityLifecycle implements Application.ActivityLifecycleCallbacks
         if (cooeeFlutterPlugin == null) {
             return;
         }
-        if (activity instanceof InAppTriggerActivity && InAppTriggerActivity.isManualClose) {
+
+        if (activity instanceof InAppTriggerActivity) {
+            InAppTriggerActivity inappActivity = (InAppTriggerActivity) activity;
+            if (!inappActivity.isManualClose()) {
+                return;
+            }
             cooeeFlutterPlugin.sendTriggerPause();
         }
     }
