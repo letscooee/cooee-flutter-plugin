@@ -1,3 +1,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-  package="com.letscooee.flutter">
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.letscooee.flutter">
+
+    <application
+        android:name=".AppController"
+        tools:replace="android:name" />
 </manifest>
