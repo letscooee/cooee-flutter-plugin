@@ -47,7 +47,7 @@ class CooeePlugin {
         try {
           var map=args.cast<String, dynamic>();
           showCupertinoModalPopup(
-              context: context, builder: (context) => GlassmophismEffect(map["blur"]));
+              context: context, builder: (context) => GlassmorphismEffect(map["blur"]));
         } catch (error) {
           print(error.toString());
         }
