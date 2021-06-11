@@ -3,6 +3,6 @@
     package="com.letscooee.flutter">
 
     <application
-        android:name=".AppController"
+        android:name=".FlutterPluginController"
         tools:replace="android:name" />
 </manifest>
