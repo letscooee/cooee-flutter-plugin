@@ -152,8 +152,6 @@ public class CooeeFlutterPlugin implements ActivityAware, FlutterPlugin, MethodC
                 e.printStackTrace();
             }
         }
-
-
     }
 
     InAppNotificationClickListener listener = new InAppNotificationClickListener() {
@@ -162,7 +160,6 @@ public class CooeeFlutterPlugin implements ActivityAware, FlutterPlugin, MethodC
             invokeMethodOnUiThread("onInAppButtonClick", payload);
         }
     };
-
 
     private void setupPlugin(Context context, BinaryMessenger messenger, Registrar registrar) {
         this.context = context.getApplicationContext();
@@ -174,6 +171,7 @@ public class CooeeFlutterPlugin implements ActivityAware, FlutterPlugin, MethodC
             //V2 setup
             this.channel = new MethodChannel(messenger, "cooee_plugin");
         }
+
         this.channel.setMethodCallHandler(this);
         this.cooeeSDK = CooeeSDK.getDefaultInstance(this.context);
         if (this.cooeeSDK != null) {
@@ -182,22 +180,22 @@ public class CooeeFlutterPlugin implements ActivityAware, FlutterPlugin, MethodC
 
         // Set current instance at ActivityLifecycle
         ActivityLifecycle.setCooeeFlutterPlugin(this);
-        System.out.println("Constant : " + Constants.LOG_PREFIX);
     }
 
     /**
      * Close Glassmorphism widget
      */
-    public void sendTriggerPause() {
-        invokeMethodOnUiThread("onInAppCloseTriggered", new HashMap());
+    public void closeGlassmorphismWidget() {
+        invokeMethodOnUiThread("onInAppTriggerClosed", new HashMap());
     }
 
     /**
-     * loads Glassmorphism widget once In-App renders
+     * Present/render glassmorphism widget for in-app trigger.
      */
     public void renderGlassmorphismWidget(int blur, String color) {
         android.util.Log.d("TAG", "onInAppTriggered: ");
-        Map<String, Integer> map = new HashMap();
+
+        Map<String, Object> map = new HashMap();
         map.put("blur", blur);
         map.put("color", color);
         invokeMethodOnUiThread("onInAppTriggered", map);

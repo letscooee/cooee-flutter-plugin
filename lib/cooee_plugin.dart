@@ -53,7 +53,7 @@ class CooeePlugin {
           print(error.toString());
         }
         break;
-      case "onInAppCloseTriggered":
+      case "onInAppTriggerClosed":
         cooeeInAppTriggerClosed();
         break;
     }
