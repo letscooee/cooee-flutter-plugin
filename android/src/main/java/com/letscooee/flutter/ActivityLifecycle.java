@@ -19,7 +19,7 @@ import com.letscooee.utils.Constants;
  * observe activity lifecycle
  *
  * @author Ashish Gaikwad on 11/06/21
- * @version 0.0.24
+ * @since 0.0.24
  */
 public class ActivityLifecycle implements Application.ActivityLifecycleCallbacks {
 
@@ -49,8 +49,9 @@ public class ActivityLifecycle implements Application.ActivityLifecycleCallbacks
 
         if (activity instanceof InAppTriggerActivity) {
             TriggerData triggerData = ((InAppTriggerActivity) activity).getTriggerData();
-            int blur = triggerData.getTriggerBackground().getBlur();
-            cooeeFlutterPlugin.sendLoadGlassmorphism(blur);
+            int blur = triggerData.getTriggerBackground().getBlurRadius();
+            String color = triggerData.getTriggerBackground().getColor();
+            cooeeFlutterPlugin.renderGlassmorphismWidget(blur, color);
         } else {
             if (TriggerHelper.lastTriggerData != null) {
                 // Alternative of using ProcessLifeCycleOwner
@@ -75,13 +76,10 @@ public class ActivityLifecycle implements Application.ActivityLifecycleCallbacks
             }
 
             TriggerHelper.lastTriggerData = inappActivity.getTriggerData();
-            cooeeFlutterPlugin.sendTriggerPause();
             // TODO: 11/06/21 come back here (Shashank)
             activity.finish();
         }
-
     }
-
 
     @Override
     public void onActivityStopped(@NonNull Activity activity) {
@@ -90,11 +88,7 @@ public class ActivityLifecycle implements Application.ActivityLifecycleCallbacks
         }
 
         if (activity instanceof InAppTriggerActivity) {
-            InAppTriggerActivity inappActivity = (InAppTriggerActivity) activity;
-            if (!inappActivity.isManualClose()) {
-                return;
-            }
-            cooeeFlutterPlugin.sendTriggerPause();
+            cooeeFlutterPlugin.closeGlassmorphismWidget();
         }
     }
 
