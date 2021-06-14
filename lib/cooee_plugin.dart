@@ -18,7 +18,7 @@ typedef void CooeeInAppTriggerClosed();
 
 class CooeePlugin {
   CooeeInAppNotificationButtonClickedHandler
-      cooeeInAppNotificationButtonClickedHandler;
+  cooeeInAppNotificationButtonClickedHandler;
   CooeeInAppTriggerClosed cooeeInAppTriggerClosed;
   BuildContext context;
 
@@ -45,7 +45,7 @@ class CooeePlugin {
         break;
       case "onInAppTriggered":
         try {
-          var map=args.cast<String, dynamic>();
+          var map = args.cast<String, dynamic>();
           showCupertinoModalPopup(
               context: context, builder: (context) => GlassmorphismEffect(map["blur"]));
         } catch (error) {
@@ -62,9 +62,9 @@ class CooeePlugin {
   ///
   /// @param eventName       Name the event like onDeviceReady
   /// @param eventProperties Properties associated with the event
-  static void sendEvent(
-      String eventName, Map<String, dynamic> eventProperties) async {
-     _channel.invokeMethod("sendEvent",
+  static void sendEvent(String eventName,
+      Map<String, dynamic> eventProperties) async {
+    _channel.invokeMethod("sendEvent",
         {"eventName": eventName, "eventProperties": eventProperties});
   }
 
@@ -72,14 +72,14 @@ class CooeePlugin {
   ///
   /// @param userData The common user data like name, email.
   static void updateUserData(Map<String, dynamic> userData) async {
-     _channel.invokeMethod("updateUserData", {"userData": userData});
+    _channel.invokeMethod("updateUserData", {"userData": userData});
   }
 
   /// Send given user properties to the server
   ///
   /// @param userProperties The additional user properties.
   static void updateUserProperties(Map<String, dynamic> userProperties) async {
-     _channel.invokeMethod(
+    _channel.invokeMethod(
         "updateUserProperties", {"userProperties": userProperties});
   }
 
@@ -109,7 +109,7 @@ class CooeePlugin {
   Future<void> setController(GlobalKey<State<StatefulWidget>> globalKey) async {
     await Future.delayed(const Duration(milliseconds: 2000));
     RenderRepaintBoundary boundary =
-        globalKey.currentContext.findRenderObject();
+    globalKey.currentContext.findRenderObject();
 
     ui.Image image = await boundary.toImage(pixelRatio: 1);
     //final directory = (await getApplicationDocumentsDirectory()).path;
