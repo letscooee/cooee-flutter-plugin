@@ -10,21 +10,27 @@ import 'cooee_plugin.dart';
 /// Custom widget for Gassmorphism effect
 class GlassmorphismEffect extends StatefulWidget {
   int blur;
+  String color;
 
-  GlassmorphismEffect(int blur) {
+  GlassmorphismEffect(int blur, String color) {
     this.blur = blur;
+    this.color = color;
   }
 
   @override
-  _GlassmorphismEffect createState() => _GlassmorphismEffect(blur);
+  _GlassmorphismEffect createState() => _GlassmorphismEffect(blur, color);
 }
 
 class _GlassmorphismEffect extends State<GlassmorphismEffect> {
   var cooeePlugin = CooeePlugin();
   int blur;
+  String color;
+  var dartColor;
 
-  _GlassmorphismEffect(int blur) {
+  _GlassmorphismEffect(int blur, String color) {
     this.blur = blur;
+    this.color = color;
+    dartColor = fromHex(color);
   }
 
   @override
@@ -34,6 +40,13 @@ class _GlassmorphismEffect extends State<GlassmorphismEffect> {
     cooeePlugin.setCooeeInAppTriggerClosed(() {
       Navigator.pop(context);
     });
+  }
+
+  static Color fromHex(String hexString) {
+    final buffer = StringBuffer();
+    if (hexString.length == 6 || hexString.length == 7) buffer.write('ff');
+    buffer.write(hexString.replaceFirst('#', ''));
+    return Color(int.parse(buffer.toString(), radix: 16));
   }
 
   @override
@@ -46,8 +59,7 @@ class _GlassmorphismEffect extends State<GlassmorphismEffect> {
         child: Container(
           width: double.infinity,
           height: double.infinity,
-          decoration:
-              BoxDecoration(color: Color(0x0)),
+          decoration: BoxDecoration(color: dartColor),
         ),
       ),
     );

@@ -195,10 +195,11 @@ public class CooeeFlutterPlugin implements ActivityAware, FlutterPlugin, MethodC
     /**
      * loads Glassmorphism widget once In-App renders
      */
-    public void sendLoadGlassmorphism(int blur) {
+    public void renderGlassmorphismWidget(int blur, String color) {
         android.util.Log.d("TAG", "onInAppTriggered: ");
         Map<String, Integer> map = new HashMap();
         map.put("blur", blur);
+        map.put("color", color);
         invokeMethodOnUiThread("onInAppTriggered", map);
     }
 }
