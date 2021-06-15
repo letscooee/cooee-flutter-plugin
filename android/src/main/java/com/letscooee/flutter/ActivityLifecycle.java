@@ -9,6 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.letscooee.models.TriggerData;
+import com.letscooee.models.TriggerBehindBackground;
 import com.letscooee.trigger.CooeeEmptyActivity;
 import com.letscooee.trigger.inapp.InAppTriggerActivity;
 import com.letscooee.utils.Constants;
@@ -49,9 +50,12 @@ public class ActivityLifecycle implements Application.ActivityLifecycleCallbacks
 
         if (activity instanceof InAppTriggerActivity) {
             TriggerData triggerData = ((InAppTriggerActivity) activity).getTriggerData();
-            int blur = triggerData.getTriggerBackground().getBlurRadius();
-            String color = triggerData.getTriggerBackground().getColor();
-            cooeeFlutterPlugin.renderGlassmorphismWidget(blur, color);
+
+            if (triggerData.getTriggerBackground().getType() == TriggerBehindBackground.Type.BLURRED) {
+                int blur = triggerData.getTriggerBackground().getBlurRadius();
+                String color = triggerData.getTriggerBackground().getColor();
+                cooeeFlutterPlugin.renderGlassmorphismWidget(blur, color);
+            }
         } else {
             if (TriggerHelper.lastTriggerData != null) {
                 // Alternative of using ProcessLifeCycleOwner
@@ -74,10 +78,10 @@ public class ActivityLifecycle implements Application.ActivityLifecycleCallbacks
             if (inappActivity.isManualClose()) {
                 return;
             }
-
-            TriggerHelper.lastTriggerData = inappActivity.getTriggerData();
-            // TODO: 11/06/21 come back here (Shashank)
-            activity.finish();
+            TriggerData triggerData = inappActivity.getTriggerData();
+            if (triggerData.getTriggerBackground().getType() == TriggerBehindBackground.Type.BLURRED) {
+                TriggerHelper.lastTriggerData = inappActivity.getTriggerData();
+            }
         }
     }
 
