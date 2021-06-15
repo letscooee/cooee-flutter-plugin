@@ -8,13 +8,30 @@ import 'cooee_plugin.dart';
 /// @author Ashish Gaikwad
 ///
 /// Custom widget for Gassmorphism effect
-class GlassmophismEffect extends StatefulWidget {
+class GlassmorphismEffect extends StatefulWidget {
+  int blur;
+  String color;
+
+  GlassmorphismEffect(int blur, String color) {
+    this.blur = blur;
+    this.color = color;
+  }
+
   @override
-  _GlassmorphismEffect createState() => _GlassmorphismEffect();
+  _GlassmorphismEffect createState() => _GlassmorphismEffect(blur, color);
 }
 
-class _GlassmorphismEffect extends State<GlassmophismEffect> {
+class _GlassmorphismEffect extends State<GlassmorphismEffect> {
   var cooeePlugin = CooeePlugin();
+  int blur;
+  String color;
+  var dartColor;
+
+  _GlassmorphismEffect(int blur, String color) {
+    this.blur = blur;
+    this.color = color;
+    dartColor = fromHex(color);
+  }
 
   @override
   void initState() {
@@ -25,17 +42,24 @@ class _GlassmorphismEffect extends State<GlassmophismEffect> {
     });
   }
 
+  static Color fromHex(String hexString) {
+    final buffer = StringBuffer();
+    if (hexString.length == 6 || hexString.length == 7) buffer.write('ff');
+    buffer.write(hexString.replaceFirst('#', ''));
+    return Color(int.parse(buffer.toString(), radix: 16));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.transparent,
       body: BackdropFilter(
-        filter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
+        filter:
+            ImageFilter.blur(sigmaX: blur.toDouble(), sigmaY: blur.toDouble()),
         child: Container(
           width: double.infinity,
           height: double.infinity,
-          decoration:
-              BoxDecoration(color: Colors.grey.shade200.withOpacity(0.5)),
+          decoration: BoxDecoration(color: dartColor),
         ),
       ),
     );

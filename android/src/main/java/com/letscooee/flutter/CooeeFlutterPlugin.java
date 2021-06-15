@@ -1,36 +1,27 @@
 package com.letscooee.flutter;
 
-import java.util.*;
-import java.io.*;
+import android.app.Activity;
+import android.content.Context;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 
-import android.util.Log;
+import com.letscooee.CooeeSDK;
+import com.letscooee.utils.Constants;
+import com.letscooee.utils.InAppNotificationClickListener;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import io.flutter.embedding.engine.plugins.FlutterPlugin;
+import io.flutter.embedding.engine.plugins.activity.ActivityAware;
+import io.flutter.embedding.engine.plugins.activity.ActivityPluginBinding;
+import io.flutter.plugin.common.BinaryMessenger;
 import io.flutter.plugin.common.MethodCall;
 import io.flutter.plugin.common.MethodChannel;
 import io.flutter.plugin.common.MethodChannel.MethodCallHandler;
 import io.flutter.plugin.common.MethodChannel.Result;
 import io.flutter.plugin.common.PluginRegistry.Registrar;
-import io.flutter.embedding.engine.plugins.activity.ActivityPluginBinding;
-import io.flutter.embedding.engine.plugins.activity.ActivityAware;
-
-import com.letscooee.CooeeSDK;
-
-import com.letscooee.trigger.EngagementTriggerActivity;
-import com.letscooee.utils.InAppNotificationClickListener;
-import com.letscooee.utils.OnInAppPopListener;
-import com.letscooee.utils.OnInAppCloseListener;
-import com.letscooee.utils.CooeeSDKConstants;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import android.app.Activity;
-import android.content.Context;
-
-import io.flutter.plugin.common.BinaryMessenger;
 
 /**
  * Main wrapper of Android's Cooee SDK.
@@ -55,7 +46,7 @@ public class CooeeFlutterPlugin implements ActivityAware, FlutterPlugin, MethodC
         channel.setMethodCallHandler(this);
         this.context = flutterPluginBinding.getApplicationContext();
         setupPlugin(flutterPluginBinding.getApplicationContext(), flutterPluginBinding.getBinaryMessenger(), null);
-        System.out.println("Constant : " + CooeeSDKConstants.LOG_PREFIX);
+        System.out.println("Constant : " + Constants.LOG_PREFIX);
     }
 
     // This static function is optional and equivalent to onAttachedToEngine. It supports the old
@@ -135,14 +126,6 @@ public class CooeeFlutterPlugin implements ActivityAware, FlutterPlugin, MethodC
                 System.out.println("Exception : " + e);
                 result.error(e.toString(), " Screen Name Not Update ", e.getCause());
             }
-        } else if (call.method.equals("setBitmap")) {
-            try {
-                cooeeSDK.setBitmap(call.argument("base64encode"));
-                result.success(" Screen Name Updated ");
-            } catch (Exception e) {
-                System.out.println("Exception : " + e);
-                result.error(e.toString(), " Screen Name Not Update ", e.getCause());
-            }
         } else {
             result.notImplemented();
         }
@@ -169,8 +152,6 @@ public class CooeeFlutterPlugin implements ActivityAware, FlutterPlugin, MethodC
                 e.printStackTrace();
             }
         }
-
-
     }
 
     InAppNotificationClickListener listener = new InAppNotificationClickListener() {
@@ -180,22 +161,8 @@ public class CooeeFlutterPlugin implements ActivityAware, FlutterPlugin, MethodC
         }
     };
 
-    OnInAppPopListener onInAppPopListener = new OnInAppPopListener() {
-        @Override
-        public void onInAppTriggered() {
-            android.util.Log.d("TAG", "onInAppTriggered: ");
-            invokeMethodOnUiThread("onInAppTriggered", new HashMap());
-        }
-    };
-
-    OnInAppCloseListener onInAppCloseListener = new OnInAppCloseListener() {
-        @Override
-        public void onInAppClosed() {
-            invokeMethodOnUiThread("onInAppCloseTriggered", new HashMap());
-        }
-    };
-
     private void setupPlugin(Context context, BinaryMessenger messenger, Registrar registrar) {
+        this.context = context.getApplicationContext();
         if (registrar != null) {
             //V1 setup
             this.channel = new MethodChannel(registrar.messenger(), "cooee_plugin");
@@ -204,15 +171,33 @@ public class CooeeFlutterPlugin implements ActivityAware, FlutterPlugin, MethodC
             //V2 setup
             this.channel = new MethodChannel(messenger, "cooee_plugin");
         }
+
         this.channel.setMethodCallHandler(this);
-        this.context = context.getApplicationContext();
         this.cooeeSDK = CooeeSDK.getDefaultInstance(this.context);
         if (this.cooeeSDK != null) {
             this.cooeeSDK.setInAppNotificationButtonListener(listener);
-            EngagementTriggerActivity.onInAppPopListener = onInAppPopListener;
-            EngagementTriggerActivity.onInAppCloseListener = onInAppCloseListener;
         }
-        System.out.println("Constant : " + CooeeSDKConstants.LOG_PREFIX);
+
+        // Set current instance at ActivityLifecycle
+        ActivityLifecycle.setCooeeFlutterPlugin(this);
     }
 
+    /**
+     * Close Glassmorphism widget
+     */
+    public void closeGlassmorphismWidget() {
+        invokeMethodOnUiThread("onInAppTriggerClosed", new HashMap());
+    }
+
+    /**
+     * Present/render glassmorphism widget for in-app trigger.
+     */
+    public void renderGlassmorphismWidget(int blur, String color) {
+        android.util.Log.d("TAG", "onInAppTriggered: ");
+
+        Map<String, Object> map = new HashMap();
+        map.put("blur", blur);
+        map.put("color", color);
+        invokeMethodOnUiThread("onInAppTriggered", map);
+    }
 }
