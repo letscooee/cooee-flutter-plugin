@@ -36,10 +36,6 @@ class _GlassmorphismEffect extends State<GlassmorphismEffect> {
   @override
   void initState() {
     super.initState();
-
-    cooeePlugin.setCooeeInAppTriggerClosed(() {
-      Navigator.pop(context);
-    });
   }
 
   static Color fromHex(String hexString) {
