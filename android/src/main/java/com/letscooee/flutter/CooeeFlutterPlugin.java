@@ -38,12 +38,14 @@ public class CooeeFlutterPlugin implements ActivityAware, FlutterPlugin, MethodC
     private CooeeSDK cooeeSDK;
     private Context context;
     private Activity activity;
+    private FlutterRenderer flutterRenderer;
 
     @Override
     public void onAttachedToEngine(@NonNull FlutterPluginBinding flutterPluginBinding) {
         channel = new MethodChannel(flutterPluginBinding.getBinaryMessenger(), "cooee_plugin");
         cooeeSDK = CooeeSDK.getDefaultInstance(flutterPluginBinding.getApplicationContext());
         channel.setMethodCallHandler(this);
+        flutterRenderer = (FlutterRenderer) flutterPluginBinding.getTextureRegistry();
         this.context = flutterPluginBinding.getApplicationContext();
         setupPlugin(flutterPluginBinding.getApplicationContext(), flutterPluginBinding.getBinaryMessenger(), null);
         System.out.println("Constant : " + Constants.LOG_PREFIX);

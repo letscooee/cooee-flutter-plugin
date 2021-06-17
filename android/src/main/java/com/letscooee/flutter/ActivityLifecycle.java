@@ -31,7 +31,9 @@ public class ActivityLifecycle implements Application.ActivityLifecycleCallbacks
 
     @Override
     public void onActivityCreated(@NonNull Activity activity, @Nullable Bundle savedInstanceState) {
-
+        if (activity instanceof InAppTriggerActivity) {
+            ((InAppTriggerActivity) activity).setBitmap(cooeeFlutterPlugin.getFlutterRenderer().getBitmap());
+        }
     }
 
     @Override
