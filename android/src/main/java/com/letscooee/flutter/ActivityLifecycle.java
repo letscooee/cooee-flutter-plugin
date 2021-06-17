@@ -14,6 +14,8 @@ import com.letscooee.trigger.CooeeEmptyActivity;
 import com.letscooee.trigger.inapp.InAppTriggerActivity;
 import com.letscooee.utils.Constants;
 
+import io.flutter.embedding.android.FlutterActivity;
+
 
 /**
  * Register {@link Application.ActivityLifecycleCallbacks} to
@@ -37,76 +39,22 @@ public class ActivityLifecycle implements Application.ActivityLifecycleCallbacks
     }
 
     @Override
-    public void onActivityStarted(@NonNull Activity activity) {
-
-    }
+    public void onActivityStarted(@NonNull Activity activity) {}
 
     @Override
-    public void onActivityResumed(@NonNull Activity activity) {
-        if (cooeeFlutterPlugin == null) {
-            return;
-        }
-        if (activity instanceof CooeeEmptyActivity) {
-            return;
-        }
-
-        if (activity instanceof InAppTriggerActivity) {
-            TriggerData triggerData = ((InAppTriggerActivity) activity).getTriggerData();
-
-            if (triggerData.getTriggerBackground().getType() == TriggerBehindBackground.Type.BLURRED) {
-                int blur = triggerData.getTriggerBackground().getBlurRadius();
-                String color = triggerData.getTriggerBackground().getColor();
-                cooeeFlutterPlugin.renderGlassmorphismWidget(blur, color);
-            }
-        } else {
-            if (TriggerHelper.lastTriggerData != null) {
-                // Alternative of using ProcessLifeCycleOwner
-                synchronized (TriggerHelper.lastTriggerData) {
-                    TriggerHelper.renderInAppTrigger(activity);
-                    TriggerHelper.lastTriggerData = null;
-                }
-            }
-        }
-
-    }
+    public void onActivityResumed(@NonNull Activity activity) {}
 
     @Override
-    public void onActivityPaused(@NonNull Activity activity) {
-        if (cooeeFlutterPlugin == null) {
-            return;
-        }
-        if (activity instanceof InAppTriggerActivity) {
-            InAppTriggerActivity inappActivity = (InAppTriggerActivity) activity;
-            if (inappActivity.isManualClose()) {
-                return;
-            }
-            TriggerData triggerData = inappActivity.getTriggerData();
-            if (triggerData.getTriggerBackground().getType() == TriggerBehindBackground.Type.BLURRED) {
-                TriggerHelper.lastTriggerData = inappActivity.getTriggerData();
-            }
-        }
-    }
+    public void onActivityPaused(@NonNull Activity activity) {}
 
     @Override
-    public void onActivityStopped(@NonNull Activity activity) {
-        if (cooeeFlutterPlugin == null) {
-            return;
-        }
-
-        if (activity instanceof InAppTriggerActivity) {
-            cooeeFlutterPlugin.closeGlassmorphismWidget();
-        }
-    }
+    public void onActivityStopped(@NonNull Activity activity) {}
 
     @Override
-    public void onActivitySaveInstanceState(@NonNull Activity activity, @NonNull Bundle outState) {
-
-    }
+    public void onActivitySaveInstanceState(@NonNull Activity activity, @NonNull Bundle outState) {}
 
     @Override
-    public void onActivityDestroyed(@NonNull Activity activity) {
-
-    }
+    public void onActivityDestroyed(@NonNull Activity activity) {}
 
     /**
      * Set instance of {@link CooeeFlutterPlugin} to manage Glassmorphism effect

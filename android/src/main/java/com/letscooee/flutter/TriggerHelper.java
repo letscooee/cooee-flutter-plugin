@@ -19,6 +19,7 @@ import io.sentry.Sentry;
  * @author Ashish Gaikwad on 11/06/21
  * @version 0.0.24
  */
+@Deprecated
 public class TriggerHelper {
 
     public static TriggerData lastTriggerData;
@@ -36,7 +37,7 @@ public class TriggerHelper {
             context.startActivity(intent);
 
         } catch (Exception ex) {
-            Log.d(Constants.LOG_PREFIX, "Couldn't show Engagement Trigger " + ex.toString());
+            Log.d(Constants.TAG, "Couldn't show Engagement Trigger " + ex.toString());
             Sentry.captureException(ex);
         }
     }

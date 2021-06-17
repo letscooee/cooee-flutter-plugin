@@ -79,7 +79,6 @@ class _MyAppState extends State<MyApp> {
 class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    CooeePlugin().setContext(context);
     return Scaffold(
       appBar: AppBar(
         title: const Text('Plugin example app'),
