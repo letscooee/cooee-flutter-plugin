@@ -51,6 +51,14 @@ public class CooeeFlutterPlugin implements ActivityAware, FlutterPlugin, MethodC
     private Activity activity;
     private FlutterRenderer flutterRenderer;
 
+    public static CooeeFlutterPlugin getInstance() {
+        return INSTANCE;
+    }
+
+    public CooeeFlutterPlugin() {
+        INSTANCE = this;
+    }
+
     @Override
     public void onAttachedToEngine(@NonNull FlutterPluginBinding flutterPluginBinding) {
         channel = new MethodChannel(flutterPluginBinding.getBinaryMessenger(), "cooee_plugin");
@@ -193,8 +201,5 @@ public class CooeeFlutterPlugin implements ActivityAware, FlutterPlugin, MethodC
         if (this.cooeeSDK != null) {
             this.cooeeSDK.setInAppNotificationButtonListener(listener);
         }
-
-        // Set current instance at ActivityLifecycle
-        ActivityLifecycle.setCooeeFlutterPlugin(this);
     }
 }
