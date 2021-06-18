@@ -2,19 +2,13 @@ package com.letscooee.flutter;
 
 import android.app.Activity;
 import android.app.Application;
+import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.letscooee.models.TriggerData;
-import com.letscooee.models.TriggerBehindBackground;
-import com.letscooee.trigger.CooeeEmptyActivity;
 import com.letscooee.trigger.inapp.InAppTriggerActivity;
-import com.letscooee.utils.Constants;
-
-import io.flutter.embedding.android.FlutterActivity;
 
 
 /**
@@ -25,8 +19,6 @@ import io.flutter.embedding.android.FlutterActivity;
  * @since 0.0.24
  */
 public class ActivityLifecycle implements Application.ActivityLifecycleCallbacks {
-
-    private static CooeeFlutterPlugin cooeeFlutterPlugin;
 
     public ActivityLifecycle() {
     }
@@ -56,14 +48,4 @@ public class ActivityLifecycle implements Application.ActivityLifecycleCallbacks
 
     @Override
     public void onActivityDestroyed(@NonNull Activity activity) {}
-
-    /**
-     * Set instance of {@link CooeeFlutterPlugin} to manage Glassmorphism effect
-     */
-    public static void setCooeeFlutterPlugin(CooeeFlutterPlugin cooeeFlutterPlugin) {
-
-        ActivityLifecycle.cooeeFlutterPlugin = cooeeFlutterPlugin;
-    }
-
-
 }

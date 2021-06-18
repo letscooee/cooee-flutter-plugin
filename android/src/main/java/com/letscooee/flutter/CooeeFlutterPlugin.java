@@ -1,26 +1,17 @@
 package com.letscooee.flutter;
 
 import android.app.Activity;
-import android.content.ClipData;
-import android.content.ClipboardManager;
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.Canvas;
-import android.util.Base64;
 import android.util.Log;
-import android.view.View;
 
 import androidx.annotation.NonNull;
 
 import com.letscooee.CooeeSDK;
-import com.letscooee.utils.Constants;
 import com.letscooee.utils.InAppNotificationClickListener;
 
-import java.io.ByteArrayOutputStream;
 import java.util.HashMap;
 import java.util.Map;
 
-import io.flutter.embedding.engine.FlutterEngine;
 import io.flutter.embedding.engine.plugins.FlutterPlugin;
 import io.flutter.embedding.engine.plugins.activity.ActivityAware;
 import io.flutter.embedding.engine.plugins.activity.ActivityPluginBinding;
@@ -32,8 +23,6 @@ import io.flutter.plugin.common.MethodChannel.MethodCallHandler;
 import io.flutter.plugin.common.MethodChannel.Result;
 import io.flutter.plugin.common.PluginRegistry.Registrar;
 
-import static android.content.Context.CLIPBOARD_SERVICE;
-
 /**
  * Main wrapper of Android's Cooee SDK.
  *
@@ -41,6 +30,8 @@ import static android.content.Context.CLIPBOARD_SERVICE;
  * @author Raajas Sode
  */
 public class CooeeFlutterPlugin implements ActivityAware, FlutterPlugin, MethodCallHandler {
+
+    private static CooeeFlutterPlugin INSTANCE;
 
     /// The MethodChannel that will the communication between Flutter and native Android
     /// This local reference serves to register the plugin with the Flutter Engine and unregister it

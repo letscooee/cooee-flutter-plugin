@@ -1,9 +1,8 @@
-import 'package:cooee_plugin/glassmorphism_effect.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'dart:async';
 
 import 'package:cooee_plugin/cooee_plugin.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
 void main() {
