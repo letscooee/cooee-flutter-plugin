@@ -7,7 +7,6 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 
 import com.letscooee.CooeeSDK;
-import com.letscooee.utils.Constants;
 import com.letscooee.utils.InAppNotificationClickListener;
 
 import java.util.HashMap;
@@ -16,6 +15,7 @@ import java.util.Map;
 import io.flutter.embedding.engine.plugins.FlutterPlugin;
 import io.flutter.embedding.engine.plugins.activity.ActivityAware;
 import io.flutter.embedding.engine.plugins.activity.ActivityPluginBinding;
+import io.flutter.embedding.engine.renderer.FlutterRenderer;
 import io.flutter.plugin.common.BinaryMessenger;
 import io.flutter.plugin.common.MethodCall;
 import io.flutter.plugin.common.MethodChannel;
@@ -31,6 +31,8 @@ import io.flutter.plugin.common.PluginRegistry.Registrar;
  */
 public class CooeeFlutterPlugin implements ActivityAware, FlutterPlugin, MethodCallHandler {
 
+    private static CooeeFlutterPlugin INSTANCE;
+
     /// The MethodChannel that will the communication between Flutter and native Android
     /// This local reference serves to register the plugin with the Flutter Engine and unregister it
     /// when the Flutter Engine is detached from the Activity
@@ -38,15 +40,24 @@ public class CooeeFlutterPlugin implements ActivityAware, FlutterPlugin, MethodC
     private CooeeSDK cooeeSDK;
     private Context context;
     private Activity activity;
+    private FlutterRenderer flutterRenderer;
+
+    public static CooeeFlutterPlugin getInstance() {
+        return INSTANCE;
+    }
+
+    public CooeeFlutterPlugin() {
+        INSTANCE = this;
+    }
 
     @Override
     public void onAttachedToEngine(@NonNull FlutterPluginBinding flutterPluginBinding) {
         channel = new MethodChannel(flutterPluginBinding.getBinaryMessenger(), "cooee_plugin");
         cooeeSDK = CooeeSDK.getDefaultInstance(flutterPluginBinding.getApplicationContext());
         channel.setMethodCallHandler(this);
+        flutterRenderer = (FlutterRenderer) flutterPluginBinding.getTextureRegistry();
         this.context = flutterPluginBinding.getApplicationContext();
         setupPlugin(flutterPluginBinding.getApplicationContext(), flutterPluginBinding.getBinaryMessenger(), null);
-        System.out.println("Constant : " + Constants.LOG_PREFIX);
     }
 
     // This static function is optional and equivalent to onAttachedToEngine. It supports the old
@@ -161,6 +172,10 @@ public class CooeeFlutterPlugin implements ActivityAware, FlutterPlugin, MethodC
         }
     };
 
+    public FlutterRenderer getFlutterRenderer() {
+        return flutterRenderer;
+    }
+
     private void setupPlugin(Context context, BinaryMessenger messenger, Registrar registrar) {
         this.context = context.getApplicationContext();
         if (registrar != null) {
@@ -177,27 +192,5 @@ public class CooeeFlutterPlugin implements ActivityAware, FlutterPlugin, MethodC
         if (this.cooeeSDK != null) {
             this.cooeeSDK.setInAppNotificationButtonListener(listener);
         }
-
-        // Set current instance at ActivityLifecycle
-        ActivityLifecycle.setCooeeFlutterPlugin(this);
-    }
-
-    /**
-     * Close Glassmorphism widget
-     */
-    public void closeGlassmorphismWidget() {
-        invokeMethodOnUiThread("onInAppTriggerClosed", new HashMap());
-    }
-
-    /**
-     * Present/render glassmorphism widget for in-app trigger.
-     */
-    public void renderGlassmorphismWidget(int blur, String color) {
-        android.util.Log.d("TAG", "onInAppTriggered: ");
-
-        Map<String, Object> map = new HashMap();
-        map.put("blur", blur);
-        map.put("color", color);
-        invokeMethodOnUiThread("onInAppTriggered", map);
     }
 }

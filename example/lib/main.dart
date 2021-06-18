@@ -1,9 +1,8 @@
-import 'package:cooee_plugin/glassmorphism_effect.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'dart:async';
 
 import 'package:cooee_plugin/cooee_plugin.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
 void main() {
@@ -79,7 +78,6 @@ class _MyAppState extends State<MyApp> {
 class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    CooeePlugin().setContext(context);
     return Scaffold(
       appBar: AppBar(
         title: const Text('Plugin example app'),

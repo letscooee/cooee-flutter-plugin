@@ -1,15 +1,8 @@
 import 'dart:async';
-import 'dart:convert';
-import 'dart:typed_data';
 
-import 'package:cooee_plugin/glassmorphism_effect.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/src/widgets/framework.dart';
-import 'dart:ui' as ui;
-
-import 'package:shared_preferences/shared_preferences.dart';
 
 typedef void CooeeInAppNotificationButtonClickedHandler(
     Map<String, dynamic> mapList);
@@ -18,7 +11,7 @@ typedef void CooeeInAppTriggerClosed();
 
 class CooeePlugin {
   CooeeInAppNotificationButtonClickedHandler
-  cooeeInAppNotificationButtonClickedHandler;
+      cooeeInAppNotificationButtonClickedHandler;
   CooeeInAppTriggerClosed cooeeInAppTriggerClosed;
   BuildContext context;
 
@@ -43,19 +36,6 @@ class CooeePlugin {
         cooeeInAppNotificationButtonClickedHandler(
             args.cast<String, dynamic>());
         break;
-      case "onInAppTriggered":
-        try {
-          var map = args.cast<String, dynamic>();
-          showCupertinoModalPopup(
-              context: context,
-              builder: (context) => GlassmorphismEffect(map["blur"],map["color"]));
-        } catch (error) {
-          print(error.toString());
-        }
-        break;
-      case "onInAppTriggerClosed":
-        cooeeInAppTriggerClosed();
-        break;
     }
   }
 
@@ -63,8 +43,8 @@ class CooeePlugin {
   ///
   /// @param eventName       Name the event like onDeviceReady
   /// @param eventProperties Properties associated with the event
-  static void sendEvent(String eventName,
-      Map<String, dynamic> eventProperties) async {
+  static void sendEvent(
+      String eventName, Map<String, dynamic> eventProperties) async {
     _channel.invokeMethod("sendEvent",
         {"eventName": eventName, "eventProperties": eventProperties});
   }
@@ -96,53 +76,4 @@ class CooeePlugin {
       CooeeInAppNotificationButtonClickedHandler handler) {
     cooeeInAppNotificationButtonClickedHandler = handler;
   }
-
-  ///Send Base64 Image to Cooee SDK
-  ///
-  /// @param base64Encode will be image in base64 format
-  Future<void> setBitmap(String base64encode) async {
-    await _channel.invokeMethod("setBitmap", {"base64encode": base64encode});
-  }
-
-  ///FUnction will take screenshot of current UI using
-  ///
-  /// @param globalKey will be object of GlobalKey which will passed by User
-  Future<void> setController(GlobalKey<State<StatefulWidget>> globalKey) async {
-    await Future.delayed(const Duration(milliseconds: 2000));
-    RenderRepaintBoundary boundary =
-    globalKey.currentContext.findRenderObject();
-
-    ui.Image image = await boundary.toImage(pixelRatio: 1);
-    //final directory = (await getApplicationDocumentsDirectory()).path;
-    ByteData byteData = await image.toByteData(format: ui.ImageByteFormat.png);
-    Uint8List pngBytes = byteData.buffer.asUint8List();
-    setBitmap(base64Encode(pngBytes));
-    sharedPrefarence(base64Encode(pngBytes));
-  }
-
-  ///Save Image in SharedPrefarence
-  ///
-  /// @param image will be base64 image
-  Future<void> sharedPrefarence(String image) async {
-    final prefs = await SharedPreferences.getInstance();
-    prefs.setString('base64', image);
-  }
-
-  ///Load base64 image from SharedPrefarence and pass it to setBitmap
-  Future<void> loadImage() async {
-    final prefs = await SharedPreferences.getInstance();
-    setBitmap(prefs.getString('base64'));
-  }
-
-  ///Accept context from user
-  ///
-  /// @param context BuildContext
-  void setContext(BuildContext context) {
-    this.context = context;
-  }
-
-  void setCooeeInAppTriggerClosed(CooeeInAppTriggerClosed handler) {
-    cooeeInAppTriggerClosed = handler;
-  }
-
 }
