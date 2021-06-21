@@ -68,27 +68,16 @@ Now in your Dart code, you can use:
 import 'package:cooee_plugin/cooee_plugin.dart';
 ```
 
-### Step 4: Provide BuildContext
-
-Because of a limitation in how Flutter for Android handles Activity, we could not achieve Glassmorphism effect in Flutter applications
-without some extra code. For this to work, you have to add an extra line in your first route widget.
-
-Call `setContext()` method to your first route widget. Check [Example](https://pub.dev/packages/cooee_plugin/example) for reference.
-
-```dart
-CooeePlugin().setContext(context);
-```
-
-### Step 5: Track custom Events
+### Step 4: Track custom Events
 
 Once you integrate the SDK, Cooee will automatically start tracking events. You can view the collected events in System Default Events. Apart from these, you can track custom events as well.
 
 ```dart
-var eventProperties = {'product id': '1234', 'product name': 'Wooden Table'};
+var eventProperties = {'product id': 1234, 'product name': 'Wooden Table'};
 CooeePlugin.sendEvent("Add to cart", eventProperties);
 ```
 
-### Step 6: Track user action on In-App Trigger
+### Step 5: Track user action on In-App Trigger
 
 Create an object of CooeePlugin and initialize event tracker
 
