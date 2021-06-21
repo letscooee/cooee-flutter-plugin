@@ -1,3 +1,11 @@
+## 0.1.0
+
+1. Using Android SDK v0.3.0.
+2. Add support to Android 11
+3. Add ActivityLifecycle to observe In-App Trigger
+4. Remove unwanted methods and files.
+5. Fix Glassmorphism issue.
+
 ## 0.0.23
 
 1. Using Android SDK v0.2.11.
