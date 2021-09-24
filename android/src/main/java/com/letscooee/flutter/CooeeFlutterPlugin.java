@@ -7,7 +7,7 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 
 import com.letscooee.CooeeSDK;
-import com.letscooee.utils.InAppNotificationClickListener;
+import com.letscooee.utils.CooeeCTAListener;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -165,9 +165,9 @@ public class CooeeFlutterPlugin implements ActivityAware, FlutterPlugin, MethodC
         }
     }
 
-    InAppNotificationClickListener listener = new InAppNotificationClickListener() {
+    CooeeCTAListener listener = new CooeeCTAListener() {
         @Override
-        public void onInAppButtonClick(HashMap<String, Object> payload) {
+        public void onResponse(HashMap<String, Object> payload) {
             invokeMethodOnUiThread("onInAppButtonClick", payload);
         }
     };
@@ -190,7 +190,7 @@ public class CooeeFlutterPlugin implements ActivityAware, FlutterPlugin, MethodC
         this.channel.setMethodCallHandler(this);
         this.cooeeSDK = CooeeSDK.getDefaultInstance(this.context);
         if (this.cooeeSDK != null) {
-            this.cooeeSDK.setInAppNotificationButtonListener(listener);
+            this.cooeeSDK.setCTAListener(listener);
         }
     }
 }
