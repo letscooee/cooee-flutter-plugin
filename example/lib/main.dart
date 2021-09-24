@@ -105,8 +105,7 @@ class HomePage extends StatelessWidget {
   }
 
   void onclick(BuildContext context) {
-    showCupertinoModalPopup(
-        context: context, builder: (context) => SecondPage());
+    CooeePlugin.showDebugInfo();
   }
 }
 

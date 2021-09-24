@@ -71,6 +71,12 @@ class CooeePlugin {
     await _channel.invokeMethod("setCurrentScreen", {"screenName": screenName});
   }
 
+  /// Launch DebugInfoActivity activity which holds debug information.
+  /// These information is useful to debug problem with the SDK.
+  static void showDebugInfo() async {
+    await _channel.invokeMethod("showDebugInfo", {});
+  }
+
   /// Define a method to handle inApp notification button clicked
   void setCooeeInAppNotificationAction(
       CooeeInAppNotificationButtonClickedHandler handler) {
