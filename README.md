@@ -95,3 +95,23 @@ void inAppTriggered(Map<String, dynamic> map) {
     });
 }
 ```
+
+### Step 6: Show debug information (Optional)
+
+To see CooeeSDK debug information for you can add `SHAKE_TO_DEBUG_COUNT` in `AndroidManifest.xml`
+
+```xml
+<!-- Change value to 0 if you don't want to open debug information when device shake-->
+<meta-data
+    android:name="SHAKE_TO_DEBUG_COUNT"
+    android:value="ANY_NUMBER" />
+```
+
+Or you can also see information by calling `showDebugInfo()` method
+
+```dart
+CooeePlugin.showDebugInfo();
+```
+
+**Note**
+Debug Information holds confidential data and is password protected. While accessing this information Cooee representative is required.
