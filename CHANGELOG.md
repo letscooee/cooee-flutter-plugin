@@ -1,3 +1,8 @@
+## 0.1.1
+
+1. Using Android SDK v1.0.1.
+2. Expose `showDebugInfo` method to launch DebugInfo Activity.
+
 ## 0.1.0
 
 1. Using Android SDK v0.3.0.
