@@ -5,7 +5,15 @@ before_script:
     - export PATH="$PATH":"$HOME/.pub-cache/bin"
 
 stages:
+    - test
     - deploy
+
+Validate MR:
+    stage: test
+    script:
+        - flutter pub publish --dry-run
+    only:
+        - merge_requests
 
 Publish Release:
     stage: deploy
