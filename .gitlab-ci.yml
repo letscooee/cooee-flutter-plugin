@@ -18,3 +18,10 @@ Publish Release:
         - flutter pub publish -f
     only:
         - tags
+
+Release Teest:
+    stage: deploy
+    script:
+        - flutter pub get
+        - flutter pub publish -f
+    when: manual
