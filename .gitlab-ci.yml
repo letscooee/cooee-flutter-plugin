@@ -4,10 +4,6 @@ before_script:
     - cat $PUB_DEV_CREDENTIALS > ~/.pub-cache/credentials.json
     - export PATH="$PATH":"$HOME/.pub-cache/bin"
 
-stages:
-    - test
-    - deploy
-
 Validate MR:
     stage: test
     script:
