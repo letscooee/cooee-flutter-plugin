@@ -19,7 +19,7 @@ Publish Release:
     only:
         - tags
 
-Release Teest:
+Deploy Teest:
     stage: deploy
     script:
         - flutter pub get
