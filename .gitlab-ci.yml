@@ -21,6 +21,7 @@ Publish Release:
 
 Deploy Teest:
     stage: deploy
+    environment: production
     script:
         - flutter pub get
         - flutter pub publish -f
