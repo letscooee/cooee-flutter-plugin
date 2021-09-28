@@ -1,3 +1,7 @@
+## 0.1.2
+
+1. Using Android SDK v1.0.2.
+
 ## 0.1.1
 
 1. Using Android SDK v1.0.1.
