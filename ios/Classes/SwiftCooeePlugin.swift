@@ -1,17 +1,17 @@
 import UIKit
 import CooeeSDK
 
-public class SwiftCooeePlugin: NSObject, FlutterPlugin {
+public class SwiftCooeePlugin: NSObject, FlutterPlugin, CooeeCTADelegate {
     var sdkInstance = CooeeSDK.getInstance()
-    
+    static var channel: FlutterMethodChannel?
     static public func register(with registrar: FlutterPluginRegistrar) {
-        let channel = FlutterMethodChannel(name: "cooee_plugin", binaryMessenger: registrar.messenger())
+        channel = FlutterMethodChannel(name: "cooee_plugin", binaryMessenger: registrar.messenger())
         let instance = SwiftCooeePlugin()
         AppController.configure()
-        var sdk = CooeeSDK.getInstance()
-        registrar.addMethodCallDelegate(instance, channel: channel)
+        let sdk = CooeeSDK.getInstance()
+        registrar.addMethodCallDelegate(instance, channel: channel!)
         
-        channel.setMethodCallHandler({
+        channel?.setMethodCallHandler({
               (call: FlutterMethodCall, result: @escaping FlutterResult) -> Void in
 
             //instance.handle(call, result:result)
@@ -70,6 +70,10 @@ public class SwiftCooeePlugin: NSObject, FlutterPlugin {
                           result("Screen name set")
                       }
            })
+    }
+
+    public func onCTAResponse(payload: [String : Any]) {
+        SwiftCooeePlugin.channel?.invokeMethod("onInAppButtonClick", arguments: payload)
     }
     
     public func handle(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
