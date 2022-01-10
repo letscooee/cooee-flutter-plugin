@@ -115,3 +115,11 @@ CooeePlugin.showDebugInfo();
 
 **Note**
 Debug Information holds confidential data and is password protected. While accessing this information Cooee representative is required.
+
+### Step 7: Show User ID (Optional)
+
+To see User ID assigned to user by Cooee you can call `getUserID`
+
+```dart
+CooeePlugin.getUserID();
+```
