@@ -48,6 +48,8 @@ class _MyAppState extends State<MyApp> {
         "email": "abhishek@flutter.com",
         "mobile": 4545454545
       });
+
+      print("User Id" + CooeePlugin.getUserID());
     } catch (e) {
       print(e);
     }

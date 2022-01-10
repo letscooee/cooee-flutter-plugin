@@ -77,6 +77,11 @@ class CooeePlugin {
     await _channel.invokeMethod("showDebugInfo", {});
   }
 
+  /// Provides user ID assigned to the user by Cooee.
+  static getUserID() async {
+    await _channel.invokeMethod("getUserID", {});
+  }
+
   /// Define a method to handle inApp notification button clicked
   void setCooeeInAppNotificationAction(
       CooeeInAppNotificationButtonClickedHandler handler) {
