@@ -15,11 +15,11 @@ spec.description  = "Hyper-personalised Mobile App Re-Engagement via Machine Lea
 
 spec.homepage     = "https://github.com/letscooee/cooee-ios-sdk"
 spec.license      = "MIT"
-spec.author       = { "Surbhi Lath" => "surbhibagadia.21@gmail.com" }
+spec.author       = { "Ashish Gaikwad" => "ashishgaikwad534@gmail.com" }
 spec.source       = { :path => '.' }
 spec.source_files    = 'Classes/**/*'
 spec.dependency               'Flutter'
-spec.dependency               'CooeeSDK','~>1.2.5'
+spec.dependency               'CooeeSDK','~>1.3.4'
 spec.platform = :ios, '13.0'
 
 # Flutter.framework does not contain a i386 slice.

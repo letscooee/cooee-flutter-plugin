@@ -1,100 +1,92 @@
-import UIKit
 import CooeeSDK
+import UIKit
 
-public class SwiftCooeePlugin: NSObject, FlutterPlugin {
-    var sdkInstance = Cooee.shared
-    
-    static public func register(with registrar: FlutterPluginRegistrar) {
-        let channel = FlutterMethodChannel(name: "cooee_plugin", binaryMessenger: registrar.messenger())
+public class SwiftCooeePlugin: NSObject, FlutterPlugin, CooeeCTADelegate {
+    // MARK: Public
+
+    public static func register(with registrar: FlutterPluginRegistrar) {
+        channel = FlutterMethodChannel(name: "cooee_plugin", binaryMessenger: registrar.messenger())
         let instance = SwiftCooeePlugin()
-        var sdk = Cooee.shared
-        registrar.addMethodCallDelegate(instance, channel: channel)
-        
-        channel.setMethodCallHandler({
-              (call: FlutterMethodCall, result: @escaping FlutterResult) -> Void in
+        AppController.configure()
+        sdkInstance = CooeeSDK.getInstance()
+        registrar.addMethodCallDelegate(instance, channel: channel!)
 
-            //instance.handle(call, result:result)
+        channel?.setMethodCallHandler {
+            (call: FlutterMethodCall, result: @escaping FlutterResult) -> Void in
 
-                      if call.method == "getUDID"{
-                          let UDID = Cooee.shared.fetchUDID() ?? ""
-                          result(UDID)
-                      }
-
-                      if call.method == "sendEvent"{
-                          if let eventParams = call.arguments as? [String: Any]{
-                              if let eventName = eventParams["eventName"] as? String, let eventProperties = eventParams["eventProperties"] as? [String: Any]{
-                                sdk.sendEvent(withName: eventName, properties: eventProperties)
-                                  result("Event sent")
-                              }
-                          }
-                      }
-
-                      if call.method == "updateUserProperties"{
-                      print("updateUserProperties")
-                          if let userProperties = call.arguments as? [String: Any]{
-                            sdk.updateProfile(withProperties: userProperties, andData: nil)
-                              result("User Properties Updated")
-                          }
-                      }
-
-                      if call.method == "updateUserData"{
-                      print("updateUserData")
-                          if let userData = call.arguments as? [String: Any]{
-                            if let data=userData["userData"] as? [String:Any]{
-                                print("**** \(data)")
-                                sdk.updateProfile(withProperties: nil, andData: data)
-                                  result("User Data Updated")
-                            }
-                            
-                          }
-                      }
-
-                      if call.method == "setCurrentScreen"{
-                      print("setCurrentScreen")
-                          if let screenName = call.arguments as? String{
-                            sdk.screenName = screenName
-                              result("Screen name set")
-                          }
-                      }
-           })
+            SwiftCooeePlugin.processMethod(call, result)
+        }
     }
-    
-    public func handle(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
-   
 
-        if call.method == "getUDID"{
-            let UDID = Cooee.shared.fetchUDID() ?? ""
+    public func onCTAResponse(payload: [String: Any]) {
+        SwiftCooeePlugin.channel?.invokeMethod("onInAppButtonClick", arguments: payload)
+    }
+
+    public func handle(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
+        SwiftCooeePlugin.processMethod(call, result)
+    }
+
+    public static func processMethod(_ call: FlutterMethodCall, _ result: @escaping FlutterResult) {
+        if call.method == "getUserID" {
+            let UDID = sdkInstance.getUserID() ?? ""
             result(UDID)
         }
-        
-        if call.method == "sendEvent"{
-            if let eventParams = call.arguments as? [String: Any]{
-                if let eventName = eventParams["eventName"] as? String, let eventProperties = eventParams["eventProperties"] as? [String: Any]{
-                        sdkInstance.sendEvent(withName: eventName, properties: eventProperties)
-                        result("Event sent")
-                }
+
+        if call.method == "sendEvent" {
+            guard let eventParams = call.arguments as? [String: Any] else {
+                return
+            }
+
+            guard let eventName = eventParams["eventName"] as? String else {
+                return
+            }
+
+            guard let eventProperties = eventParams["eventProperties"] as? [String: Any] else {
+                return
+            }
+
+            do {
+                try sdkInstance.sendEvent(eventName: eventName, eventProperties: eventProperties)
+                result("Event sent")
+            } catch {
+                result(FlutterError(code: "Invalid Event", message: error.localizedDescription, details: error))
             }
         }
-        
-        if call.method == "updateUserProperties"{
-            if let userProperties = call.arguments as? [String: Any]{
-                sdkInstance.updateProfile(withProperties: userProperties, andData: nil)
-                result("User Properties Updated")
+
+        if call.method == "updateUserProperties" {
+            guard let userProperties = call.arguments as? [String: Any] else {
+                return
             }
+
+            sdkInstance.updateUserProperties(userProperties: userProperties)
         }
-        
-        if call.method == "updateUserData"{
-            if let userData = call.arguments as? [String: Any]{
-                sdkInstance.updateProfile(withProperties: nil, andData: userData)
-                result("User Data Updated")
+
+        if call.method == "updateUserData" {
+            guard let userData = call.arguments as? [String: Any] else {
+                return
             }
+
+            sdkInstance.updateUserData(userData: userData)
+            result("User Data Updated")
         }
-        
-        if call.method == "setCurrentScreen"{
-            if let screenName = call.arguments as? String{
-                sdkInstance.screenName = screenName
-                result("Screen name set")
+
+        if call.method == "setCurrentScreen" {
+            guard let arguments = call.arguments as? [String: Any] else {
+                return
             }
+
+            guard let screenName = arguments["screenName"] as? String else {
+                return
+            }
+
+            sdkInstance.setCurrentScreen(screenName: screenName)
+            result("Screen name set")
         }
     }
+
+    // MARK: Internal
+
+    static var channel: FlutterMethodChannel?
+
+    static var sdkInstance = CooeeSDK.getInstance()
 }

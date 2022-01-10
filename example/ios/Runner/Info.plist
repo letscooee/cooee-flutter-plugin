@@ -42,12 +42,12 @@
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
 	<key>NSBluetoothPeripheralUsageDescription</key>
-            <string>App uses Bluetooth to find out nearby devices</string>
-            <key>CooeeAppID</key>
-            <string>5f9136107d618d7d123cc118</string>
-            <key>CooeeSecretKey</key>
-            <string>TEST-6107d618d7d123cc118</string>
-            <key>NSLocationWhenInUseUsageDescription</key>
-            <string>App uses location to search retailer location</string>
+	<string>App uses Bluetooth to find out nearby devices</string>
+	<key>COOEE_APP_ID</key>
+	<string>5f9136107d618d7d123cc118</string>
+	<key>COOEE_APP_SECRET</key>
+	<string>TEST-6107d618d7d123cc118</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>App uses location to search retailer location</string>
 </dict>
 </plist>
