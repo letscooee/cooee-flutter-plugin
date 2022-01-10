@@ -1,3 +1,9 @@
+## 1.0.0
+
+1. Expose `getUserID` method to access Cooee's userID
+2. Upgrade to Android SDK v1.1.0
+3. Support of iOS via v1.3.4
+
 ## 0.1.2
 
 1. Using Android SDK v1.0.2.
