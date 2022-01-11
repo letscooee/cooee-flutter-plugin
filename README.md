@@ -21,7 +21,7 @@ triggers for end users with simple SDK integration that requires no coding at mo
 
 ### Step 1: Dependencies
 
-To add the Cooee Flutter plugin to your project, Tou can use `flutter pub add` or edit your project's `pubspec.yaml` file:
+To add the Cooee Flutter plugin to your project, You can use `flutter pub add` or edit your project's `pubspec.yaml` file:
 
 #### Add via terminal
 
@@ -66,7 +66,7 @@ Add following in `Info.plist` present at `ios/Runner` path
 <string>MY_COOEE_APP_SECRET</string>
 ```
 
-<span style="color:red">**Note:**</span> Replace `MY_COOEE_APP_ID` & `MY_COOEE_APP_SECRET` with the app id & secret 
+**Note:** Replace `MY_COOEE_APP_ID` & `MY_COOEE_APP_SECRET` with the app id & secret
 given to you separately in both **Android** & **iOS**.
 
 ### Step 3: Import it
@@ -93,17 +93,20 @@ Cooee also allows you to update user profile and properties
 #### Update user profile
 
 ```dart
-var userProfile = {'name': 'John Smith', 
-                     'mobile': 9876543210, 
-                     'email': 'johnsmit@gmail.com'};
-CooeePlugin.updateUserData("Add to cart", userProfile);
+var userProfile = {
+   'name': 'John Smith', 
+   'mobile': 9876543210, 
+   'email': 'johnsmit@gmail.com'
+};
+
+CooeePlugin.updateUserData('Add to cart', userProfile);
 ```
 
 #### Update user properties
 
 ```dart
 var userProproperties = {'foo': 'bar'};
-CooeePlugin.updateUserData("Add to cart", userProproperties);
+CooeePlugin.updateUserData('Add to cart', userProproperties);
 ```
 
 ### Step 6: Track user action on In-App Trigger
@@ -144,7 +147,7 @@ Or you can also see information by calling `showDebugInfo()` method
 CooeePlugin.showDebugInfo();
 ```
 
-<span style="color:red">**Note:**</span>
+**Note:**
 Debug Information holds confidential data and is password protected. While accessing this information Cooee representative is required.
 
 ### Step 7: Show User ID (Optional)
