@@ -1,5 +1,7 @@
 # Cooee plugin for Flutter App
 
+[![pub package](https://img.shields.io/pub/v/cooee_plugin.svg)](https://pub.dartlang.org/packages/cooee_plugin)
+
 ## What is Cooee?
 
 Lets Cooee powers hyper-personalized and real time engagements for mobile apps based on machine learning. The SaaS platform, hosted on
