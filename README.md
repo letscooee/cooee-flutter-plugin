@@ -117,9 +117,11 @@ Don't forget to initialize `inAppTriggered`
 
 ```dart
 void inAppTriggered(Map<String, dynamic> map) {
-    this.setState(() {
-      print("Data " + map.toString());
-    });
+    if (map["actionType"] == "VIEW_ITEM") {
+        // Use map["item"]
+    } else if (map["actionType"] == "GO_TO_SCREEN") {
+        // Use map["screenName"]
+    }
 }
 ```
 
