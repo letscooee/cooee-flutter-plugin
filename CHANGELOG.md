@@ -1,3 +1,9 @@
+## 1.0.1
+
+1. Update example app
+2. Upgrade to Android SDK v1.1.1
+3. Upgrade to iOS SDK v1.3.6
+
 ## 1.0.0
 
 1. Expose `getUserID` method to access Cooee's userID
