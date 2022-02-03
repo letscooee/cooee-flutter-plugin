@@ -1,5 +1,7 @@
 # Cooee plugin for Flutter App
 
+[![pub package](https://img.shields.io/pub/v/cooee_plugin.svg)](https://pub.dartlang.org/packages/cooee_plugin)
+
 ## What is Cooee?
 
 Lets Cooee powers hyper-personalized and real time engagements for mobile apps based on machine learning. The SaaS platform, hosted on
@@ -19,11 +21,19 @@ triggers for end users with simple SDK integration that requires no coding at mo
 
 ### Step 1: Dependencies
 
-To add the Cooee Flutter plugin to your project, edit your project's `pubspec.yaml` file:
+To add the Cooee Flutter plugin to your project, You can use `flutter pub add` or edit your project's `pubspec.yaml` file:
+
+#### Add via terminal
+
+```shell
+flutter pub add cooee_plugin
+```
+
+#### Or Update your `pubspec.yaml`
 
 ```yaml
 dependencies:
-cooee_plugin: x.x.x
+  cooee_plugin: x.x.x
 ```
 
 You can check the latest version of the plugin from https://pub.dev/packages/cooee_plugin/admin.
@@ -32,18 +42,16 @@ You can check the latest version of the plugin from https://pub.dev/packages/coo
 
 #### Android
 
-Add following in AndroidManifest.xml within the `<application>` tag:
+Add following in `AndroidManifest.xml` present at `android/app/src/main` within the `<application>` tag:
 
 ```xml
 <meta-data android:name="COOEE_APP_ID" android:value="MY_COOEE_APP_ID"/>
 <meta-data android:name="COOEE_APP_SECRET" android:value="MY_COOEE_APP_SECRET"/>
 ```
 
-Replace `MY_COOEE_APP_ID` & `MY_COOEE_APP_SECRET` with the app id & secret given to you separately.
-
 #### iOS
 
-Add following in Info.plist
+Add following in `Info.plist` present at `ios/Runner` path
 
 ```xml
 <key>NSBluetoothPeripheralUsageDescription</key>
@@ -52,13 +60,14 @@ Add following in Info.plist
 <key>NSLocationWhenInUseUsageDescription</key>
 <string>App uses location to search retailer location</string>
 
-<key>CooeeAppID</key>
+<key>COOEE_APP_ID</key>
 <string>MY_COOEE_APP_ID</string>
-<key>CooeeSecretKey</key>
+<key>COOEE_APP_SECRET</key>
 <string>MY_COOEE_APP_SECRET</string>
 ```
 
-Replace `MY_COOEE_APP_ID` & `MY_COOEE_APP_SECRET` with the app id & secret given to you separately.
+**Note:** Replace `MY_COOEE_APP_ID` & `MY_COOEE_APP_SECRET` with the app id & secret
+given to you separately in both **Android** & **iOS**.
 
 ### Step 3: Import it
 
@@ -79,6 +88,29 @@ CooeePlugin.sendEvent("Add to cart", eventProperties);
 
 ### Step 5: Track user action on In-App Trigger
 
+Cooee also allows you to update user profile and properties
+
+#### Update user profile
+
+```dart
+var userProfile = {
+   'name': 'John Smith', 
+   'mobile': 9876543210, 
+   'email': 'johnsmit@gmail.com'
+};
+
+CooeePlugin.updateUserData('Add to cart', userProfile);
+```
+
+#### Update user properties
+
+```dart
+var userProproperties = {'foo': 'bar'};
+CooeePlugin.updateUserData('Add to cart', userProproperties);
+```
+
+### Step 6: Track user action on In-App Trigger
+
 Create an object of CooeePlugin and initialize event tracker
 
 ```dart
@@ -90,13 +122,15 @@ Don't forget to initialize `inAppTriggered`
 
 ```dart
 void inAppTriggered(Map<String, dynamic> map) {
-    this.setState(() {
-      print("Data " + map.toString());
-    });
+    if (map["actionType"] == "VIEW_ITEM") {
+        // Use map["item"]
+    } else if (map["actionType"] == "GO_TO_SCREEN") {
+        // Use map["screenName"]
+    }
 }
 ```
 
-### Step 6: Show debug information (Optional)
+### Step 7: Show debug information (Optional)
 
 To see CooeeSDK debug information for you can add `SHAKE_TO_DEBUG_COUNT` in `AndroidManifest.xml`
 
@@ -113,7 +147,7 @@ Or you can also see information by calling `showDebugInfo()` method
 CooeePlugin.showDebugInfo();
 ```
 
-**Note**
+**Note:**
 Debug Information holds confidential data and is password protected. While accessing this information Cooee representative is required.
 
 ### Step 7: Show User ID (Optional)
