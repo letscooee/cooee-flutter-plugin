@@ -43,8 +43,8 @@ class CooeePlugin {
   ///
   /// @param eventName       Name the event like onDeviceReady
   /// @param eventProperties Properties associated with the event
-  static void sendEvent(
-      String eventName, Map<String, dynamic> eventProperties) async {
+  static void sendEvent(String eventName,
+      [Map<String, dynamic> eventProperties]) async {
     _channel.invokeMethod("sendEvent",
         {"eventName": eventName, "eventProperties": eventProperties});
   }
@@ -52,16 +52,26 @@ class CooeePlugin {
   /// Send given user data to the server
   ///
   /// @param userData The common user data like name, email.
+  @Deprecated("Use updateUserProfile(Map) instead")
   static void updateUserData(Map<String, dynamic> userData) async {
-    _channel.invokeMethod("updateUserData", {"userData": userData});
+    updateUserProfile(userData);
   }
 
   /// Send given user properties to the server
   ///
   /// @param userProperties The additional user properties.
+  @Deprecated("Use updateUserProfile(Map) instead")
   static void updateUserProperties(Map<String, dynamic> userProperties) async {
-    _channel.invokeMethod(
-        "updateUserProperties", {"userProperties": userProperties});
+    updateUserProfile(userProperties);
+  }
+
+  /// Send given user data to the server
+  ///
+  /// @param userData The common user data like name, email, etc.
+  ///
+  /// @since 1.3.0
+  static void updateUserProfile(Map<String, dynamic> userData) async {
+    _channel.invokeMethod("updateUserProfile", {"updateUserProfile": userData});
   }
 
   /// Manually update screen name

@@ -101,32 +101,27 @@ public class CooeeFlutterPlugin implements ActivityAware, FlutterPlugin, MethodC
         if (call.method.equals("sendEvent")) {
 
             try {
-                cooeeSDK.sendEvent(call.argument("eventName"), call.argument("eventProperties"));
+                if (call.argument("eventProperties") == null) {
+                    cooeeSDK.sendEvent(call.argument("eventName"));
+                } else {
+                    cooeeSDK.sendEvent(call.argument("eventName"), call.argument("eventProperties"));
+                }
+
                 result.success(" Event Sent ");
             } catch (Exception e) {
                 System.out.println("Exception : " + e);
                 result.error(e.toString(), " Event Not Sent", e.getCause());
                 e.printStackTrace();
             }
-        } else if (call.method.equals("updateUserData")) {
-            Map<String, Object> userData = call.argument("userData");
+        } else if (call.method.equals("updateUserProfile")) {
+            Map<String, Object> userData = call.argument("updateUserProfile");
 
             try {
-                cooeeSDK.updateUserData(userData);
+                cooeeSDK.updateUserProfile(userData);
                 result.success("User Data Updated ");
             } catch (Exception e) {
                 System.out.println("Exception : " + e);
                 result.error(e.toString(), " User Data Not Updated ", e.getCause());
-                e.printStackTrace();
-            }
-        } else if (call.method.equals("updateUserProperties")) {
-
-            try {
-                cooeeSDK.updateUserProperties(call.argument("userProperties"));
-                result.success(" User Properties Updated ");
-            } catch (Exception e) {
-                System.out.println("Exception : " + e);
-                result.error(e.toString(), " User Properties Updated Failed ", e.getCause());
                 e.printStackTrace();
             }
         } else if (call.method.equals("setCurrentScreen")) {
