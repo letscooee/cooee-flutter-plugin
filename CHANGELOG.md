@@ -1,3 +1,11 @@
+## 1.3.0
+
+1. Update example app.
+2. Upgrade to Android SDK v1.3.2.
+3. Update `CooeePlugin.sendEvent` method.
+4. Exposed `CooeePlugin.updateUserProfile`.
+5. Deprecate `CooeePlugin.updateUserData` and `CooeePlugin.updateUserProperties`.
+
 ## 1.0.1
 
 1. Update example app
