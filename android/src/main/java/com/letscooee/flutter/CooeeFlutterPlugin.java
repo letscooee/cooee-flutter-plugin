@@ -99,7 +99,6 @@ public class CooeeFlutterPlugin implements ActivityAware, FlutterPlugin, MethodC
     @Override
     public void onMethodCall(@NonNull MethodCall call, @NonNull Result result) {
         if (call.method.equals("sendEvent")) {
-
             try {
                 if (call.argument("eventProperties") == null) {
                     cooeeSDK.sendEvent(call.argument("eventName"));
@@ -107,44 +106,37 @@ public class CooeeFlutterPlugin implements ActivityAware, FlutterPlugin, MethodC
                     cooeeSDK.sendEvent(call.argument("eventName"), call.argument("eventProperties"));
                 }
 
-                result.success(" Event Sent ");
+                result.success("Event Sent");
             } catch (Exception e) {
-                System.out.println("Exception : " + e);
-                result.error(e.toString(), " Event Not Sent", e.getCause());
-                e.printStackTrace();
+                result.error(e.toString(), "Event not sent", e.getCause());
             }
         } else if (call.method.equals("updateUserProfile")) {
             Map<String, Object> userData = call.argument("updateUserProfile");
 
             try {
                 cooeeSDK.updateUserProfile(userData);
-                result.success("User Data Updated ");
+                result.success("User profile updated");
             } catch (Exception e) {
-                System.out.println("Exception : " + e);
-                result.error(e.toString(), " User Data Not Updated ", e.getCause());
-                e.printStackTrace();
+                result.error(e.toString(), "User data not updated", e.getCause());
             }
         } else if (call.method.equals("setCurrentScreen")) {
             try {
                 cooeeSDK.setCurrentScreen(call.argument("screenName"));
-                result.success(" Screen Name Updated ");
+                result.success("Screen name updated");
             } catch (Exception e) {
-                System.out.println("Exception : " + e);
-                result.error(e.toString(), " Screen Name Not Update ", e.getCause());
+                result.error(e.toString(), "Screen name not update", e.getCause());
             }
         } else if (call.method.equals("showDebugInfo")) {
             try {
                 cooeeSDK.showDebugInfo();
             } catch (Exception e) {
-                System.out.println("Exception : " + e);
-                result.error(e.toString(), " Debug Info Screen Not Shown ", e.getCause());
+                result.error(e.toString(), "Debug info screen not shown", e.getCause());
             }
         } else if (call.method.equals("getUserID")) {
             try {
                 cooeeSDK.getUserID();
             } catch (Exception e) {
-                System.out.println("Exception : " + e);
-                result.error(e.toString(), " getUserID Failed ", e.getCause());
+                result.error(e.toString(), "getUserID Failed", e.getCause());
             }
         } else {
             result.notImplemented();

@@ -37,7 +37,7 @@ class _MyAppState extends State<MyApp> {
 
     try {
       CooeePlugin.setCurrentScreen("CartPage");
-      await CooeePlugin.sendEvent("View Item", {"foo": "bar"} );
+      await CooeePlugin.sendEvent("View Item", {"foo": "bar"});
       await CooeePlugin.sendEvent("Add To Cart");
     } on Exception {
       print(Exception);
@@ -47,7 +47,9 @@ class _MyAppState extends State<MyApp> {
       await CooeePlugin.updateUserProfile({
         "name": "Abhishek flutter",
         "email": "abhishek@flutter.com",
-        "mobile": 4545454545
+        "mobile": 4545454545,
+        "foo": "bar",
+        "cuisine":"MH"
       });
 
       print("User Id" + CooeePlugin.getUserID());
