@@ -18,14 +18,6 @@ public class SwiftCooeePlugin: NSObject, FlutterPlugin, CooeeCTADelegate {
         }
     }
 
-    public func onCTAResponse(payload: [String: Any]) {
-        SwiftCooeePlugin.channel?.invokeMethod("onInAppButtonClick", arguments: payload)
-    }
-
-    public func handle(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
-        SwiftCooeePlugin.processMethod(call, result)
-    }
-
     public static func processMethod(_ call: FlutterMethodCall, _ result: @escaping FlutterResult) {
         if call.method == "getUserID" {
             let UDID = sdkInstance.getUserID() ?? ""
@@ -34,54 +26,66 @@ public class SwiftCooeePlugin: NSObject, FlutterPlugin, CooeeCTADelegate {
 
         if call.method == "sendEvent" {
             guard let eventParams = call.arguments as? [String: Any] else {
+                result(FlutterError(code: "Invalid data", message: "Invalid event data", details: nil))
                 return
             }
 
             guard let eventName = eventParams["eventName"] as? String else {
+                result(FlutterError(code: "Empty event name", message: "Event name can not be empty", details: nil))
                 return
             }
 
-            guard let eventProperties = eventParams["eventProperties"] as? [String: Any] else {
-                return
-            }
+            let eventProperties = eventParams["eventProperties"] as? [String: Any]
 
             do {
                 try sdkInstance.sendEvent(eventName: eventName, eventProperties: eventProperties)
                 result("Event sent")
             } catch {
-                result(FlutterError(code: "Invalid Event", message: error.localizedDescription, details: error))
+                result(FlutterError(code: "Invalid event", message: error.localizedDescription, details: error))
             }
         }
 
-        if call.method == "updateUserProperties" {
-            guard let userProperties = call.arguments as? [String: Any] else {
+        if call.method == "updateUserProfile" {
+            guard let callData = call.arguments as? [String: Any] else {
+                result(FlutterError(code: "Invalid data", message: "Invalid user profile data", details: nil))
                 return
             }
 
-            sdkInstance.updateUserProperties(userProperties: userProperties)
-        }
-
-        if call.method == "updateUserData" {
-            guard let userData = call.arguments as? [String: Any] else {
+            guard let userProfile = callData["updateUserProfile"] as? [String: Any] else {
+                result(FlutterError(code: "Invalid data", message: "Profile data can not be null", details: nil))
                 return
             }
 
-            sdkInstance.updateUserData(userData: userData)
-            result("User Data Updated")
+            do {
+                try sdkInstance.updateUserProfile(userProfile)
+                result("User profile updated")
+            } catch {
+                result(FlutterError(code: "Invalid data", message: error.localizedDescription, details: error))
+            }
         }
 
         if call.method == "setCurrentScreen" {
             guard let arguments = call.arguments as? [String: Any] else {
+                result(FlutterError(code: "Invalid data", message: "Invalid screen data", details: nil))
                 return
             }
 
             guard let screenName = arguments["screenName"] as? String else {
+                result(FlutterError(code: "Invalid data", message: "Screen name can not be null", details: nil))
                 return
             }
 
             sdkInstance.setCurrentScreen(screenName: screenName)
             result("Screen name set")
         }
+    }
+
+    public func onCTAResponse(payload: [String: Any]) {
+        SwiftCooeePlugin.channel?.invokeMethod("onInAppButtonClick", arguments: payload)
+    }
+
+    public func handle(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
+        SwiftCooeePlugin.processMethod(call, result)
     }
 
     // MARK: Internal
