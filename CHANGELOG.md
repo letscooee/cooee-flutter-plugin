@@ -1,3 +1,8 @@
+## 1.3.1
+
+1. Using Android SDK v1.3.4.
+2. Using iOS SDK 1.3.11
+
 ## 1.3.0
 
 1. Update example app.

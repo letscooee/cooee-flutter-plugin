@@ -9,7 +9,7 @@
 Pod::Spec.new do |spec|
 
 spec.name         = "cooee_plugin"
-spec.version      = "0.0.21"
+spec.version      = "1.3.1"
 spec.summary      = "Hyper-personalised Mobile App Re-Engagement via Machine Learning"
 spec.description  = "Hyper-personalised Mobile App Re-Engagement via Machine Learning"
 
@@ -19,7 +19,7 @@ spec.author       = { "Ashish Gaikwad" => "ashishgaikwad534@gmail.com" }
 spec.source       = { :path => '.' }
 spec.source_files    = 'Classes/**/*'
 spec.dependency               'Flutter'
-spec.dependency               'CooeeSDK','~>1.3.10'
+spec.dependency               'CooeeSDK','~>1.3.11'
 spec.platform = :ios, '13.0'
 
 # Flutter.framework does not contain a i386 slice.
