@@ -1,8 +1,6 @@
 import 'dart:async';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter/src/widgets/framework.dart';
 
 typedef void CooeeInAppNotificationButtonClickedHandler(
     Map<String, dynamic> mapList);
@@ -10,10 +8,8 @@ typedef void CooeeInAppNotificationButtonClickedHandler(
 typedef void CooeeInAppTriggerClosed();
 
 class CooeePlugin {
-  CooeeInAppNotificationButtonClickedHandler
+  CooeeInAppNotificationButtonClickedHandler?
       cooeeInAppNotificationButtonClickedHandler;
-  CooeeInAppTriggerClosed cooeeInAppTriggerClosed;
-  BuildContext context;
 
   static const MethodChannel _channel = const MethodChannel('cooee_plugin');
 
@@ -33,7 +29,11 @@ class CooeePlugin {
     var args = call.arguments;
     switch (call.method) {
       case "onInAppButtonClick":
-        cooeeInAppNotificationButtonClickedHandler(
+        if (cooeeInAppNotificationButtonClickedHandler == null) {
+          break;
+        }
+
+        cooeeInAppNotificationButtonClickedHandler!(
             args.cast<String, dynamic>());
         break;
     }
@@ -44,7 +44,7 @@ class CooeePlugin {
   /// @param eventName       Name the event like onDeviceReady
   /// @param eventProperties Properties associated with the event
   static void sendEvent(String eventName,
-      [Map<String, dynamic> eventProperties]) async {
+      [Map<String, dynamic>? eventProperties]) async {
     _channel.invokeMethod("sendEvent",
         {"eventName": eventName, "eventProperties": eventProperties});
   }
@@ -88,13 +88,13 @@ class CooeePlugin {
   }
 
   /// Provides user ID assigned to the user by Cooee.
-  static getUserID() async {
-    await _channel.invokeMethod("getUserID", {});
+  static Future<String?> getUserID() async {
+    return await _channel.invokeMethod("getUserID", {});
   }
 
   /// Define a method to handle inApp notification button clicked
   void setCooeeInAppNotificationAction(
-      CooeeInAppNotificationButtonClickedHandler handler) {
+      CooeeInAppNotificationButtonClickedHandler? handler) {
     cooeeInAppNotificationButtonClickedHandler = handler;
   }
 }
