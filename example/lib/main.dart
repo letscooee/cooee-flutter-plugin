@@ -15,8 +15,7 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  String _platformVersion = 'Unknown';
-  CooeePlugin sdk;
+  CooeePlugin? sdk;
 
   @override
   void initState() {
@@ -33,26 +32,29 @@ class _MyAppState extends State<MyApp> {
 
   // Platform messages are asynchronous, so we initialize in an async method.
   Future<void> initPlatformState() async {
-    String platformVersion;
-
     try {
       CooeePlugin.setCurrentScreen("CartPage");
-      await CooeePlugin.sendEvent("View Item", {"foo": "bar"});
-      await CooeePlugin.sendEvent("Add To Cart");
+      CooeePlugin.sendEvent("View Item", {"foo": "bar"});
+      CooeePlugin.sendEvent("Add To Cart");
     } on Exception {
       print(Exception);
     }
 
     try {
-      await CooeePlugin.updateUserProfile({
+      CooeePlugin.updateUserProfile({
         "name": "Abhishek flutter",
         "email": "abhishek@flutter.com",
         "mobile": 4545454545,
         "foo": "bar",
-        "cuisine":"MH"
+        "cuisine": "MH"
       });
 
-      print("User Id" + CooeePlugin.getUserID());
+      CooeePlugin.getUserID().then((cooeeUserID) {
+        if (cooeeUserID == null) return;
+        setState(() {
+          print("User Id: " + cooeeUserID);
+        });
+      });
     } catch (e) {
       print(e);
     }
@@ -61,10 +63,6 @@ class _MyAppState extends State<MyApp> {
     // message was in flight, we want to discard the reply rather than calling
     // setState to update our non-existent appearance.
     if (!mounted) return;
-
-    setState(() {
-      _platformVersion = platformVersion;
-    });
   }
 
   @override
@@ -76,7 +74,7 @@ class _MyAppState extends State<MyApp> {
 
   void initHandlers(BuildContext context) {
     sdk = new CooeePlugin();
-    sdk.setCooeeInAppNotificationAction(inAppTriggered);
+    sdk!.setCooeeInAppNotificationAction(inAppTriggered);
   }
 }
 
