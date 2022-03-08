@@ -133,11 +133,13 @@ public class CooeeFlutterPlugin implements ActivityAware, FlutterPlugin, MethodC
                 result.error(e.toString(), "Debug info screen not shown", e.getCause());
             }
         } else if (call.method.equals("getUserID")) {
-            try {
-                cooeeSDK.getUserID();
-            } catch (Exception e) {
-                result.error(e.toString(), "getUserID Failed", e.getCause());
+            String userID = cooeeSDK.getUserID();
+            if (userID == null) {
+                result.success("");
+                return;
             }
+
+            result.success(userID);
         } else {
             result.notImplemented();
         }
