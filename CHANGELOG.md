@@ -1,3 +1,16 @@
+# Change Log
+
+## v1.3.2
+
+### Improvements
+1. Add Null Sound Safety
+2. Using Android SDK v1.3.5.
+3. Using iOS SDK 1.3.12.
+
+### Fixes
+
+1. `getUserID` will return user ID
+
 ## 1.3.1
 
 1. Using Android SDK v1.3.4.
