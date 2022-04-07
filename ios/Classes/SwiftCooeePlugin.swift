@@ -9,6 +9,7 @@ public class SwiftCooeePlugin: NSObject, FlutterPlugin, CooeeCTADelegate {
         let instance = SwiftCooeePlugin()
         AppController.configure()
         sdkInstance = CooeeSDK.getInstance()
+        sdkInstance.setOnCTADelegate(instance.self)
         registrar.addMethodCallDelegate(instance, channel: channel!)
 
         channel?.setMethodCallHandler {
