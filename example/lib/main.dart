@@ -34,7 +34,30 @@ class _MyAppState extends State<MyApp> {
   Future<void> initPlatformState() async {
     try {
       CooeePlugin.setCurrentScreen("CartPage");
-      CooeePlugin.sendEvent("View Item", {"foo": "bar"});
+      var props = {
+        "item": {
+          "id": "FOO-B076H19JPJ",
+          "name": "Adidas Men's Agora 1.0 Multisport Shoe",
+          "category": {"id": "15234", "name": "Shoes"}
+        },
+        "items": [
+          {
+            "id": "FOO-B076H19JPJ",
+            "name": "Adidas Men's Agora 1.0 Multisport Shoe",
+            "category": {"id": "15234", "name": "Shoes"}
+          },
+          {
+            "id": "FOO-B076H19JPJ",
+            "name": "Adidas Men's Agora 1.0 Multisport Shoe",
+            "category": {"id": "15234", "name": "Shoes"}
+          }
+        ],
+        "stringData": "kansldkf",
+        "intData": 241234,
+        "floatData": 23.2345,
+        "booData": true
+      };
+      CooeePlugin.sendEvent("View Item", props);
       CooeePlugin.sendEvent("Add To Cart");
     } on Exception {
       print(Exception);
