@@ -1,5 +1,13 @@
 # Change Log
 
+## v1.3.4 (2022-05-06)
+
+### Improvements
+
+1. Using Android SDK v1.3.9.
+2. Using iOS SDK v1.3.14.
+3. Using latest version of gradle in plugin.
+
 ## v1.3.3 (2022-04-19)
 
 ### Improvements
