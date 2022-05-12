@@ -12,6 +12,7 @@ import androidx.annotation.NonNull;
  * @since 1.3.5
  */
 public class FlutterCooeeFirebaseMessagingService extends CooeeFirebaseMessagingService {
+
     @Override
     public void onNewToken(@NonNull String token) {
         super.onNewToken(token);
