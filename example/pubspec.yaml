@@ -13,6 +13,7 @@ dependencies:
   flutter:
     sdk: flutter
 
+  firebase_messaging: ^11.3.0
   cooee_plugin:
     # When depending on this package from a real application you should use:
     #   cooee_plugin: ^x.y.z
