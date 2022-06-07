@@ -6,7 +6,6 @@
 	<string>development</string>
 	<key>com.apple.security.application-groups</key>
 	<array>
-		<string>group.com.letscooee.flutterios.NotificationService</string>
 		<string>group.com.letscooee.5f9136107d618d7d123cc118</string>
 	</array>
 </dict>
