@@ -1,4 +1,11 @@
 # Change Log
+
+## v1.3.7 (2022-06-08)
+
+### Improvements
+
+1. Using iOS SDK v1.3.15.
+
 ## v1.3.6 (2022-05-26)
 
 ### Improvements
