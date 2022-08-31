@@ -6,8 +6,8 @@ public class SwiftCooeePlugin: NSObject, FlutterPlugin, CooeeCTADelegate {
 
     public static func register(with registrar: FlutterPluginRegistrar) {
         channel = FlutterMethodChannel(name: "cooee_plugin", binaryMessenger: registrar.messenger())
+        configure()
         let instance = SwiftCooeePlugin()
-        AppController.configure()
         sdkInstance = CooeeSDK.getInstance()
         sdkInstance.setOnCTADelegate(instance.self)
         registrar.addMethodCallDelegate(instance, channel: channel!)
@@ -79,6 +79,12 @@ public class SwiftCooeePlugin: NSObject, FlutterPlugin, CooeeCTADelegate {
             sdkInstance.setCurrentScreen(screenName: screenName)
             result("Screen name set")
         }
+    }
+
+    @objc
+    public static func configure() {
+        NewSessionExecutor.updateWrapperInformation(wrapperType: .FLUTTER, versionNumber: Constants.VERSION_NAME, versionCode: Constants.VERSION_CODE)
+        AppController.configure()
     }
 
     public func onCTAResponse(payload: [String: Any]) {
