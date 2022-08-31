@@ -19,7 +19,7 @@ spec.author       = { "Ashish Gaikwad" => "ashishgaikwad534@gmail.com" }
 spec.source       = { :path => '.' }
 spec.source_files    = 'Classes/**/*'
 spec.dependency               'Flutter'
-spec.dependency               'CooeeSDK','~>1.3.15'
+spec.dependency               'CooeeSDK','~>1.4.0'
 spec.platform = :ios, '13.0'
 
 # Flutter.framework does not contain a i386 slice.

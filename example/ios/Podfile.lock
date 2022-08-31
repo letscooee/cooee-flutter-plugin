@@ -1,10 +1,10 @@
 PODS:
   - cooee_plugin (1.3.7):
-    - CooeeSDK (~> 1.3.15)
+    - CooeeSDK (~> 1.4.0)
     - Flutter
-  - CooeeSDK (1.3.15):
+  - CooeeSDK (1.4.0):
     - HandyJSON (~> 5.0.2)
-    - Sentry (~> 7.8.0)
+    - Sentry (~> 7.23.0)
   - Firebase/CoreOnly (8.15.0):
     - FirebaseCore (= 8.15.0)
   - Firebase/Messaging (8.15.0):
@@ -41,7 +41,7 @@ PODS:
     - GoogleUtilities/UserDefaults (~> 7.7)
     - nanopb (~> 2.30908.0)
   - Flutter (1.0.0)
-  - GoogleDataTransport (9.1.4):
+  - GoogleDataTransport (9.2.0):
     - GoogleUtilities/Environment (~> 7.7)
     - nanopb (< 2.30910.0, >= 2.30908.0)
     - PromisesObjC (< 3.0, >= 1.2)
@@ -68,10 +68,10 @@ PODS:
     - nanopb/encode (= 2.30908.0)
   - nanopb/decode (2.30908.0)
   - nanopb/encode (2.30908.0)
-  - PromisesObjC (2.1.0)
-  - Sentry (7.8.0):
-    - Sentry/Core (= 7.8.0)
-  - Sentry/Core (7.8.0)
+  - PromisesObjC (2.1.1)
+  - Sentry (7.23.0):
+    - Sentry/Core (= 7.23.0)
+  - Sentry/Core (7.23.0)
 
 DEPENDENCIES:
   - cooee_plugin (from `.symlinks/plugins/cooee_plugin/ios`)
@@ -105,8 +105,8 @@ EXTERNAL SOURCES:
     :path: Flutter
 
 SPEC CHECKSUMS:
-  cooee_plugin: ce63c3022cdd37ceb49fe0b5208190fe70dc714b
-  CooeeSDK: ff34206d83bb8e39d05b12ede478d9945b4db54c
+  cooee_plugin: 13732ebfe7f83b5262e34484c69117a596c2a7f8
+  CooeeSDK: bccf25ba818e012e5b793577d205797ff1eea486
   Firebase: 5f8193dff4b5b7c5d5ef72ae54bb76c08e2b841d
   firebase_core: 6ef152b7d6a361e24105e2cc56ab458f1f8367fe
   firebase_messaging: 09caf4347b3a73deb37ed31f284ca11cc6039541
@@ -115,12 +115,12 @@ SPEC CHECKSUMS:
   FirebaseInstallations: 40bd9054049b2eae9a2c38ef1c3dd213df3605cd
   FirebaseMessaging: 5e5118a2383b3531e730d974680954c679ca0a13
   Flutter: 50d75fe2f02b26cc09d224853bb45737f8b3214a
-  GoogleDataTransport: 5fffe35792f8b96ec8d6775f5eccd83c998d5a3b
+  GoogleDataTransport: 1c8145da7117bd68bbbed00cf304edb6a24de00f
   GoogleUtilities: e0913149f6b0625b553d70dae12b49fc62914fd1
   HandyJSON: 9e4e236f5d2dbefad5155a77417bbea438201c03
   nanopb: a0ba3315591a9ae0a16a309ee504766e90db0c96
-  PromisesObjC: 99b6f43f9e1044bd87a95a60beff28c2c44ddb72
-  Sentry: 9b980005a8cd62b4a985ceb431fceb7f17f7615d
+  PromisesObjC: ab77feca74fa2823e7af4249b8326368e61014cb
+  Sentry: a0d4563fa4ddacba31fdcc35daaa8573d87224d6
 
 PODFILE CHECKSUM: 1354ba152a8a87fa8bb212cc417d33fbeaf90373
 
