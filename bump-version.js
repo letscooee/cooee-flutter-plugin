@@ -1,21 +1,22 @@
 const fs = require('fs');
 const child = require("child_process");
 
-let newVersion = process.argv[2];
-const podspecFilePath = 'pubspec.yaml';
-let podspecData = fs.readFileSync(podspecFilePath, "utf8");
-console.log(podspecData);
-console.log(podspecData.match(/version: \d*\.\d*\.\d*/g));
-
-const oldVersion = podspecData.match(/version: \d*\.\d*\.\d*/g)[0].split(':')[1].trim().replaceAll('"', '');
+const pubspecFilePath = 'pubspec.yaml';
 const iOSVersionFilePath = 'ios/Classes/Constants.swift';
 const androidVersionFilePath = 'android/src/main/java/com/letscooee/flutter/utils/Constants.java';
+let newVersion = process.argv[2];
+
+/**************** Find Old Version ***************/
+let pubspecData = fs.readFileSync(pubspecFilePath, "utf8");
+const oldVersion = pubspecData.match(/version: \d*\.\d*\.\d*/g)[0].split(':')[1].trim().replaceAll('"', '');
+/**************** End Find Old Version ***************/
 
 if (!newVersion) {
     console.log('Please specify a version number/updater');
     return;
 }
 
+/**************** Bump Version ***************/
 if (newVersion === 'patch') {
     newVersion = updatePatch(oldVersion);
 } else if (newVersion === 'minor') {
@@ -32,16 +33,26 @@ if (newVersion === 'patch') {
         '\t<version>: valid version string in 1.1.1 format\n');
     return;
 }
+/**************** End Bump Version ***************/
 
 console.log(`updating [${oldVersion}] --> [${newVersion}]`);
 const newVersionCode = parseInt(newVersion.split('.').map(v => v.padStart(2, '0')).join(''));
 
-podspecData = podspecData.replace(/version: \d*\.\d*\.\d*/g, `version: ${newVersion}`);
-fs.writeFileSync(podspecFilePath, podspecData);
+/**************** Write New Version in pubspec.yaml ***************/
+pubspecData = pubspecData.replace(/version: \d*\.\d*\.\d*/g, `version: ${newVersion}`);
+fs.writeFileSync(pubspecFilePath, pubspecData);
+/**************** End Write New Version in pubspec.yaml ***************/
 
+/**************** Write New Version in Constant.java & Constant.swift ***************/
 bumpVersionInNativeFiles(iOSVersionFilePath);
 bumpVersionInNativeFiles(androidVersionFilePath);
+/**************** End Write New Version in pubspec.yaml ***************/
 
+/**
+ * Access file at given path and write VERSION_NAME & VERSION_CODE
+ *
+ * @param path {string} path of the file
+ */
 function bumpVersionInNativeFiles(path){
     let cooeeMetaData = fs.readFileSync(path, "utf8");
     cooeeMetaData = cooeeMetaData.replace(/VERSION_NAME = "[^"]+"/, `VERSION_NAME = "${newVersion}"`);
