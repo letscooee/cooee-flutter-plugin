@@ -4,5 +4,16 @@
 
     <application
         android:name=".FlutterPluginController"
-        tools:replace="android:name" />
+        tools:replace="android:name">
+
+        <receiver
+            android:name=".utils.CooeeNotificationReceiver"
+            android:exported="true"
+            android:permission="com.google.android.c2dm.permission.SEND">
+            <intent-filter>
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+            </intent-filter>
+        </receiver>
+
+    </application>
 </manifest>

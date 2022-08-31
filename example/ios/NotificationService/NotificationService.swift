@@ -15,7 +15,7 @@ class NotificationService: UNNotificationServiceExtension {
 
     override func didReceive(_ request: UNNotificationRequest, withContentHandler contentHandler: @escaping (UNNotificationContent) -> Void) {
         self.contentHandler = contentHandler
-        bestAttemptContent = CooeeNotificationService.updateContent(((request.content.mutableCopy() as! UNMutableNotificationContent)), with: request.content.userInfo)
+        bestAttemptContent = CooeeNotificationService.updateContentFromRequest(request)
         
         if let bestAttemptContent = bestAttemptContent {
             // Modify the notification content here...
