@@ -81,6 +81,9 @@ public class SwiftCooeePlugin: NSObject, FlutterPlugin, CooeeCTADelegate {
         }
     }
 
+    /**
+     Sets wrapper information to Native SDK and then start Native SDK implementation
+     */
     @objc
     public static func configure() {
         NewSessionExecutor.updateWrapperInformation(wrapperType: .FLUTTER, versionNumber: Constants.VERSION_NAME, versionCode: Constants.VERSION_CODE)
