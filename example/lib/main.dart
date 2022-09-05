@@ -3,7 +3,8 @@ import 'dart:async';
 import 'package:cooee_plugin/cooee_plugin.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
+
+import 'SecondPage.dart';
 
 void main() {
   runApp(MyApp());
@@ -109,20 +110,30 @@ class HomePage extends StatelessWidget {
         title: const Text('Plugin example app'),
       ),
       body: Container(
+        decoration: BoxDecoration(
+          image: DecorationImage(
+              image: AssetImage('assets/homepage.png'), fit: BoxFit.cover),
+        ),
         height: double.infinity,
         width: double.infinity,
         child: Center(
           child: Column(children: [
-            Image(
+            /*Image(
               image: new AssetImage('assets/homepage.png'),
               width: 500,
               height: 500,
-            ),
+            ),*/
             RaisedButton(
               onPressed: () {
                 onclick(context);
               },
-              child: Text("First page Button"),
+              child: Text("Show Debug Info"),
+            ),
+            RaisedButton(
+              onPressed: () {
+                openSecondScreen(context);
+              },
+              child: Text("Update Profile"),
             ),
           ]),
         ),
@@ -133,28 +144,9 @@ class HomePage extends StatelessWidget {
   void onclick(BuildContext context) {
     CooeePlugin.showDebugInfo();
   }
-}
 
-class SecondPage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Plugin example app'),
-      ),
-      body: Container(
-        height: double.infinity,
-        width: double.infinity,
-        child: Center(
-          child: Column(children: [
-            Image(
-              image: new AssetImage('assets/homepage.png'),
-              width: 600,
-              height: 600,
-            ),
-          ]),
-        ),
-      ),
-    );
+  void openSecondScreen(BuildContext context) {
+    showCupertinoModalPopup(
+        context: context, builder: (context) => SecondPage());
   }
 }
