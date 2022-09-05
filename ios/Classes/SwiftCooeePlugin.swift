@@ -107,6 +107,7 @@ public class SwiftCooeePlugin: NSObject, FlutterPlugin, CooeeCTADelegate, Flutte
 
     /**
      Triggered by iOS Lifecycle once app become active.
+     Helps only in case of App Launch (Flutter blocks Foreground event when app has fresh launch where Native do not.)
      - parameters:
      - application - Instance of the application
      */
@@ -116,7 +117,21 @@ public class SwiftCooeePlugin: NSObject, FlutterPlugin, CooeeCTADelegate, Flutte
             return
         }
 
-        Timer.scheduledTimer(timeInterval: 5, target: self, selector: #selector(triggerAppForeground), userInfo: nil, repeats: false)
+        // Add observer to UIViewController So that once flutter UI is loaded we can perform organic launch
+        if let rootViewController = UIApplication.shared.windows.first?.rootViewController {
+            rootViewController.view.layer.addObserver(self, forKeyPath: "sublayers", options: NSKeyValueObservingOptions.new, context: nil)
+        }
+    }
+
+    /**
+     Observer called as soon as there is change in ViewControllers sub layer (i.e) Flutter UI is  loaded in the ViewController.
+     */
+    override public func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey: Any]?, context: UnsafeMutableRawPointer?) {
+        if SwiftCooeePlugin.isAfterForegroundEvent {
+            return
+        }
+
+        triggerAppForeground()
     }
 
     public func onCTAResponse(payload: [String: Any]) {
