@@ -30,6 +30,8 @@
 	<string>App uses Bluetooth to find out nearby devices</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>App uses location to search retailer location</string>
+	<key>UIApplicationExitsOnSuspend</key>
+	<false/>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>fetch</string>
