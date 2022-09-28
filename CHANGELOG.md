@@ -1,5 +1,17 @@
 # Change Log
 
+## v1.4.0 (2022-09-28)
+
+### Improvements
+
+1. Using Android SDK version v1.4.0.
+2. Using iOS SDK version v1.4.1.
+3. Add Android 12L support.
+
+### Fixes
+
+1. InApp rendering with custom event.
+
 ## v1.3.7 (2022-06-08)
 
 ### Improvements
