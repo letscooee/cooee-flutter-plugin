@@ -1,5 +1,11 @@
 # Change Log
 
+## v1.4.1 (2022-10-07)
+
+### Improvements
+
+1. Using Android SDK version v1.4.1.
+
 ## v1.4.0 (2022-09-28)
 
 ### Improvements

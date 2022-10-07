@@ -7,6 +7,6 @@ package com.letscooee.flutter.utils;
  * @since 1.4.0
  */
 public class Constants {
-    public static final int VERSION_CODE = 10400;
-    public static final String VERSION_NAME = "1.4.0";
+    public static final int VERSION_CODE = 10401;
+    public static final String VERSION_NAME = "1.4.1";
 }
