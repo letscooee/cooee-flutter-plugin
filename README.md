@@ -2,6 +2,7 @@
 
 ![Pub Version](https://img.shields.io/pub/v/cooee_plugin)
 ![GitHub](https://img.shields.io/github/license/letscooee/cooee-flutter-plugin)
+![Pub Points](https://img.shields.io/pub/points/cooee_plugin)
 
 ## What is Cooee?
 
@@ -9,7 +10,7 @@ Lets Cooee powers hyper-personalized and real time engagements for mobile apps b
 cloud infrastructure processes millions of user transactions and data attributes to create unique and contextual user engagement
 triggers for end users with simple SDK integration that requires no coding at mobile app level.
 
-For nore information visit our [website](https://www.letscooee.com/) and [documentation](https://docs.letscooee.com/developers/ios/quickstart).
+For nore information visit our [website](https://www.letscooee.com/) and [documentation](https://docs.letscooee.com/developers/flutter).
 
 ## Features
 
@@ -22,4 +23,4 @@ For nore information visit our [website](https://www.letscooee.com/) and [docume
 
 ## Installation
 
-For detailed installation & uses, Refer [Flutter](https://docs.letscooee.com/developers/flutter/quickstart) documentation.
+For detailed installation & uses, Refer [Flutter](https://docs.letscooee.com/developers/flutter/get-started) documentation.
