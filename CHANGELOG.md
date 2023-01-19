@@ -1,5 +1,12 @@
 # Change Log
 
+## v1.4.2 (2023-01-19)
+
+### Improvements
+
+1. Using Android SDK version v1.4.2.
+2. Using iOS SDK version v1.4.2.
+
 ## v1.4.1 (2022-10-07)
 
 ### Improvements

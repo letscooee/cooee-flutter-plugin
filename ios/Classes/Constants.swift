@@ -14,6 +14,6 @@ import Foundation
  - Since: 1.4.0
  */
 struct Constants {
-    static let VERSION_CODE = 10401
-    static let VERSION_NAME = "1.4.1"
+    static let VERSION_CODE = 10402
+    static let VERSION_NAME = "1.4.2"
 }
