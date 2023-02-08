@@ -64,7 +64,7 @@ class _SecondPage extends State<SecondPage> {
                     maxLength: 10,
                     keyboardType: TextInputType.number,
                   ),
-                  RaisedButton(
+                  ElevatedButton(
                     onPressed: () {
                       updateProfile(context);
                     },
@@ -106,7 +106,7 @@ class _SecondPage extends State<SecondPage> {
             title: Text(title),
             content: Text(body),
             actions: <Widget>[
-              new FlatButton(
+              new ElevatedButton(
                 child: new Text('OK'),
                 onPressed: () {
                   Navigator.of(context).pop();

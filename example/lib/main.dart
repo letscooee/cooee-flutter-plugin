@@ -124,13 +124,13 @@ class HomePage extends StatelessWidget {
               width: 500,
               height: 500,
             ),*/
-            RaisedButton(
+            ElevatedButton(
               onPressed: () {
                 onclick(context);
               },
               child: Text("Show Debug Info"),
             ),
-            RaisedButton(
+            ElevatedButton(
               onPressed: () {
                 openSecondScreen(context);
               },
