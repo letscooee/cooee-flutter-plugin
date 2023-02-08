@@ -1,5 +1,18 @@
 # Change Log
 
+## v1.4.3 (2023-03-08)
+
+### Features
+
+1. Expose `CooeePlugin.requestNotificationPermission` to request notification permission on Android 13.
+2. Add Support to Android 13.
+
+### Improvements
+
+1. Using Android SDK [v1.4.3](https://github.com/letscooee/cooee-android-sdk/releases/tag/v1.4.3).
+2. Remove unwanted JFrog URL
+
+
 ## v1.4.2 (2023-01-19)
 
 ### Improvements
