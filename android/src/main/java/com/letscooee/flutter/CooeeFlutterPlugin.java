@@ -140,6 +140,9 @@ public class CooeeFlutterPlugin implements ActivityAware, FlutterPlugin, MethodC
             }
 
             result.success(userID);
+        } else if (call.method.equals("requestNotificationPermission")) {
+            cooeeSDK.requestNotificationPermission(activity);
+            result.success("Permission Requested");
         } else {
             result.notImplemented();
         }
@@ -196,4 +199,5 @@ public class CooeeFlutterPlugin implements ActivityAware, FlutterPlugin, MethodC
             this.cooeeSDK.setCTAListener(listener);
         }
     }
+
 }

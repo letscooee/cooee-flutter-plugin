@@ -99,6 +99,7 @@ class _MyAppState extends State<MyApp> {
   void initHandlers(BuildContext context) {
     sdk = new CooeePlugin();
     sdk!.setCooeeInAppNotificationAction(inAppTriggered);
+    CooeePlugin.requestNotificationPermission();
   }
 }
 
