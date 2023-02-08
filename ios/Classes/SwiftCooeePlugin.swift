@@ -85,6 +85,10 @@ public class SwiftCooeePlugin: NSObject, FlutterPlugin, CooeeCTADelegate, Flutte
             sdkInstance.showDebugInfo()
             result("Displaying Debug Info")
         }
+
+        if call.method == "requestNotificationPermission" {
+            result("Not required for iOS")
+        }
     }
 
     /**

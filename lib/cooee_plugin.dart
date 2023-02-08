@@ -92,6 +92,16 @@ class CooeePlugin {
     return await _channel.invokeMethod("getUserID", {});
   }
 
+  /// Request an Notification Permission to the user
+  /// <br/><br/>
+  /// <b>Note:</b> This should be called on Android API 33 and above i.e
+  /// Android 13(TIRAMISU) and above.
+  ///
+  /// @since 1.4.3
+  static void requestNotificationPermission() {
+    _channel.invokeListMethod("requestNotificationPermission");
+  }
+
   /// Define a method to handle inApp notification button clicked
   void setCooeeInAppNotificationAction(
       CooeeInAppNotificationButtonClickedHandler? handler) {

@@ -99,6 +99,7 @@ class _MyAppState extends State<MyApp> {
   void initHandlers(BuildContext context) {
     sdk = new CooeePlugin();
     sdk!.setCooeeInAppNotificationAction(inAppTriggered);
+    CooeePlugin.requestNotificationPermission();
   }
 }
 
@@ -123,13 +124,13 @@ class HomePage extends StatelessWidget {
               width: 500,
               height: 500,
             ),*/
-            RaisedButton(
+            ElevatedButton(
               onPressed: () {
                 onclick(context);
               },
               child: Text("Show Debug Info"),
             ),
-            RaisedButton(
+            ElevatedButton(
               onPressed: () {
                 openSecondScreen(context);
               },
